@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 namespace PRN221_Assignment
 {
     public class Program
@@ -5,6 +9,28 @@ namespace PRN221_Assignment
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var jwtOptions = builder.Configuration.GetSection("JwtOptions");
+            var key = Encoding.ASCII.GetBytes(jwtOptions["SigningKey"]);
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtOptions["Issuer"],
+        ValidAudience = jwtOptions["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ClockSkew = TimeSpan.Zero
+    };
+});
+            builder.Services.AddAuthorization();
 
             // Add services to the container.
             builder.Services.AddRazorPages();
@@ -23,7 +49,7 @@ namespace PRN221_Assignment
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapRazorPages();

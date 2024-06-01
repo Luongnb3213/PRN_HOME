@@ -1,0 +1,63 @@
+.thread_main_icon svg {
+    fill: transparent;
+    color: rgb(243, 245, 247);
+    stroke: currentColor;
+    stroke-width: 2;
+}
+.line {
+    height: 100%;
+    background-color: rgb(77,77,77);
+    width: 3px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.thread_bottom{
+    
+}
+thread-main {
+    border-top: 1px solid rgba(243, 245, 247, 0.15);
+}
+.author {
+    color: rgb(243, 245, 247);
+}
+.author span{
+    color : #777777;
+    margin-left: 5px;
+}
+.thread_comments, .thread_likes {
+    color: #777777;
+}
+.dots {
+    color: #777777;
+    line-height: 28px;
+}
+.thread_wrapper {
+    background-color: rgb(24, 24, 24);
+    border-radius: 20px;
+    border-width: 1px;
+    border-color: rgba(243, 245, 247, 0.15);
+    border-style: solid;
+}
+.create_post span{
+    color: #777777;
+}
+.button_create {
+    color: #777777;
+    font-size: 15px;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: rgba(243, 245, 247, 0.15);
+    border-style: solid;
+}
+.bls_like_thread{
+     line-height: 28px;
+}
+.more_options:active{
+    transform: scale(0.4);
+}
+.more_options {
+     transition: all 0.2s linear;
+}
+.more_options:hover{
+    background-color: red;
+}

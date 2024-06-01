@@ -65,7 +65,7 @@
     --input-placeholder-color: rgba(var(--color-heading-rgb), 0.6);
     --page-width: 1200px;
     --page-width-value: 1200;
-    --fluid-container-width: 1410px;
+    --fluid-container-width: 600px;
     --fluid-container-width-value: 1410px;
     --color-white: #FFF;
     --color-dark: #111;
@@ -118,6 +118,7 @@ html {
 }
 
 body {   
+    background-color: black;
     min-height: 100vh;
     margin: 0;
     font-family: "Instrument Sans", sans-serif;
@@ -936,6 +937,10 @@ blockquote {
 
 .fs-13 {
     font-size: 1.3rem;
+}
+
+.fs-15 {
+    font-size: 1.5rem;
 }
 
 .fs-16 {
@@ -3071,4 +3076,7 @@ cookie-bar {
     100% {
         background-position-x: -150%;
     }
+}
+.ml-10{
+    margin-left: 10px;
 }
