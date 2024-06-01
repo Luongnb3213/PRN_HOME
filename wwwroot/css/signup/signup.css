@@ -1,0 +1,115 @@
+﻿:root {
+    --primary-color: #000000;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+.page {
+    background-color: var(--primary-color);
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* logo */
+.logo {
+    width: 50%;
+    text-align: center;
+    margin: auto;
+    padding: 16px 0;
+}
+
+/* Big box */
+.big-box {
+    width: 30%;
+    background-color: white;
+    border-radius: 10px;
+    margin: auto;
+    padding: 28px 16px;
+}
+
+.title {
+    font-size: 3.2rem;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    font-weight: lighter;
+    margin-bottom: 28px;
+}
+
+.row {
+    width: 75%;
+    margin: auto;
+}
+
+.input-field {
+    display: block;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    outline: none;
+    border: solid 1px grey;
+    line-height: 40px;
+    font-size: 1.6rem;
+    margin: 8px auto;
+    padding: 0 12px;
+}
+
+.error {
+    color: red;
+    font-size: 1.2rem;
+    margin: 12px 0;
+}
+
+    .error.hide {
+        display: none;
+    }
+
+/* Btn */
+.btn {
+    width: 75%;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    margin: 12px auto;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.btn-create {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Small box */
+.small-box {
+    width: 30%;
+    background-color: white;
+    border-radius: 10px;
+    margin: auto;
+    padding: 16px;
+    margin-top: 8px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.back {
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+    .back:hover {
+        opacity: 0.8;
+    }

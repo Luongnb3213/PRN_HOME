@@ -1,0 +1,154 @@
+﻿:root {
+    --primary-color: #000000;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+.page {
+    background-color: var(--primary-color);
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* Box */
+.box {
+    background-color: white;
+    border-radius: 10px;
+    width: 40%;
+    padding-top: 18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.icon {
+    background-image: url(../../pics/forgot/icon.jpg);
+    width: 20%;
+    padding: 10%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: auto;
+    border: 3px solid rgb(119, 119, 119);
+    border-radius: 50%;
+}
+
+.ques {
+    width: 50%;
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 18px auto;
+    font-weight: bold;
+}
+
+.description {
+    width: 50%;
+    text-align: center;
+    font-size: 1.4rem;
+    margin: 18px auto;
+}
+
+.username {
+    display: block;
+    width: 75%;
+    height: 40px;
+    border-radius: 5px;
+    outline: none;
+    border: solid 1px grey;
+    line-height: 40px;
+    font-size: 1.6rem;
+    padding: 0 12px;
+    margin: 12px auto;
+}
+
+.btn {
+    width: 75%;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    margin: 12px auto;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.btn-submit {
+    background-color: #000000;
+    color: white;
+}
+
+    .btn-submit:hover {
+        opacity: 0.9;
+    }
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 24px auto;
+    width: 75%;
+}
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #a7a7a7;
+    }
+
+    .divider:not(:empty)::before {
+        margin-right: 10px;
+    }
+
+    .divider:not(:empty)::after {
+        margin-left: 10px;
+    }
+
+    .divider span {
+        font-size: 1.4rem;
+    }
+
+.a-link {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin: 24px auto;
+    display: block;
+    width: 50%;
+    text-align: center;
+    font-weight: bold;
+}
+
+    .a-link:hover {
+        opacity: 0.8;
+    }
+
+.logo {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    padding-top: 16px;
+}
+
+.error {
+    color: red;
+    font-size: 1.4rem;
+    width: 100%;
+    text-align: center;
+    padding-top: 12px;
+}
+
+    .error.hide {
+        display: none;
+    }

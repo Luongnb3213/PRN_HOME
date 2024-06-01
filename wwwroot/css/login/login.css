@@ -1,0 +1,194 @@
+﻿:root {
+    --primary-color: #000000;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Page */
+.page {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--primary-color);
+    display: block;
+}
+
+/* Main */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100vh;
+    /* background-color: white; */
+}
+
+.pic {
+    background-image: url('../../pics/login/banner.png');
+    width: 25%;
+    padding-top: 35%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 150px;
+}
+
+.text {
+    line-height: 48px;
+    text-align: center;
+}
+
+/* Big-box */
+.big-box {
+    background-color: white;
+    min-width: 350px;
+    width: 100%;
+    border-radius: 10px;
+    margin-right: 150px;
+    padding: 35px;
+}
+
+/* Input */
+.input {
+    display: block;
+    width: 75%;
+    height: 40px;
+    border-radius: 5px;
+    outline: none;
+    border: solid 1px grey;
+    line-height: 40px;
+    font-size: 1.6rem;
+    padding: 0 12px;
+    margin: 12px auto;
+}
+
+.btn {
+    width: 75%;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    margin: 12px auto;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.btn-login:hover {
+    opacity: 0.9;
+}
+
+.btn-login {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.error {
+    width: 50%;
+    margin: 24px auto;
+    text-align: center;
+    color: red;
+    font-size: 1.4rem;
+    font-weight: 100;
+}
+
+    .error.hide {
+        display: none;
+    }
+
+/* style.css */
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 24px auto;
+    width: 75%;
+}
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #a7a7a7;
+    }
+
+    .divider:not(:empty)::before {
+        margin-right: 10px;
+    }
+
+    .divider:not(:empty)::after {
+        margin-left: 10px;
+    }
+
+    .divider span {
+        font-size: 1.4rem;
+    }
+
+.fa-google {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+    .fa-google.fa-3x {
+        font-size: 20px;
+    }
+
+.btn-google {
+    border: 1px solid rgb(79, 79, 79);
+}
+
+    .btn-google span {
+        margin-left: 8px;
+    }
+
+    .btn-google:hover {
+        background-color: rgb(210, 210, 210);
+    }
+
+.forgot-password {
+    width: 50%;
+    text-align: center;
+    margin: auto;
+    margin-top: 28px;
+}
+
+    .forgot-password a {
+        text-decoration: none;
+        color: var(--primary-color);
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+
+        .small-box a:hover,
+        .forgot-password a:hover {
+            color: rgb(59, 59, 59);
+        }
+
+/* Small-box */
+.small-box {
+    margin-top: 8px;
+    background-color: white;
+    min-width: 350px;
+    width: 100%;
+    border-radius: 10px;
+    margin-right: 150px;
+    padding: 35px;
+    text-align: center;
+}
+
+    .small-box a {
+        font-size: 1.4rem;
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
