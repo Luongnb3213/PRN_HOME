@@ -104,6 +104,12 @@ html {
 
 /* style.css */
 
+
+.big-box form {
+    display: flex;
+    flex-direction: column;
+}
+
 .divider {
     display: flex;
     align-items: center;

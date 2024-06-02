@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/authentication/login"
 @model PRN221_Assignment.Pages.Authentication.LoginModel
 @{
     Layout = null;
@@ -43,10 +43,10 @@
                     </svg>
                 </div>
                 <div class="big-box">
-                    <form action="">
-                        <input type="text" class="input username" placeholder="Username">
-                        <input type="password" class="input password" placeholder="Password">
-                        <div class="btn btn-login">Login</div>
+                    <form method="post" class="flex align-center flex-column">
+                        <input type="text" class="input username" asp-for="Input.Username" placeholder="Username">
+                        <input type="password" class="input password" asp-for="Input.Password" placeholder="Password">
+                        <button type="submit" class="btn btn-login">Login</button>
                         <div class="error hide">*Invalid username or password</div>
                     </form>
                     <div class="divider">

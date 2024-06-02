@@ -17,7 +17,25 @@ namespace PRN221_Assignment
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
 .AddJwtBearer(options =>
+
 {
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            context.Token = context.Request.Cookies["jwtToken"];
+            return Task.CompletedTask;
+        },
+        OnChallenge = context =>
+        {
+            context.HandleResponse();
+            if (!context.Response.HasStarted)
+            {
+                context.Response.Redirect("/authentication/login");
+            }
+            return Task.CompletedTask;
+        }
+    };
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
