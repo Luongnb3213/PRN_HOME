@@ -24,7 +24,7 @@ body .tingle-modal__close {
 }
 .tingle-modal .tingle-modal-box {
         max-width: var(--popup-max-width, unset);
-        width: 90%;
+        width: 60%;
         margin: auto;
         display: none;
     }

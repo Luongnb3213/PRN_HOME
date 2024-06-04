@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -15,6 +16,8 @@ namespace PRN221_Assignment
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
 .AddJwtBearer(options =>
 
@@ -47,7 +50,11 @@ namespace PRN221_Assignment
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ClockSkew = TimeSpan.Zero
     };
-});
+}).AddCookie().AddGoogle(options =>
+{
+    options.ClientId = "500915612685-fmucrlmjuti8p7q1jop9vbu0bk48sevi.apps.googleusercontent.com";
+    options.ClientSecret = "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";
+}); 
             builder.Services.AddAuthorization();
 
             // Add services to the container.

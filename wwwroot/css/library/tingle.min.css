@@ -74,10 +74,14 @@
     margin-bottom: auto;
     width: 60%;
     border-radius: 4px;
-    background: #fff;
+    background: rgb(24,24,24);
     opacity: 1;
     cursor: auto;
     will-change: transform, opacity;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: rgba(243, 245, 247, 0.15);
+    background-color: rgb(24,24,24);
 }
 
 .tingle-modal-box__content {

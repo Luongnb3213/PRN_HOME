@@ -432,7 +432,6 @@ input[type="password"] {
 
 textarea {
     --input-border-radius: calc(var(--btn-radius) - 10px);
-    min-height: 15rem;
     resize: none;
     --input-padding: 2rem;
 }
@@ -2548,7 +2547,7 @@ blockquote {
     --swiper-pagination-bullet-horizontal-gap: 0;
 }
 
-@media screen and (max-width: 767.98px) {
+@media screen and (min-width: 767.98px) {
     .free-scroll {
         margin-left: calc(-1 * var(--bs-gutter-x, 1.5rem));
         margin-right: calc(-1 * var(--bs-gutter-x, 1.5rem));
