@@ -6,10 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\pics\profile\" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.29" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.29" />
+  <ItemGroup>    
+	  <Folder Include="wwwroot\pics\profile\" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.29" />  
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.29" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
     <Folder Include="wwwroot\pics\forgot\" />
   </ItemGroup>
