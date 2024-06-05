@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/css/library/popup.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/library/swiper-bundle.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/library/tingle.min.css" asp-append-version="true" />
-
+    <link rel="stylesheet" href="~/css/profile/profile.css"/>
 
    
 
@@ -106,11 +106,9 @@
           
         </nav>
     </header>
-    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -138,6 +136,8 @@
     <script src="~/js/tingle.min.js"></script>
     <script src="~/js/swiper-bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/profile/profile.js"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

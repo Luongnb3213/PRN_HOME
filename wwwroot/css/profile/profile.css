@@ -3,13 +3,15 @@
     --secondary-color: #181818;
     --third-color: #101010;
     --hover-react-color: #1E1E1E;
-    --text-color: #E2E4E6;
+    --text-color: #F1F1F1;
     --sub-text-color: #717171;
     --border-color: #3a3a3a;
     --red-text: #FF3040;
+    --scroll-track: #424242;
+    --scroll-thumb: #7B7B7B;
 }
 
-* {
+/** {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -19,14 +21,17 @@ html {
     font-size: 62.5%;
     line-height: 1.6rem;
     font-family: 'Nunito', sans-serif;
-}
+}*/
+
 
 /* Page */
 .page {
+    position: relative;
     background-color: var(--primary-color);
     width: 100%;
     padding: 12px 0;
     position: relative;
+    height: 100%;
 }
 
 /* Overlay */
@@ -44,7 +49,20 @@ html {
         display: none;
     }
 
-/* In overlay */
+.custom-option-box .tingle-modal-box__content,
+.custom-option-box .tingle-modal-box {
+    max-width: 230px;
+    padding: 0;
+}
+
+.custom-option-box .tingle-modal-box__content {
+    text-align: center;
+}
+
+.custom-option-box .tingle-modal-box .tingle-modal__close {
+    display: none;
+}
+
 .option-box {
     width: 230px;
     background-color: var(--third-color);
@@ -60,6 +78,12 @@ html {
     .option-box.hide {
         display: none;
     }
+
+.custom-edit-info-box .tingle-modal-box {
+    width: 35%;
+    background-color: var(--third-color);
+    border: 1px solid var(--border-color);
+}
 
 .edit-info-box {
     width: 35%;
@@ -111,11 +135,8 @@ html {
     width: 640px;
     background-color: var(--secondary-color);
     margin: auto;
-    height: calc(100vh - 12px * 2);
     padding: 24px;
     border: 1px solid var(--border-color);
-    overflow-y: auto;
-    scrollbar-width: none;
 }
 
 /* Profile */
@@ -159,7 +180,7 @@ html {
 }
 
 .avatar {
-    background-image: url(../../pics/profile/shh.jpg);
+    background-image: url('../../pics/profile/shh.jpg');
     width: 84px;
     height: 84px;
     background-size: contain;
@@ -172,12 +193,13 @@ html {
     cursor: pointer;
 }
 
-    .avatar:hover {
-        opacity: 0.9;
-    }
+.avatar:hover {
+    opacity: 0.9;
+}
 
 /* Btn edit */
 .btn-edit {
+    display: block;
     width: 100%;
     font-size: 1.4rem;
     color: white;
@@ -216,6 +238,7 @@ html {
 .line {
     width: 100%;
     height: 1px;
+    margin: 0;
     background-color: var(--border-color);
 }
 
@@ -249,7 +272,7 @@ html {
     border: none;
     width: 100%;
     margin: 8px 0 0;
-    padding: 8px 0;
+    padding: 8px 8px;
     font-size: 1.4rem;
     outline: none;
     background-color: var(--third-color);
@@ -334,7 +357,7 @@ thread-up {
 .avt-author {
     width: 48px;
     height: 48px;
-    background-image: url(../../pics/profile/shh.jpg);
+    background-image: url('../../pics/profile/shh.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     border-radius: 50%;
@@ -355,9 +378,10 @@ thread-up {
     text-decoration: none;
 }
 
-    .username-author:hover {
-        text-decoration: underline;
-    }
+.username-author:hover {
+    text-decoration: underline;
+    color: var(--text-color);
+}
 
 .time {
     color: var(--sub-text-color);
@@ -370,6 +394,10 @@ thread-up {
     color: var(--text-color);
     font-size: 1.4rem;
 }
+
+    .caption:hover {
+        cursor: pointer;
+    }
 
 .post-pics-frame {
     margin-top: 10px;
@@ -414,10 +442,6 @@ thread-up {
     margin-right: 8px;
 }
 
-    .wrapper-react-num:hover {
-        background-color: var(--hover-react-color);
-    }
-
 .separate-post {
     background-color: var(--border-color);
     height: 1px;
@@ -442,3 +466,275 @@ thread-up {
 .caption {
     cursor: default;
 }
+
+.heart,
+.comment,
+.re-post {
+    transition: scale .1s ease;
+    scale: 1;
+}
+
+    .heart:hover,
+    .comment:hover,
+    .re-post:hover {
+        scale: 1.2;
+    }
+
+/* Detail post */
+.wrapper-avt.detail {
+    margin-right: 12px;
+}
+
+.detail-header-author {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-caption {
+    margin: 14px 0;
+}
+
+/*.view-detail-post {
+    cursor: pointer;
+}*/
+
+.detail-post {
+    min-width: 640px;
+    background-color: var(--third-color);
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    padding: 18px 32px;
+    cursor: default;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.detail-post.hide {
+    display: none;
+}
+
+.custom-thread-detail .tingle-modal-box__content {
+    position: relative;
+    max-height: 90vh;
+}
+
+.custom-thread-detail .tingle-modal-box {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    height: auto;
+    width: 640px;
+}
+
+.custom-thread-detail .tingle-modal__close {
+    display: none;
+}
+
+.detail-separate-line {
+    height: 1px;
+    background-color: var(--border-color);
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    left: 0;
+}
+
+.caption.detail {
+    cursor: auto;
+}
+
+.post-pics-frame.detail {
+    cursor: auto;
+}
+
+.num-like.detail:hover,
+.num-comment.detail:hover,
+.num-share.detail:hover {
+    text-decoration: underline;
+}
+
+/* Detail like */
+.detail-like-box {
+    background-color: var(--third-color);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    padding-top: 18px;
+    cursor: default;
+    width: 100%;
+    overflow: hidden;
+}
+
+.detail-like-content {
+    overflow-y: auto;
+    max-height: 350px;
+}
+
+.custom-thread-detail-like .tingle-modal__close {
+    display: none
+}
+
+.custom-thread-detail-like .tingle-modal-box {
+    width: 500px;
+    border: 1px solid var(--border-color);
+}
+
+.custom-thread-detail-like .tingle-modal-box__content {
+    padding: 0;
+    overflow: hidden
+}
+/* Scroll */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scroll-track);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-thumb);
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #686868;
+        cursor: pointer;
+    }
+
+.detail-like-header {
+    position: relative;
+    width: 100%;
+    padding: 0 0 16px;
+}
+
+.detail-like-box.hide {
+    display: none;
+}
+
+.detail-like--title {
+    width: 100%;
+    font-size: 1.8rem;
+    color: var(--text-color);
+    text-align: center;
+    padding-top: 16px;
+}
+
+.detail-like--line {
+    height: 1px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    position: absolute;
+}
+
+/* Sub overlay */
+.sub-overlay {
+    background-color: #161616d6;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    cursor: pointer;
+}
+
+    .sub-overlay.hide {
+        display: none;
+    }
+
+.detail-like-person {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 16px 20px;
+}
+
+.person-avt {
+    background-image: url('../../pics/profile/shh.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.person-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.person-username {
+    font-size: 1.4rem;
+    color: var(--text-color);
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+    .person-username:hover {
+        text-decoration: underline;
+    }
+
+.person-fullname {
+    font-size: 1.5rem;
+    color: var(--sub-text-color);
+    cursor: auto;
+}
+
+.btn-follow {
+    width: 96px;
+    height: 32px;
+    background-color: var(--text-color);
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: bolder;
+    text-align: center;
+    line-height: 32px;
+    border-radius: 10px;
+    transition: scale .2s ease;
+}
+
+    .btn-follow.hide {
+        display: none;
+    }
+
+.btn-unfollow {
+    width: 132px;
+    height: 32px;
+    background-color: var(--border-color);
+    border-radius: 10px;
+    text-align: center;
+    line-height: 32px;
+    font-size: 1.4rem;
+    font-weight: bolder;
+    color: var(--text-color);
+    transition: scale .2s ease;
+}
+
+    .btn-unfollow.hide {
+        display: none;
+    }
+
+    .btn-unfollow:hover,
+    .btn-follow:hover {
+        cursor: pointer;
+        opacity: .9;
+        scale: 1.05;
+    }
+
+/* Detail comment */
+

@@ -1,62 +1,529 @@
 ﻿@page "/profile"
 @model PRN221_Assignment.Pages.Profile.ProfileModel
 @{
-    Layout = null;
 }
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Threads</title>
-    <link rel="stylesheet" href="~/css/profile/profile.css">
-    <link rel="icon" href="~/fav.ico">
-
-</head>
-
-<body>
-    <div class="page">
-        <div class="main">
-            <div class="profile">
-                <div class="left">
-                    <div class="username">Tối thứ 6</div>
-                    <div class="fullname">tra_____dao</div>
-                    <div class="story">ghét rán cá, thích uống rịu 🍶</div>
-                    <a href="" class="followers">50 followers</a>
-                </div>
-                <div class="right">
-                    <div class="avatar"></div>
-                </div>
+<div class="page">
+    <div class="main">
+        <div class="profile">
+            <div class="left">
+                <div class="username">Sát thủ đa tình</div>
+                <div class="fullname">giu_giot_le_sau</div>
+                <div class="story">ghét rán cá, thích uống rịu 🍶</div>
+                <a href="" class="followers">50 followers</a>
             </div>
-            <div class="btn-edit">
-                Edit profile
-            </div>
-            <div class="tabs">
-                <div class="tab-left selected">
-                    <div class="up">Thread</div>
-                </div>
-                <div class="tab-right">
-                    <div class="share">Re-thread</div>
-                </div>
-                <div class="selected-line"></div>
-            </div>
-            <div class="line"></div>
-            <!-- Created Threads -->
-            <thread-up>
-                <div class="post-wrapper">
-                    <div class="wrapper-avt">
-                        <div class="avt-author"></div>
+            <div class="right">
+                <avatar-user data-custom-class="custom-option-box" class="avatar">
+                    <div class="option-box hide">
+                        <div class="new-avt">Upload new avatar</div>
+                        <div class="divider"></div>
+                        <div class="delete-avt">Delete avatar</div>
                     </div>
-                    <div class="wrapper-author">
-                        <div class="info-author">
-                            <a href="" class="username-author">tra_____dao</a>
-                            <span class="time">13 giờ</span>
-                        </div>
-                        <div class="caption">Về nhà, thấy bạn bên đời đã đợi bên bàn...</div>
+                </avatar-user>
+            </div>
+        </div>
+        <edit-info-box data-custom-class="custom-edit-info-box" class="btn-edit">
+            Edit profile
+            <div class="edit-info-box hide">
+                <form action="">
+                    <div class="row">
+                        <div class="label">Fullname</div>
+                        <input class="info username" value="Sát thủ đa tình" />
+                    </div>
+                    <div class="seperate-line"></div>
+                    <div class="row">
+                        <div class="label">Username</div>
+                        <input class="info fullname" value="giu_giot_le_sau"/>
+                    </div>
+                    <div class="seperate-line"></div>
+                    <div class="row">
+                        <div class="label">Biography</div>
+                        <input class="info story" value="ghét rán cá, thích uống rịu 🍶"/>
+                    </div>
+                    <div class="seperate-line"></div>
+                    <div class="row-private">
+                        <div class="label">Private account</div>
+                        <btn-private class="btn-private">
+                            <div class="btn-ball"></div>
+                        </btn-private>
+                    </div>
+                    <div class="btn-edit-info">Xong</div>
+                </form>
+            </div>
+        </edit-info-box>
+        <div class="tabs">
+            <div class="tab-left selected">
+                <div class="up">Thread</div>
+            </div>
+            <div class="tab-right">
+                <div class="share">Re-thread</div>
+            </div>
+            <div class="selected-line"></div>
+        </div>
+        <div class="line"></div>
+        <!-- Created Threads -->
+        <!--Thread 1-->
+        <thread-up data-custom-class="custom-thread-detail">
+            <!--thread upload detail-->
+                <div class="detail-post hide">
+                    <thread-detail data-custom-class="custom-thread-detail-like">
+                    <thread-detail-like  class="wrapper-detail-like-box hidden">
+                            <div class="detail-like-box ">
+                                <div class="detail-like-header">
+                                    <div class="detail-like--title">Likes</div>
+                                    <div class="detail-like--line"></div>
+                                </div>
+                                <div class="detail-like-content">
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Sát thủ đa tình</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow hide">Follow</div>
+                                            <div class="btn-unfollow ">Unfollow</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Tối thứ 7</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow hide">Follow</div>
+                                            <div class="btn-unfollow">Unfollow</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Tối chủ nhật</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow">Follow</div>
+                                            <div class="btn-unfollow hide">Unfollow</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Tối chủ nhật</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow">Follow</div>
+                                            <div class="btn-unfollow hide">Unfollow</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Tối chủ nhật</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow">Follow</div>
+                                            <div class="btn-unfollow hide">Unfollow</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Tối chủ nhật</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow">Follow</div>
+                                            <div class="btn-unfollow hide">Unfollow</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Tối chủ nhật</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow">Follow</div>
+                                            <div class="btn-unfollow hide">Unfollow</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Tối chủ nhật</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow">Follow</div>
+                                            <div class="btn-unfollow hide">Unfollow</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Tối chủ nhật</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow">Follow</div>
+                                            <div class="btn-unfollow hide">Unfollow</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <div class="person-avt"></div>
+                                            <div class="person-name">
+                                                <div class="person-username">giu_giot_le_sau</div>
+                                                <div class="person-fullname">Tối chủ nhật</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow">Follow</div>
+                                            <div class="btn-unfollow hide">Unfollow</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </thread-detail-like>
+                            <div class="detail-header-wrapper">
+                                <div class="detail-header-author">
+                                    <div class="wrapper-avt detail">
+                                        <div class="avt-author"></div>
+                                    </div>
+                                    <div class="wrapper-author">
+                                        <div class="info-author">
+                                            <a href="" class="username-author">giu_giot_le_sau</a>
+                                            <span class="time">13 giờ</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="option-icon">
+                                    <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
+                                        <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
+                                             class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
+                                             style="fill: #777777; --height: 20px; --width: 20px;">
+                                            <title>Xem thêm</title>
+                                            <circle cx="12" cy="12" r="1.5"></circle>
+                                            <circle cx="6" cy="12" r="1.5"></circle>
+                                            <circle cx="18" cy="12" r="1.5"></circle>
+                                        </svg>
+                                    </icon>
+                                </div>
+                            </div>
+                            <div class="detail-caption">
+                                <div class="view-detail-post">
+                                    <div class="caption detail">Tôi muốn cưới vợ</div>
+                                    <div class="post-pics-frame detail">
+                                        <div class="post-pics"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail-react">
+                                <div class="react-wrapper">
+                                    <div class="wrapper-react-num">
+                                        <div class="heart">
+                                            <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
+                                                 style="--fill: transparent; --height: 19px; --width: 20px;">
+                                                <title>Thích</title>
+                                                <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <div class="num-like detail-like detail">555</div>
+                                    </div>
+                                    <div class="wrapper-react-num">
+                                        <div class="re-post">
+                                            <svg width="20" height="19" aria-label="Đăng lại" role="img" viewBox="0 0 24 24"
+                                                 style="--fill: currentColor; --height: 20px; --width: 20px; stroke-width: 1;">
+                                                <title>Đăng lại</title>
+                                                <path d="M19.998 9.497a1 1 0 0 0-1 1v4.228a3.274 3.274 0 0 1-3.27 3.27h-5.313l1.791-1.787a1 1 0 0 0-1.412-1.416L7.29 18.287a1.004 1.004 0 0 0-.294.707v.001c0 .023.012.042.013.065a.923.923 0 0 0 .281.643l3.502 3.504a1 1 0 0 0 1.414-1.414l-1.797-1.798h5.318a5.276 5.276 0 0 0 5.27-5.27v-4.228a1 1 0 0 0-1-1Zm-6.41-3.496-1.795 1.795a1 1 0 1 0 1.414 1.414l3.5-3.5a1.003 1.003 0 0 0 0-1.417l-3.5-3.5a1 1 0 0 0-1.414 1.414l1.794 1.794H8.27A5.277 5.277 0 0 0 3 9.271V13.5a1 1 0 0 0 2 0V9.271a3.275 3.275 0 0 1 3.271-3.27Z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <div class="num-share detail-share detail">555</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail-separate-line"></div>
+                            <div class="comment-box"></div>
+                     </thread-detail>
+                </div>
+            <!--thread upload detail-->
+
+            <!--thread upload-->
+            <div class="post-wrapper">
+                <div class="wrapper-avt">
+                    <div class="avt-author"></div>
+                </div>
+                <div class="wrapper-author">
+                    <div class="info-author">
+                        <a href="" class="username-author">giu_giot_le_sau</a>
+                        <span class="time">13 giờ</span>
+                    </div>
+                    <div class="view-detail-post">
+                        <div class="caption link-detail">Về nhà, thấy bạn bên đời đã đợi bên bàn</div>
                         <div class="post-pics-frame">
                             <div class="post-pics"></div>
                         </div>
+                    </div>
+                    <div class="react-wrapper">
+                        <div class="wrapper-react-num">
+                            <div class="heart">
+                                <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
+                                     style="--fill: transparent; --height: 19px; --width: 20px;">
+                                    <title>Thích</title>
+                                    <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="num-like detail-like">555</div>
+                        </div>
+                        <div class="wrapper-react-num">
+
+                            <div class="comment">
+                                <svg width="20" height="19" aria-label="Trả lời" role="img" viewBox="0 0 24 24"
+                                     style="--fill: currentColor; --height: 20px; --width: 20px;">
+                                    <title>Trả lời</title>
+                                    <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"></path>
+                                </svg>
+                            </div>
+                            <div class="num-comment detail-comment">555</div>
+                        </div>
+                        <div class="wrapper-react-num">
+                            <div class="re-post">
+                                <svg width="20" height="19" aria-label="Đăng lại" role="img" viewBox="0 0 24 24"
+                                     style="--fill: currentColor; --height: 20px; --width: 20px; stroke-width: 1.2;">
+                                    <title>Đăng lại</title>
+                                    <path d="M19.998 9.497a1 1 0 0 0-1 1v4.228a3.274 3.274 0 0 1-3.27 3.27h-5.313l1.791-1.787a1 1 0 0 0-1.412-1.416L7.29 18.287a1.004 1.004 0 0 0-.294.707v.001c0 .023.012.042.013.065a.923.923 0 0 0 .281.643l3.502 3.504a1 1 0 0 0 1.414-1.414l-1.797-1.798h5.318a5.276 5.276 0 0 0 5.27-5.27v-4.228a1 1 0 0 0-1-1Zm-6.41-3.496-1.795 1.795a1 1 0 1 0 1.414 1.414l3.5-3.5a1.003 1.003 0 0 0 0-1.417l-3.5-3.5a1 1 0 0 0-1.414 1.414l1.794 1.794H8.27A5.277 5.277 0 0 0 3 9.271V13.5a1 1 0 0 0 2 0V9.271a3.275 3.275 0 0 1 3.271-3.27Z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="num-share detail-share">555</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="option-icon">
+                    <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
+                        <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
+                             class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
+                             style="fill: #777777; --height: 20px; --width: 20px;">
+                            <title>Xem thêm</title>
+                            <circle cx="12" cy="12" r="1.5"></circle>
+                            <circle cx="6" cy="12" r="1.5"></circle>
+                            <circle cx="18" cy="12" r="1.5"></circle>
+                        </svg>
+                    </icon>
+                </div>
+            </div>
+            <div class="separate-post">
+            </div>
+            <!--thread upload-->
+        </thread-up>
+        
+        <!--Thread 2-->
+        <thread-up data-custom-class="custom-thread-detail">
+            <!--thread upload detail-->
+            <div class="detail-post hide">
+                <thread-detail data-custom-class="custom-thread-detail-like">
+                    <thread-detail-like class="wrapper-detail-like-box hidden">
+                        <div class="detail-like-box ">
+                            <div class="detail-like-header">
+                                <div class="detail-like--title">Likes</div>
+                                <div class="detail-like--line"></div>
+                            </div>
+                            <div class="detail-like-content">
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Sát thủ đa tình</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow hide">Follow</div>
+                                        <div class="btn-unfollow ">Unfollow</div>
+                                    </div>
+                                </div>
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Tối thứ 7</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow hide">Follow</div>
+                                        <div class="btn-unfollow">Unfollow</div>
+                                    </div>
+                                </div>
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Tối chủ nhật</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow">Follow</div>
+                                        <div class="btn-unfollow hide">Unfollow</div>
+                                    </div>
+                                </div>
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Tối chủ nhật</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow">Follow</div>
+                                        <div class="btn-unfollow hide">Unfollow</div>
+                                    </div>
+                                </div>
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Tối chủ nhật</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow">Follow</div>
+                                        <div class="btn-unfollow hide">Unfollow</div>
+                                    </div>
+                                </div>
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Tối chủ nhật</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow">Follow</div>
+                                        <div class="btn-unfollow hide">Unfollow</div>
+                                    </div>
+                                </div>
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Tối chủ nhật</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow">Follow</div>
+                                        <div class="btn-unfollow hide">Unfollow</div>
+                                    </div>
+                                </div>
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Tối chủ nhật</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow">Follow</div>
+                                        <div class="btn-unfollow hide">Unfollow</div>
+                                    </div>
+                                </div>
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Tối chủ nhật</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow">Follow</div>
+                                        <div class="btn-unfollow hide">Unfollow</div>
+                                    </div>
+                                </div>
+                                <div class="detail-like-person">
+                                    <div class="person-info">
+                                        <div class="person-avt"></div>
+                                        <div class="person-name">
+                                            <div class="person-username">giu_giot_le_sau</div>
+                                            <div class="person-fullname">Tối chủ nhật</div>
+                                        </div>
+                                    </div>
+                                    <div class="person-follow-status">
+                                        <div class="btn-follow">Follow</div>
+                                        <div class="btn-unfollow hide">Unfollow</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </thread-detail-like>
+                    <div class="detail-header-wrapper">
+                        <div class="detail-header-author">
+                            <div class="wrapper-avt detail">
+                                <div class="avt-author"></div>
+                            </div>
+                            <div class="wrapper-author">
+                                <div class="info-author">
+                                    <a href="" class="username-author">giu_giot_le_sau</a>
+                                    <span class="time">3 ngày</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="option-icon">
+                            <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
+                                <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
+                                     class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
+                                     style="fill: #777777; --height: 20px; --width: 20px;">
+                                    <title>Xem thêm</title>
+                                    <circle cx="12" cy="12" r="1.5"></circle>
+                                    <circle cx="6" cy="12" r="1.5"></circle>
+                                    <circle cx="18" cy="12" r="1.5"></circle>
+                                </svg>
+                            </icon>
+                        </div>
+                    </div>
+                    <div class="detail-caption">
+                        <div class="view-detail-post">
+                            <div class="caption detail">Tôi muốn cưới vợ</div>
+                            <div class="post-pics-frame detail">
+                                <div class="post-pics" style="background-image: url('../../pics/profile/3some.jpg')"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-react">
                         <div class="react-wrapper">
                             <div class="wrapper-react-num">
                                 <div class="heart">
@@ -67,85 +534,104 @@
                                         </path>
                                     </svg>
                                 </div>
-                                <span class="num-like">555</span>
-                            </div>
-                            <div class="wrapper-react-num">
-
-                                <div class="comment">
-                                    <svg width="20" height="19" aria-label="Trả lời" role="img" viewBox="0 0 24 24"
-                                         style="--fill: currentColor; --height: 20px; --width: 20px;">
-                                        <title>Trả lời</title>
-                                        <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"></path>
-                                    </svg>
-                                </div>
-                                <span class="num-comment">555</span>
+                                <div class="num-like detail-like detail">555</div>
                             </div>
                             <div class="wrapper-react-num">
                                 <div class="re-post">
                                     <svg width="20" height="19" aria-label="Đăng lại" role="img" viewBox="0 0 24 24"
-                                         style="--fill: currentColor; --height: 20px; --width: 20px; stroke-width: 1.2;">
+                                         style="--fill: currentColor; --height: 20px; --width: 20px; stroke-width: 1;">
                                         <title>Đăng lại</title>
                                         <path d="M19.998 9.497a1 1 0 0 0-1 1v4.228a3.274 3.274 0 0 1-3.27 3.27h-5.313l1.791-1.787a1 1 0 0 0-1.412-1.416L7.29 18.287a1.004 1.004 0 0 0-.294.707v.001c0 .023.012.042.013.065a.923.923 0 0 0 .281.643l3.502 3.504a1 1 0 0 0 1.414-1.414l-1.797-1.798h5.318a5.276 5.276 0 0 0 5.27-5.27v-4.228a1 1 0 0 0-1-1Zm-6.41-3.496-1.795 1.795a1 1 0 1 0 1.414 1.414l3.5-3.5a1.003 1.003 0 0 0 0-1.417l-3.5-3.5a1 1 0 0 0-1.414 1.414l1.794 1.794H8.27A5.277 5.277 0 0 0 3 9.271V13.5a1 1 0 0 0 2 0V9.271a3.275 3.275 0 0 1 3.271-3.27Z">
                                         </path>
                                     </svg>
                                 </div>
-                                <span class="num-share">555</span>
+                                <div class="num-share detail-share detail">555</div>
                             </div>
                         </div>
                     </div>
-                    <div class="option-icon">
-                        <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
-                            <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
-                                 class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
-                                 style="fill: #777777; --height: 20px; --width: 20px;">
-                                <title>Xem thêm</title>
-                                <circle cx="12" cy="12" r="1.5"></circle>
-                                <circle cx="6" cy="12" r="1.5"></circle>
-                                <circle cx="18" cy="12" r="1.5"></circle>
-                            </svg>
-                        </icon>
+                    <div class="detail-separate-line"></div>
+                    <div class="comment-box"></div>
+                </thread-detail>
+            </div>
+            <!--thread upload detail-->
+            <!--thread upload-->
+            <div class="post-wrapper">
+                <div class="wrapper-avt">
+                    <div class="avt-author"></div>
+                </div>
+                <div class="wrapper-author">
+                    <div class="info-author">
+                        <a href="" class="username-author">giu_giot_le_sau</a>
+                        <span class="time">3 ngày</span>
+                    </div>
+                    <div class="view-detail-post">
+                        <div class="caption link-detail">Tôi muốn cưới vợ</div>
+                        <div class="post-pics-frame">
+                            <div class="post-pics" style="background-image: url('../../pics/profile/3some.jpg')"></div>
+                        </div>
+                    </div>
+                    <div class="react-wrapper">
+                        <div class="wrapper-react-num">
+                            <div class="heart">
+                                <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
+                                     style="--fill: transparent; --height: 19px; --width: 20px;">
+                                    <title>Thích</title>
+                                    <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="num-like detail-like">555</div>
+                        </div>
+                        <div class="wrapper-react-num">
+
+                            <div class="comment">
+                                <svg width="20" height="19" aria-label="Trả lời" role="img" viewBox="0 0 24 24"
+                                     style="--fill: currentColor; --height: 20px; --width: 20px;">
+                                    <title>Trả lời</title>
+                                    <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"></path>
+                                </svg>
+                            </div>
+                            <div class="num-comment detail-comment">555</div>
+                        </div>
+                        <div class="wrapper-react-num">
+                            <div class="re-post">
+                                <svg width="20" height="19" aria-label="Đăng lại" role="img" viewBox="0 0 24 24"
+                                     style="--fill: currentColor; --height: 20px; --width: 20px; stroke-width: 1.2;">
+                                    <title>Đăng lại</title>
+                                    <path d="M19.998 9.497a1 1 0 0 0-1 1v4.228a3.274 3.274 0 0 1-3.27 3.27h-5.313l1.791-1.787a1 1 0 0 0-1.412-1.416L7.29 18.287a1.004 1.004 0 0 0-.294.707v.001c0 .023.012.042.013.065a.923.923 0 0 0 .281.643l3.502 3.504a1 1 0 0 0 1.414-1.414l-1.797-1.798h5.318a5.276 5.276 0 0 0 5.27-5.27v-4.228a1 1 0 0 0-1-1Zm-6.41-3.496-1.795 1.795a1 1 0 1 0 1.414 1.414l3.5-3.5a1.003 1.003 0 0 0 0-1.417l-3.5-3.5a1 1 0 0 0-1.414 1.414l1.794 1.794H8.27A5.277 5.277 0 0 0 3 9.271V13.5a1 1 0 0 0 2 0V9.271a3.275 3.275 0 0 1 3.271-3.27Z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="num-share detail-share">555</div>
+                        </div>
                     </div>
                 </div>
-                <div class="separate-post">
+                <div class="option-icon">
+                    <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
+                        <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
+                             class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
+                             style="fill: #777777; --height: 20px; --width: 20px;">
+                            <title>Xem thêm</title>
+                            <circle cx="12" cy="12" r="1.5"></circle>
+                            <circle cx="6" cy="12" r="1.5"></circle>
+                            <circle cx="18" cy="12" r="1.5"></circle>
+                        </svg>
+                    </icon>
                 </div>
-            </thread-up>
-        </div>
+            </div>
+            <div class="separate-post">
+            </div>
+            <!--thread upload-->
+        </thread-up>
+
     </div>
 
     <div class="overlay hide">
-        <div class="option-box hide">
-            <div class="new-avt">Upload new avatar</div>
-            <div class="divider"></div>
-            <div class="delete-avt">Delete avatar</div>
-        </div>
-        <div class="edit-info-box">
-            <form action="">
-                <div class="row">
-                    <div class="label">Fullname</div>
-                    <input class="info username" value="Tối thứ 6"></input>
-                </div>
-                <div class="seperate-line"></div>
-                <div class="row">
-                    <div class="label">Username</div>
-                    <input class="info fullname" value="tra_____dao"></input>
-                </div>
-                <div class="seperate-line"></div>
-                <div class="row">
-                    <div class="label">Biography</div>
-                    <input class="info story" value="ghét rán cá, thích uống rịu 🍶"></input>
-                </div>
-                <div class="seperate-line"></div>
-                <div class="row-private">
-                    <div class="label">Private account</div>
-                    <div class="btn-private">
-                        <div class="btn-ball"></div>
-                    </div>
-                </div>
-                <div class="btn-edit-info">Xong</div>
-            </form>
-        </div>
-    </div>
-</body>
-<script src="~/js/profile/profile.js"></script>
 
-</html>
+
+        
+    </div>
+    <div class="sub-overlay hide">
+        
+    </div>
+</div>
