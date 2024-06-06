@@ -2,17 +2,69 @@
 const up = document.querySelector(".tab-left");
 const share = document.querySelector(".tab-right");
 const line = document.querySelector(".selected-line");
-const overlay = document.querySelector(".overlay");
-const subOverlay = document.querySelector(".sub-overlay");
-const optionBox = document.querySelector(".option-box");
-const newAvt = document.querySelector(".new-avt");
-const deleteAvt = document.querySelector(".delete-avt");
-const btnEdit = document.querySelector(".btn-edit");
-const editBox = document.querySelector(".edit-info-box");
-const viewDetailPost = document.querySelector(".view-detail-post");
-const detailPost = document.querySelector(".detail-post");
-const detailLikeBox = document.querySelector(".detail-like-box");
 
+
+
+//Get coordinates
+(function () {
+    var currentScrollObj = JSON.parse(localStorage.getItem('currentScroll'));
+    if (currentScrollObj) {
+        window.scrollTo({
+            top: currentScrollObj.scrollY,
+            left: currentScrollObj.scrollX,
+            behavior: "instant"
+        });
+        setTimeout(function () {
+            localStorage.removeItem('currentScroll');
+        }, 100);
+    }
+})();
+
+//Thread-up
+class threadUp extends PopupBase {
+    constructor() {
+        super();
+        this.saveScroll();
+    }
+
+    saveScroll() {
+        var _this = this;
+        let aLink = _this.querySelector('.link-detail');
+        aLink.addEventListener('click', function () {
+            console.log(aLink)
+            let scrollX = window.pageXOffset;
+            let scrollY = window.pageYOffset;
+            let currentScroll = {
+                scrollX,
+                scrollY
+            }
+            console.log(currentScroll);
+            setTimeout(() => {
+                // Chuyển hướng đến href của thẻ <a>
+                window.location.href = e.target.href;
+            }, 100);
+            localStorage.setItem('currentScroll', JSON.stringify(currentScroll));
+        })
+    }
+}
+customElements.define('thread-up', threadUp);
+
+//Scroll coordinates
+//let linkDetail = document.querySelector('.link-detail');
+//linkDetail.addEventListener('click', function (e) {
+//    let scrollX = window.pageXOffset;
+//    let scrollY = window.pageYOffset;
+//    let currentScroll = {
+//        scrollX,
+//        scrollY
+//    }
+//    console.log(currentScroll);
+//    setTimeout(() => {
+//        // Chuyển hướng đến href của thẻ <a>
+//        window.location.href = e.target.href;
+//    }, 100);
+//    localStorage.setItem('currentScroll', JSON.stringify(currentScroll));
+//})
 
 up.addEventListener("click", function () {
     if (!up.classList.contains("selected")) {
@@ -31,80 +83,6 @@ share.addEventListener("click", function () {
         line.style.width = this.offsetWidth + "px";
     }
 });
-
-
-
-//detailLikeNum.addEventListener("click", function (e) {
-//    subOverlay.classList.remove("hide");
-//    detailLikeBox.classList.remove("hide");
-//    // page.style.height = "100vh";
-//    page.style.overflow = "hidden";
-//});
-
-// Close overlay
-//overlay.addEventListener("click", function () {
-//    overlay.classList.add("hide");
-//    optionBox.classList.add("hide");
-//    editBox.classList.add("hide");
-//    detailPost.classList.add("hide");
-//    page.style.height = "";
-//    page.style.overflow = "";
-//});
-
-//subOverlay.addEventListener("click", function () {
-//    subOverlay.classList.add("hide");
-//    detailLikeBox.classList.add("hide");
-//    page.style.height = "";
-//    page.style.overflow = "";
-//});
-
-// Stop propagation
-//newAvt.addEventListener("click", function (event) {
-//    event.stopPropagation();
-//});
-
-//deleteAvt.addEventListener("click", function (event) {
-//    event.stopPropagation();
-//});
-
-//editBox.addEventListener("click", function (event) {
-//    event.stopPropagation();
-//});
-
-//detailPost.addEventListener("click", function (event) {
-//    event.stopPropagation();
-//});
-
-//detailLikeBox.addEventListener("click", function (event) {
-//    event.stopPropagation();
-//});
-
-//detailLikeBox.addEventListener("scroll", function () {
-//    if (detailLikeBox.scrollHeight > detailLikeBox.clientHeight) {
-//        container.style.overflow = "hidden";
-//    } else {
-//        container.style.overflow = "auto";
-//    }
-//});
-
-
-
-//View Detail Post
-class threadUp extends PopupBase {
-    constructor() {
-        super();
-        this.init();
-    }
-
-    init() {
-        var _this = this;
-        var caption = _this.querySelector('.caption.link-detail');
-        caption.addEventListener('click', function () {
-            _this.initPopup(_this.querySelector('.detail-post').innerHTML);
-        })
-    }
-}
-customElements.define('thread-up', threadUp);
 
 //Edit Info Box
 class editInfoBox extends PopupBase {
@@ -165,19 +143,4 @@ class btnPrivateStatus extends PopupBase {
 }
 customElements.define('btn-private', btnPrivateStatus);
 
-//Like-detail-box
-class threadDetail extends PopupBase {
-    constructor() {
-        super();
-        this.init();
-    }
 
-    init() {
-        var _this = this;
-        var numLike = _this.querySelector('.num-like.detail-like.detail');
-        numLike.addEventListener('click', function () {
-            _this.initPopup(_this.querySelector('thread-detail-like .detail-like-box').innerHTML);
-        })
-    }
-}
-customElements.define('thread-detail', threadDetail);
