@@ -764,5 +764,55 @@ thread-up {
         scale: 1.05;
     }
 
-/* Detail comment */
+/* Comment box */
+.comment-author {
+    display: flex;
+}
 
+.author-comment-avt {
+    width: 40px;
+    height: 40px;
+    background-image: url("../../pics/profile/choi can choi co choi ke.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+}
+
+.comment-wrapper {
+    margin-top: 24px;
+}
+
+.author-comment-header {
+    display: flex;
+    align-content: center;
+}
+
+.author-comment-header .author-name,
+.author-comment-header .author-comment-time {
+    font-size: 1.4rem;
+}
+
+.author-comment-header .author-name {
+    color: var(--text-color);
+    margin-right: 8px;
+}
+
+.author-comment-header .author-comment-time {
+    color: var(--sub-text-color);
+}
+
+.author-comment-content {
+    margin-left: 12px;
+}
+
+.author-comment-body {
+    margin-top: 4px;
+}
+
+.comment-content {
+    color: var(--text-color);
+}
+
+.react-wrapper.author-comment-react {
+    margin-top: 8px;
+}
