@@ -342,7 +342,7 @@ html {
 thread-up {
     width: 100%;
     display: block;
-    padding: 20px 32px;
+    padding: 20px;
     position: relative;
 }
 
@@ -408,10 +408,11 @@ thread-up {
 }
 
 .post-pics {
-    background-image: url('../../pics/profile/396903095_236683649428912_7065068823687155026_n.jpg');
     background-size: contain;
     background-repeat: no-repeat;
-    padding: 50%;
+    width: 500px;
+    height: auto;
+    border-radius: 15px;
 }
 
 .react-wrapper {
@@ -598,7 +599,7 @@ thread-up {
     background-color: var(--third-color);
     border-radius: 15px;
     border: 1px solid var(--border-color);
-    padding-top: 18px;
+/*    padding-top: 18px;*/
     cursor: default;
     width: 100%;
     overflow: hidden;
@@ -815,4 +816,29 @@ thread-up {
 
 .react-wrapper.author-comment-react {
     margin-top: 8px;
+}
+
+.comment-picture {
+    width: 300px;
+    height: auto;
+    background-size: contain;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    margin-top: 8px;
+}
+
+/*Comment detail like box*/
+.comment-detail-like-box .tingle-modal__close {
+    display: none;
+}
+
+.comment-detail-like-box .tingle-modal-box__content {
+    padding: 0;
+    overflow: hidden;
+}
+
+.comment-detail-like-box .tingle-modal-box {
+    width: 500px;
+    border-radius: 20px;
+    border: none;
 }
