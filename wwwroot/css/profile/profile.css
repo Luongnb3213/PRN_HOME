@@ -814,6 +814,10 @@ thread-up {
     color: var(--text-color);
 }
 
+.react-wrapper.author-comment-react.more-reply {
+    margin: 8px 0 40px 0;
+}
+
 .react-wrapper.author-comment-react {
     margin-top: 8px;
 }
@@ -827,6 +831,9 @@ thread-up {
     margin-top: 8px;
 }
 
+.author-comment-footer {
+/*    position: relative;*/
+}
 /*Comment detail like box*/
 .comment-detail-like-box .tingle-modal__close {
     display: none;
@@ -842,3 +849,22 @@ thread-up {
     border-radius: 20px;
     border: none;
 }
+
+/*View reply btn*/
+.view-reply {
+    font-size: 1.2rem;
+    color: var(--sub-text-color);
+    cursor: pointer;
+    position: absolute;
+    bottom: 16px;
+    left: 160px;
+}
+
+.view-reply:hover {
+    opacity: 0.8;
+}
+
+/*
+    .author-comment-react them more-reply + bo hidden viewmore
+*/
+

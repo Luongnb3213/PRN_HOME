@@ -1,5 +1,5 @@
 ﻿//Comment-detail-like
-class commentBox extends PopupBase {
+class commentAuthor extends PopupBase {
     constructor() {
         super();
         this.init();
@@ -13,7 +13,7 @@ class commentBox extends PopupBase {
         })
     }
 }
-customElements.define('comment-box', commentBox)
+customElements.define('comment-author', commentAuthor)
 
 
 //Like-detail-box
