@@ -138,6 +138,7 @@ html {
     padding: 24px;
     border: 1px solid var(--border-color);
     position: relative;
+    margin-bottom: 50px;
 }
 
 /* Profile */
@@ -925,4 +926,43 @@ thread-up {
 
 .link-to-reply:hover {
     text-decoration: underline;
+}
+
+/* Write comment box*/
+.write-comment-wrapper {
+    width: 640px;
+    background-color: var(--secondary-color);
+    padding: 24px;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.write-comment-account-avt {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.write-comment-account,
+.write-comment-btn-submit {
+    flex: 1
+}
+
+.write-comment-box-wrapper {
+    flex: 10
+}
+
+.write-comment-box-content {
+    margin-left: 12px;
+    outline: none;
+    font-size: 1.4rem
 }
