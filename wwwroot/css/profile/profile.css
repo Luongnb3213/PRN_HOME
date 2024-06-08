@@ -358,14 +358,17 @@ thread-up {
 .avt-author {
     width: 48px;
     height: 48px;
-    background-image: url('../../pics/profile/shh.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     border-radius: 50%;
+    flex-shrink: 0;
+    cursor: pointer;
+    object-fit: cover;
 }
 
 .wrapper-author {
-    flex: 6;
+    margin-left: 12px;
+    flex: 8;
 }
 
 .info-author {
@@ -413,6 +416,7 @@ thread-up {
     width: 500px;
     height: auto;
     border-radius: 15px;
+    cursor: pointer;
 }
 
 .react-wrapper {
@@ -457,7 +461,7 @@ thread-up {
 
 .option-icon svg {
     border-radius: 50%;
-    scale: 1.1;
+/*    scale: 1.1;*/
     cursor: pointer;
 }
 
@@ -475,13 +479,13 @@ thread-up {
 .comment,
 .re-post {
     transition: scale .1s ease;
-    scale: 1;
+/*    scale: 1;*/
 }
 
     .heart:hover,
-    .comment:hover,
+    .comment.comment-of-post:hover,
     .re-post:hover {
-        scale: 1.2;
+/*        scale: 1.2;*/
     }
 
 /* Detail post */
@@ -577,8 +581,9 @@ thread-up {
     height: 1px;
     background-color: var(--border-color);
     position: absolute;
-    right: 0;
-    left: 0;
+    right: -24px;
+    left: -24px;
+    bottom: 0;
 }
 
 .caption.detail {
@@ -692,7 +697,6 @@ thread-up {
 }
 
 .person-avt {
-    background-image: url('../../pics/profile/shh.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     width: 44px;
@@ -768,24 +772,45 @@ thread-up {
 /* Comment box */
 .comment-author {
     display: flex;
+    position: relative;
+}
+
+.comment-right-wrapper {
+    flex: 1;
+}
+
+.comment-left-wrapper {
+    flex: 100;
+    display: flex;
 }
 
 .author-comment-avt {
     width: 40px;
     height: 40px;
-    background-image: url("../../pics/profile/choi can choi co choi ke.jpg");
     background-size: contain;
     background-repeat: no-repeat;
     border-radius: 50%;
+    flex-shrink: 0;
+    cursor: pointer;
+    object-fit: cover;
 }
 
 .comment-wrapper {
-    margin-top: 24px;
+    margin-top: 18px;
+    position: relative;
 }
 
 .author-comment-header {
     display: flex;
     align-content: center;
+}
+
+.author-name:hover {
+    text-decoration: underline;
+}
+
+.author-name {
+    text-decoration: none;
 }
 
 .author-comment-header .author-name,
@@ -851,20 +876,53 @@ thread-up {
 }
 
 /*View reply btn*/
+.hide-reply,
 .view-reply {
     font-size: 1.2rem;
     color: var(--sub-text-color);
     cursor: pointer;
+}
+
+.hide-reply:hover,
+.view-reply:hover {
+    opacity: 0.7;
+}
+
+.view-reply-line {
+    width: 80px;
+    height: 2px;
+    background-color: var(--border-color);
+    position: relative;
+    margin-right: 12px;
+}
+
+.view-reply-wrapper {
+    display: flex;
+    align-items: center;
     position: absolute;
     bottom: 16px;
-    left: 160px;
+    left: 120px;
 }
-
-.view-reply:hover {
-    opacity: 0.8;
-}
-
 /*
-    .author-comment-react them more-reply + bo hidden viewmore
+    để show cái more comment thì phải thêm class more-reply vào author-comment-react để nó spacing, đồng thời bỏ hidden cả cái dòng thông báo và cả cái line
 */
+.detail-post-wrapper {
+    position: relative;
+    padding-bottom: 4px;
+}
 
+/* Reply */
+.comment-reply {
+    padding-left: 52px;
+}
+
+.link-to-reply {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.link-to-reply:hover {
+    text-decoration: underline;
+}
