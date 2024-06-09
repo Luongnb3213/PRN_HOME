@@ -395,7 +395,9 @@ thread-up {
 }
 
 .caption {
-    margin-top: 10px;
+    display: inline-block;
+    margin-top: 4px;
+    margin-bottom: 4px;
     color: var(--text-color);
     font-size: 1.4rem;
     text-decoration: none;
@@ -407,7 +409,7 @@ thread-up {
     }
 
 .post-pics-frame {
-    margin-top: 10px;
+    margin-top: 4px;
     border-radius: 10px;
 }
 
@@ -950,9 +952,11 @@ thread-up {
     background-size: contain;
     object-fit: cover;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .write-comment-account,
+.write-comment-btn-emoji,
 .write-comment-btn-submit {
     flex: 1
 }
@@ -962,7 +966,35 @@ thread-up {
 }
 
 .write-comment-box-content {
-    margin-left: 12px;
+/*    margin-left: 12px;*/
     outline: none;
-    font-size: 1.4rem
+    font-size: 1.4rem !important;
+    color: var(--text-color) !important;
+    background-color: var(--primary-color) !important;
+    border: 1px solid var(--border-color) !important;
+    width: 100%;
+}
+
+.write-comment-btn-submit,
+.write-comment-btn-emoji {
+    text-align: center;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.6rem;
+}
+
+.write-comment-btn-emoji:hover,
+.write-comment-btn-submit:hover {
+    opacity: .8;
+}
+
+.write-comment-box-content::placeholder {
+    color: var(--sub-text-color);
+    font-style: normal;
+}
+
+/*Share*/
+.share-box {
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
 }
