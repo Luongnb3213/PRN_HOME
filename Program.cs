@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PRN221_Assignment.Respository;
 using System.Text;
 
 namespace PRN221_Assignment
@@ -10,6 +12,8 @@ namespace PRN221_Assignment
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<DataContext>(options =>
+              options.UseSqlServer(builder.Configuration.GetConnectionString("DB") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
             var jwtOptions = builder.Configuration.GetSection("JwtOptions");
             var key = Encoding.ASCII.GetBytes(jwtOptions["SigningKey"]);
             builder.Services.AddAuthentication(options =>
