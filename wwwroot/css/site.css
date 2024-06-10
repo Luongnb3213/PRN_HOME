@@ -101,3 +101,7 @@ thread-main {
 .heart:active, .comment:active, .re-post:active{
    transform : scale(0.5);
 }
+
+.icon-header.new-noti {
+
+}
