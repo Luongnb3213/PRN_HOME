@@ -63,3 +63,27 @@
     text-decoration: none;
 }
 
+.type-noti {
+    width: 200px;
+    text-align: center;
+    margin: 24px auto;
+}
+
+.list-type {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.6rem;
+    display: flex;
+    text-align: center;
+}
+
+.list-type li a {
+    color: var(--sub-text-color);
+    text-decoration: none;
+    margin-right: 16px
+}
+
+.option-noti.selected a {
+    color: var(--text-color) !important;
+}

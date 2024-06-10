@@ -1,0 +1,105 @@
+﻿:root {
+    --primary-color: #0A0A0A;
+    --secondary-color: #181818;
+    --third-color: #101010;
+    --hover-react-color: #1E1E1E;
+    --text-color: #F1F1F1;
+    --sub-text-color: #717171;
+    --border-color: #3a3a3a;
+    --red-text: #FF3040;
+    --scroll-track: #424242;
+    --scroll-thumb: #7B7B7B;
+}
+
+.request-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.request-avt {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-size: contain;
+    object-fit: cover;
+}
+
+.request-avt-wrapper {
+    flex: 1;
+}
+
+.request-content-wrapper {
+    margin-left: 12px;
+    flex: 5;
+}
+
+.request-content-body {
+    color: var(--text-color);
+    font-size: 1.4rem;
+}
+
+.request-content-header {
+    display: flex;
+    align-content: center;
+}
+
+.request-person-name {
+    color: var(--text-color);
+}
+
+.request-time {
+    margin-left: 12px;
+    color: var(--sub-text-color);
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+.a-link-request {
+    text-decoration: none;
+    display: inline-block;
+    flex: 4;
+}
+
+.request-wrapper-all {
+    display: flex;
+}
+
+.btn-accept-wrapper {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-decline-request,
+.btn-accept-request {
+    background-color: red;
+    width: 100px;
+    height: 32px;
+    margin-left: 12px;
+    text-align: center;
+    border-radius: 15px;
+    line-height: 32px;
+    font-size: 1.4rem;
+}
+
+.btn-decline-request {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-accept-request {
+    background-color: var(--text-color);
+    color: var(--primary-color);
+}
+
+.btn-decline-request:hover,
+.btn-accept-request:hover {
+    opacity: .8;
+    cursor: pointer;
+}
