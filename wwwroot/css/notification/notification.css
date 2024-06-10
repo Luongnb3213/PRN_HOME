@@ -1,0 +1,65 @@
+﻿:root {
+    --primary-color: #0A0A0A;
+    --secondary-color: #181818;
+    --third-color: #101010;
+    --hover-react-color: #1E1E1E;
+    --text-color: #F1F1F1;
+    --sub-text-color: #717171;
+    --border-color: #3a3a3a;
+    --red-text: #FF3040;
+    --scroll-track: #424242;
+    --scroll-thumb: #7B7B7B;
+}
+
+.noti-wrapper {
+    display: flex;
+    align-content: center;
+    margin: 12px 0;
+}
+
+.noti-avt {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-size: contain;
+    object-fit: cover;
+}
+
+.noti-avt-wrapper {
+    flex: 1;
+}
+
+.noti-content-wrapper {
+    margin-left: 12px;
+    flex: 11;
+}
+
+.noti-content-body {
+    color: var(--text-color);
+    font-size: 1.4rem;
+}
+
+.noti-content-header {
+    display: flex;
+    align-content: center;
+}
+
+.noti-person-name {
+    color: var(--text-color);
+}
+
+.noti-time {
+    margin-left: 12px;
+    color: var(--sub-text-color);
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+.a-link-noti {
+    text-decoration: none;
+}
+
