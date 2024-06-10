@@ -102,6 +102,6 @@ thread-main {
    transform : scale(0.5);
 }
 
-.icon-header.new-noti {
-
+.icon-header.new-noti svg {
+    fill: #ff3d36;
 }
