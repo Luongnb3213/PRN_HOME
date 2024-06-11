@@ -17,7 +17,7 @@ namespace PRN221_Assignment.Models
         public string Image { get; set; }
        
      
-        public virtual Account Account { get; set; }
+        public virtual Account? Account { get; set; }
 
     }
 }

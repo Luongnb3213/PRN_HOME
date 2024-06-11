@@ -8,6 +8,6 @@ namespace PRN221_Assignment.Models
         public int FollowerId { get; set; }
         public int UserID { get; set; }
 
-        public virtual Account Account { get; set; }
+        public virtual Account? Account { get; set; }
     }
 }

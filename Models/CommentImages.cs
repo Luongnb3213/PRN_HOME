@@ -9,6 +9,6 @@ namespace PRN221_Assignment.Models
 
         public string Media {  get; set; }
 
-        public virtual Comment Comment { get; set; }
+        public virtual Comment? Comment { get; set; }
     }
 }

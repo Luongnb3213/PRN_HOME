@@ -1,14 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace PRN221_Assignment.Models
 {
     public class Thread
     {
+        public Thread() {
+            ThreadImages = new HashSet<ThreadImages>();
+            Comments = new HashSet<Comment>();
+            ThreadComments = new HashSet<ThreadComment>();
+        }
         [Key]
-  
         public int ThreadId { get; set; }
- 
-        public string Content { get; set; }
+
+        public string? Content { get; set; }
      
         public int AuthorId { get; set; }
 
@@ -17,7 +22,7 @@ namespace PRN221_Assignment.Models
 
         public DateTime SubmitDate { get; set; }
 
-        public virtual Account Account { get; set; }
+        public virtual Account? Account { get; set; }
 
         public virtual ICollection<ThreadImages> ThreadImages { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

@@ -7,6 +7,6 @@ namespace PRN221_Assignment.Models
         [Key]
         public int ThreadId { get; set; }
         public string Media { get; set; }
-        public virtual Thread Thread { get; set; }
+        public virtual Thread? Thread { get; set; }
     }
 }

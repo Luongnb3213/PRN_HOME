@@ -44,7 +44,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Block", b =>
@@ -62,7 +62,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Block");
+                    b.ToTable("Block", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Comment", b =>
@@ -90,7 +90,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comment", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.CommentImages", b =>
@@ -104,7 +104,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.ToTable("CommentImages");
+                    b.ToTable("CommentImages", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Conversation", b =>
@@ -125,7 +125,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("ThreadCommentId");
 
-                    b.ToTable("Conversation");
+                    b.ToTable("Conversation", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Follow", b =>
@@ -143,7 +143,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Follow");
+                    b.ToTable("Follow", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Info", b =>
@@ -176,7 +176,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Info");
+                    b.ToTable("Info", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Thread", b =>
@@ -207,7 +207,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Thread");
+                    b.ToTable("Thread", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.ThreadComment", b =>
@@ -230,7 +230,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("ThreadId");
 
-                    b.ToTable("ThreadComment");
+                    b.ToTable("ThreadComment", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.ThreadImages", b =>
@@ -244,7 +244,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasKey("ThreadId");
 
-                    b.ToTable("ThreadImages");
+                    b.ToTable("ThreadImages", (string)null);
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Block", b =>
