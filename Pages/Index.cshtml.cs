@@ -15,7 +15,12 @@ namespace PRN221_Assignment.Pages
         {
             _logger = logger;
         }
+        [BindProperty]
+        public Thread? Thread { get; set; }
+        public void OnPost()
+        {
 
+        }
         public void OnGet()
         {
             //var username = User.Identity;

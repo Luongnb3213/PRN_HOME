@@ -75,6 +75,7 @@ class popupCreate extends PopupBase {
     constructor() {
         super()
         this.init()
+        this.getBtn()
     }
     init() {
         var _this = this
@@ -83,6 +84,7 @@ class popupCreate extends PopupBase {
             _this.initPopup(_this.querySelector(".create_thread").innerHTML)
         })
     }
+
 }
 customElements.define("popup-create", popupCreate)
 class SlideSection extends HTMLElement {

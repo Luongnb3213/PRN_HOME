@@ -49,40 +49,6 @@ class threadUp extends PopupBase {
 }
 customElements.define('thread-up', threadUp);
 
-//Scroll coordinates
-//let linkDetail = document.querySelector('.link-detail');
-//linkDetail.addEventListener('click', function (e) {
-//    let scrollX = window.pageXOffset;
-//    let scrollY = window.pageYOffset;
-//    let currentScroll = {
-//        scrollX,
-//        scrollY
-//    }
-//    console.log(currentScroll);
-//    setTimeout(() => {
-//        // Chuyển hướng đến href của thẻ <a>
-//        window.location.href = e.target.href;
-//    }, 100);
-//    localStorage.setItem('currentScroll', JSON.stringify(currentScroll));
-//})
-
-up.addEventListener("click", function () {
-    if (!up.classList.contains("selected")) {
-        up.classList.add("selected");
-        share.classList.remove("selected");
-        line.style.left = this.offsetLeft + "px";
-        line.style.width = this.offsetWidth + "px";
-    }
-});
-
-share.addEventListener("click", function () {
-    if (!share.classList.contains("selected")) {
-        share.classList.add("selected");
-        up.classList.remove("selected");
-        line.style.left = this.offsetLeft + "px";
-        line.style.width = this.offsetWidth + "px";
-    }
-});
 
 //Edit Info Box
 class editInfoBox extends PopupBase {
