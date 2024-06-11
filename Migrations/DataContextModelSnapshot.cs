@@ -111,8 +111,11 @@ namespace PRN221_Assignment.Migrations
 
             modelBuilder.Entity("PRN221_Assignment.Models.Conversation", b =>
                 {
-                    b.Property<int>("ThreadCommentId")
+                    b.Property<int>("ConversationId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConversationId"), 1L, 1);
 
                     b.Property<int>("BoxCommentId")
                         .HasColumnType("int");
@@ -120,7 +123,12 @@ namespace PRN221_Assignment.Migrations
                     b.Property<int>("CommentId")
                         .HasColumnType("int");
 
-                    b.HasKey("ThreadCommentId");
+                    b.Property<int>("ThreadCommentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ConversationId");
+
+                    b.HasIndex("ThreadCommentId");
 
                     b.ToTable("Conversation");
                 });

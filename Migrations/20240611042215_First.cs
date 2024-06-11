@@ -197,13 +197,15 @@ namespace PRN221_Assignment.Migrations
                 name: "Conversation",
                 columns: table => new
                 {
+                    ConversationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ThreadCommentId = table.Column<int>(type: "int", nullable: false),
                     BoxCommentId = table.Column<int>(type: "int", nullable: false),
                     CommentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Conversation", x => x.ThreadCommentId);
+                    table.PrimaryKey("PK_Conversation", x => x.ConversationId);
                     table.ForeignKey(
                         name: "FK_Conversation_ThreadComment_ThreadCommentId",
                         column: x => x.ThreadCommentId,
@@ -221,6 +223,11 @@ namespace PRN221_Assignment.Migrations
                 name: "IX_Comment_AuthorId",
                 table: "Comment",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Conversation_ThreadCommentId",
+                table: "Conversation",
+                column: "ThreadCommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Follow_UserID",

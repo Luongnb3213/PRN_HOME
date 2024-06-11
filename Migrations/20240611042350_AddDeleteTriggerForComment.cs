@@ -16,7 +16,7 @@ namespace PRN221_Assignment.Migrations
                 BEGIN
                     DELETE FROM ThreadComment WHERE CommentId IN (SELECT CommentId FROM DELETED);
                 END
-            ");
+            "); 
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
