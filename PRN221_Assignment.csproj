@@ -8,6 +8,7 @@
 
   <ItemGroup>    
 	  <Folder Include="Migrations\" />    
+	  <Folder Include="wwwroot\uploadMedia\" />    
 	  <Folder Include="wwwroot\pics\profile\" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.29" />  
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.29" />  

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221_Assignment.Authorization;
+using PRN221_Assignment.Models;
 using System.Security.Claims;
 
 namespace PRN221_Assignment.Pages
@@ -9,17 +10,33 @@ namespace PRN221_Assignment.Pages
       
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly PRN221_Assignment.Respository.DataContext context;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(PRN221_Assignment.Respository.DataContext _context)
         {
-            _logger = logger;
+            context = _context;
+            //Thread = new Models.Thread();
         }
         [BindProperty]
-        public Thread? Thread { get; set; }
-        public void OnPost()
+        public Models.Thread Thread { get; set; }
+        [BindProperty]
+        public ThreadImages ThreadImages { get; set; }
+        public IActionResult OnPost()
         {
+            var listMedia = Request.Form["listMedia"];
+            foreach(var media in listMedia)
+            {
+                //listMedia
+            }
 
+            Thread.AuthorId = 1;
+            Thread.React = 0;
+            Thread.Share = 0;
+            Thread.SubmitDate = DateTime.Now;
+            context.Thread.Add(Thread);
+
+
+            return Page();
         }
         public void OnGet()
         {

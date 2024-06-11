@@ -7,7 +7,7 @@ namespace PRN221_Assignment.Models
     {
         public Thread() {
             ThreadImages = new HashSet<ThreadImages>();
-            Comments = new HashSet<Comment>();
+            Comments = new HashSet<Comment>(); 
             ThreadComments = new HashSet<ThreadComment>();
         }
         [Key]
