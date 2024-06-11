@@ -6,12 +6,8 @@ namespace PRN221_Assignment.Models
     {
         [Key]
         public int ConversationId { get; set; }
-
         public int ThreadCommentId { get; set; }
-        public int BoxCommentId { get; set; }
-
         public int CommentId { get; set; }
         public virtual ThreadComment ThreadComment { get; set; }
-
     }
 }
