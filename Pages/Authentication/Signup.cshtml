@@ -1,5 +1,6 @@
 ﻿@page
 @model PRN221_Assignment.Pages.Authentication.SignupModel
+
 @{
     Layout = null;
 }
@@ -39,26 +40,38 @@
         </div>
         <div class="big-box">
             <div class="title">Explore the world!</div>
-            <form action="">
+            <form method="post">
+
+
                 <div class="row">
-                    <input class="input-field fullname" placeholder="Full Name" />
+                    <input class="input-field fullname" asp-for="Account.Info.Name" value="@Model.Account?.Info?.Name" placeholder="Full Name" />
                     <div class="error">*Something's wrong</div>
                 </div>
                 <div class="row">
-                    <input class="input-field username" placeholder="User Name" />
+                    <input class="input-field email" type="email" value="@Model.Account?.Email" placeholder="Email" asp-for="Account.Email" />
                     <div class="error">*Something's wrong</div>
                 </div>
                 <div class="row">
-                    <input class="input-field dob" placeholder="Birth Date" />
+                    <input class="input-field username" placeholder="User Name" asp-for="Account.Info.userName" value="@Model.Account?.Info?.userName" />
+                    <div class="error">*Something's wrong</div>
+                </div>
+                <div class="row">
+                    <input class="input-field dob" type="date" placeholder="Birth Date" asp-for="Account.Info.Dob" value="@Model.Account?.Info.Dob" />
                     <div class="error hide">*Something's wrong</div>
                 </div>
                 <div class="row">
-                    <input class="input-field password" placeholder="Password" />
+                    <input class="input-field password" type="password" placeholder="Password" asp-for="Account.Password" />
                     <div class="error">*Something's wrong</div>
                 </div>
-                <div class="btn btn-create">
-                    Sign up
+                <div class="row">
+                    <input class="input-field password" type="password" name="confirmPassword" placeholder="Confirm Password" />
+                    <div class="error">*Something's wrong</div>
                 </div>
+
+
+                <button type="submit" class="btn btn-create">
+                    Sign up
+                </button>
             </form>
         </div>
         <div class="small-box">
