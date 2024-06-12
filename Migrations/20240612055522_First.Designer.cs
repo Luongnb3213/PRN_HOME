@@ -12,8 +12,8 @@ using PRN221_Assignment.Respository;
 namespace PRN221_Assignment.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240611042350_AddDeleteTriggerForComment")]
-    partial class AddDeleteTriggerForComment
+    [Migration("20240612055522_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,17 +33,15 @@ namespace PRN221_Assignment.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"), 1L, 1);
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("isActive")
+                    b.Property<bool?>("isActive")
                         .HasColumnType("bit");
 
                     b.HasKey("UserID");
@@ -119,9 +117,6 @@ namespace PRN221_Assignment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConversationId"), 1L, 1);
 
-                    b.Property<int>("BoxCommentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CommentId")
                         .HasColumnType("int");
 
@@ -161,10 +156,6 @@ namespace PRN221_Assignment.Migrations
                     b.Property<DateTime>("Dob")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -198,7 +189,6 @@ namespace PRN221_Assignment.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("React")
@@ -242,14 +232,22 @@ namespace PRN221_Assignment.Migrations
 
             modelBuilder.Entity("PRN221_Assignment.Models.ThreadImages", b =>
                 {
-                    b.Property<int>("ThreadId")
+                    b.Property<int>("ThreadImageId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ThreadImageId"), 1L, 1);
 
                     b.Property<string>("Media")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ThreadId");
+                    b.Property<int>("ThreadId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ThreadImageId");
+
+                    b.HasIndex("ThreadId");
 
                     b.ToTable("ThreadImages");
                 });
@@ -369,8 +367,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.Navigation("Follows");
 
-                    b.Navigation("Info")
-                        .IsRequired();
+                    b.Navigation("Info");
 
                     b.Navigation("Threads");
                 });

@@ -91,6 +91,7 @@ namespace PRN221_Assignment.Respository
       .HasForeignKey(e => e.ThreadCommentId)
       .IsRequired();
 
+
         }
     }
 }

@@ -15,10 +15,10 @@ namespace PRN221_Assignment.Migrations
                 {
                     UserID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,7 +90,6 @@ namespace PRN221_Assignment.Migrations
                 columns: table => new
                 {
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     userName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Story = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -114,7 +113,7 @@ namespace PRN221_Assignment.Migrations
                 {
                     ThreadId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AuthorId = table.Column<int>(type: "int", nullable: false),
                     React = table.Column<int>(type: "int", nullable: false),
                     Share = table.Column<int>(type: "int", nullable: false),
@@ -179,12 +178,14 @@ namespace PRN221_Assignment.Migrations
                 name: "ThreadImages",
                 columns: table => new
                 {
+                    ThreadImageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ThreadId = table.Column<int>(type: "int", nullable: false),
                     Media = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ThreadImages", x => x.ThreadId);
+                    table.PrimaryKey("PK_ThreadImages", x => x.ThreadImageId);
                     table.ForeignKey(
                         name: "FK_ThreadImages_Thread_ThreadId",
                         column: x => x.ThreadId,
@@ -200,7 +201,6 @@ namespace PRN221_Assignment.Migrations
                     ConversationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ThreadCommentId = table.Column<int>(type: "int", nullable: false),
-                    BoxCommentId = table.Column<int>(type: "int", nullable: false),
                     CommentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -248,6 +248,21 @@ namespace PRN221_Assignment.Migrations
                 name: "IX_ThreadComment_ThreadId",
                 table: "ThreadComment",
                 column: "ThreadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ThreadImages_ThreadId",
+                table: "ThreadImages",
+                column: "ThreadId");
+
+            migrationBuilder.Sql(@"
+                CREATE TRIGGER trg_DeleteComment
+                ON Comment
+                AFTER DELETE
+                AS
+                BEGIN
+                    DELETE FROM ThreadComment WHERE CommentId IN (SELECT CommentId FROM DELETED);
+                END
+            ");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -281,6 +296,8 @@ namespace PRN221_Assignment.Migrations
 
             migrationBuilder.DropTable(
                 name: "Accounts");
+
+            migrationBuilder.Sql("DROP TRIGGER trg_DeleteComment");
         }
     }
 }

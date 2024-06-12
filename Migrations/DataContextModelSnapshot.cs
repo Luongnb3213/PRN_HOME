@@ -44,7 +44,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Block", b =>
@@ -62,7 +62,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Block", (string)null);
+                    b.ToTable("Block");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Comment", b =>
@@ -90,7 +90,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Comment", (string)null);
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.CommentImages", b =>
@@ -104,7 +104,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.ToTable("CommentImages", (string)null);
+                    b.ToTable("CommentImages");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Conversation", b =>
@@ -125,7 +125,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("ThreadCommentId");
 
-                    b.ToTable("Conversation", (string)null);
+                    b.ToTable("Conversation");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Follow", b =>
@@ -143,7 +143,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Follow", (string)null);
+                    b.ToTable("Follow");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Info", b =>
@@ -153,10 +153,6 @@ namespace PRN221_Assignment.Migrations
 
                     b.Property<DateTime>("Dob")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -176,7 +172,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Info", (string)null);
+                    b.ToTable("Info");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Thread", b =>
@@ -191,7 +187,6 @@ namespace PRN221_Assignment.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("React")
@@ -207,7 +202,7 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Thread", (string)null);
+                    b.ToTable("Thread");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.ThreadComment", b =>
@@ -230,21 +225,29 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasIndex("ThreadId");
 
-                    b.ToTable("ThreadComment", (string)null);
+                    b.ToTable("ThreadComment");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.ThreadImages", b =>
                 {
-                    b.Property<int>("ThreadId")
+                    b.Property<int>("ThreadImageId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ThreadImageId"), 1L, 1);
 
                     b.Property<string>("Media")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ThreadId");
+                    b.Property<int>("ThreadId")
+                        .HasColumnType("int");
 
-                    b.ToTable("ThreadImages", (string)null);
+                    b.HasKey("ThreadImageId");
+
+                    b.HasIndex("ThreadId");
+
+                    b.ToTable("ThreadImages");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Block", b =>
