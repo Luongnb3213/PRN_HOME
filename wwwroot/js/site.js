@@ -75,7 +75,6 @@ class popupCreate extends PopupBase {
     constructor() {
         super()
         this.init()
-        this.getBtn()
     }
     init() {
         var _this = this

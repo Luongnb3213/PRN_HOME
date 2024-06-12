@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PRN221_Assignment.Authorization;
 using PRN221_Assignment.Models;
@@ -9,7 +10,7 @@ using Thread = PRN221_Assignment.Models.Thread;
 
 namespace PRN221_Assignment.Pages
 {
-      
+
     public class IndexModel : PageModel
     {
         private readonly PRN221_Assignment.Respository.DataContext context;
@@ -23,9 +24,10 @@ namespace PRN221_Assignment.Pages
         public Models.Thread Thread { get; set; }
         [BindProperty]
         public List<IFormFile> UploadedFiles { get; set; }
+        public List<Thread> Threads { get; set; }
         public async Task<IActionResult> OnPost()
         {
-            foreach(var media in UploadedFiles)
+            foreach (var media in UploadedFiles)
             {
                 var filePath = Path.Combine("wwwroot/uploadMedia", media.FileName);
 
@@ -39,7 +41,8 @@ namespace PRN221_Assignment.Pages
             if (string.IsNullOrEmpty(Thread.Content))
             {
                 newThread.Content = string.Empty;
-            } else
+            }
+            else
             {
                 newThread.Content = Thread.Content;
             }
@@ -50,7 +53,7 @@ namespace PRN221_Assignment.Pages
             context.Thread.Add(newThread);
             context.SaveChanges();
 
-            foreach(var file in UploadedFiles)
+            foreach (var file in UploadedFiles)
             {
                 ThreadImages newThreadImage = new ThreadImages();
                 newThreadImage.ThreadId = newThread.ThreadId;
@@ -58,17 +61,28 @@ namespace PRN221_Assignment.Pages
                 context.ThreadImages.Add(newThreadImage);
                 context.SaveChanges();
             }
-
-            return Page();
+            TempData["msg"] = "CreatedThread";
+            return RedirectToPage("", new { msg = TempData["msg"] });
 
         }
-        public void OnGet()
+        public void OnGet(string msg)
         {
+            if (!string.IsNullOrEmpty(msg))
+            {
+                ViewData["msg"] = msg;
+            }
             //var username = User.Identity;
             //var isAuthenticate = User.Identity?.IsAuthenticated ?? false;
             //var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
             //return new JsonResult(new { username, isAuthenticate, email });
+
+            Threads = context.Thread
+                .Include(x => x.ThreadImages)
+                .Include(x => x.ThreadComments)
+                .Include(x => x.Account)
+                .ThenInclude(account => account.Info)
+                .ToList();
         }
     }
 }

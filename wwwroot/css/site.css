@@ -105,3 +105,12 @@ thread-main {
 .icon-header.new-noti svg {
     fill: #ff3d36;
 }
+
+.swal2-confirm.custom-confirm-button {
+    border: none;
+}
+
+.content.content-text {
+    color: var(--text-color);
+    margin: 4px 0px;
+}
