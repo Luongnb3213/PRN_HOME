@@ -145,33 +145,36 @@
                         <div class="content content-text">
                             @thread.Content
                         </div>
-                        <div class="slide-image w-full" style="height: 210px;">
-                            <slide-section class="swiper w-full free-scroll"
-                                           data-section-id="template--16740126261401__collection_list_VmEYkJ"
-                                           data-autoplay="false"
-                                           data-effect="slide"
-                                           data-loop="false"
-                                           data-speed="800"
-                                           data-autoplay-speed="5"
-                                           data-spacing="30"
-                                           data-mobile="1"
-                                           data-tablet="2"
-                                           data-desktop="1.5"
-                                           data-free-scroll="true"
-                                           data-pagination-progressbar="false">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <h1 style="color: white">abcd</h1>
+                        @if (thread.ThreadImages.Count != 0)
+                        {
+                            <div class="slide-image w-full" style="height: 210px;">
+                                <slide-section class="swiper w-full free-scroll"
+                                               data-section-id="template--16740126261401__collection_list_VmEYkJ"
+                                               data-autoplay="false"
+                                               data-effect="slide"
+                                               data-loop="false"
+                                               data-speed="800"
+                                               data-autoplay-speed="5"
+                                               data-spacing="30"
+                                               data-mobile="1"
+                                               data-tablet="2"
+                                               data-desktop="1.5"
+                                               data-free-scroll="true"
+                                               data-pagination-progressbar="false">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <h1 style="color: white">abcd</h1>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <h1 style="color: white">abcd</h1>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <h1 style="color: white">abcd</h1>
+                                        </div>
                                     </div>
-                                    <div class="swiper-slide">
-                                        <h1 style="color: white">abcd</h1>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <h1 style="color: white">abcd</h1>
-                                    </div>
-                                </div>
-                            </slide-section>
-                        </div>
+                                </slide-section>
+                            </div>
+                        }
 
                         <div class="thread_main_icon flex gap-15 ">
                             <div class="heart">
@@ -195,13 +198,13 @@
                     </div>
                     <div class="flex ml-10 bls_like_thread">
                         <div class="thread_comments fs-15">
-                            <span>7</span><span class="" style="margin-left: 5px;">Thread trả lời </span>
+                            <span>@Model.dicThreadComment[thread.ThreadId.ToString()]</span><span class="" style="margin-left: 5px;">Comments</span>
                         </div>
                         <span class="dots px-2">&nbsp;·&nbsp;</span>
                         <div class="thread_likes flex">
                             <div style="transition: all 0.2s linear;" class="number ">
                                 <div style="transition: all 0.2s linear" class="number_1 fs-15">
-                                    767
+                                    @thread.React
                                 </div>
                                 <div style="transition: all 0.2s linear" class="main-number fs-15">
                                     763

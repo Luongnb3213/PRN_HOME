@@ -18,6 +18,7 @@ namespace PRN221_Assignment.Pages
         public IndexModel(PRN221_Assignment.Respository.DataContext _context)
         {
             context = _context;
+            dicThreadComment = new Dictionary<string, int>();
             //Thread = new Models.Thread();
         }
         [BindProperty]
@@ -25,6 +26,7 @@ namespace PRN221_Assignment.Pages
         [BindProperty]
         public List<IFormFile> UploadedFiles { get; set; }
         public List<Thread> Threads { get; set; }
+        public Dictionary<string, int> dicThreadComment { get; set; }
         public async Task<IActionResult> OnPost()
         {
             foreach (var media in UploadedFiles)
@@ -83,6 +85,12 @@ namespace PRN221_Assignment.Pages
                 .Include(x => x.Account)
                 .ThenInclude(account => account.Info)
                 .ToList();
+
+            foreach (var th in Threads)
+            {
+                int countComment = context.ThreadComment.Count(x => x.ThreadId == th.ThreadId);
+                dicThreadComment[th.ThreadId.ToString()] = countComment;
+            }
         }
     }
 }
