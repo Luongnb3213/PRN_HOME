@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using PRN221_Assignment.Authorization;
 using PRN221_Assignment.Models;
 using System.Security.Claims;
+using Thread = PRN221_Assignment.Models.Thread;
 
 namespace PRN221_Assignment.Pages
 {
@@ -20,23 +22,45 @@ namespace PRN221_Assignment.Pages
         [BindProperty]
         public Models.Thread Thread { get; set; }
         [BindProperty]
-        public ThreadImages ThreadImages { get; set; }
-        public IActionResult OnPost()
+        public List<IFormFile> UploadedFiles { get; set; }
+        public async Task<IActionResult> OnPost()
         {
-            var listMedia = Request.Form["listMedia"];
-            foreach(var media in listMedia)
+            foreach(var media in UploadedFiles)
             {
-                //listMedia
+                var filePath = Path.Combine("wwwroot/uploadMedia", media.FileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await media.CopyToAsync(stream);
+                }
             }
 
-            Thread.AuthorId = 1;
-            Thread.React = 0;
-            Thread.Share = 0;
-            Thread.SubmitDate = DateTime.Now;
-            context.Thread.Add(Thread);
+            Thread newThread = new Thread();
+            if (string.IsNullOrEmpty(Thread.Content))
+            {
+                newThread.Content = string.Empty;
+            } else
+            {
+                newThread.Content = Thread.Content;
+            }
+            newThread.AuthorId = 1;
+            newThread.React = 0;
+            newThread.Share = 0;
+            newThread.SubmitDate = DateTime.Now;
+            context.Thread.Add(newThread);
+            context.SaveChanges();
 
+            foreach(var file in UploadedFiles)
+            {
+                ThreadImages newThreadImage = new ThreadImages();
+                newThreadImage.ThreadId = newThread.ThreadId;
+                newThreadImage.Media = $"~/uploadMedia/{file.FileName}";
+                context.ThreadImages.Add(newThreadImage);
+                context.SaveChanges();
+            }
 
             return Page();
+
         }
         public void OnGet()
         {
