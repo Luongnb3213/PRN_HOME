@@ -5,10 +5,6 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRN221_Assignment", "PRN221_Assignment.csproj", "{D54C4B11-3A49-4365-A170-42C871F0E8DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadDbRazor", "..\LoadDbRazor\LoadDbRazor.csproj", "{B57DCA4F-C6FE-467D-A3A9-9AD116D2973E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment", "..\..\PRN211\WinFormsAppChiLp\Assignment\Assignment.csproj", "{8179E75D-E547-4DAE-8470-F32FED8F48A4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{D54C4B11-3A49-4365-A170-42C871F0E8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D54C4B11-3A49-4365-A170-42C871F0E8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D54C4B11-3A49-4365-A170-42C871F0E8DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B57DCA4F-C6FE-467D-A3A9-9AD116D2973E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B57DCA4F-C6FE-467D-A3A9-9AD116D2973E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B57DCA4F-C6FE-467D-A3A9-9AD116D2973E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B57DCA4F-C6FE-467D-A3A9-9AD116D2973E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8179E75D-E547-4DAE-8470-F32FED8F48A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8179E75D-E547-4DAE-8470-F32FED8F48A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8179E75D-E547-4DAE-8470-F32FED8F48A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8179E75D-E547-4DAE-8470-F32FED8F48A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
