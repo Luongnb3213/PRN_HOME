@@ -7,9 +7,13 @@ namespace PRN221_Assignment.Models
     {
         [Key]
         public int UserID { get; set; }
+
+        [Required]
         public string userName { get; set; }
         public string Name { get; set; }
         public string Story { get; set; }
+
+        
         public DateTime Dob { get; set; }
         
         public string Image { get; set; }

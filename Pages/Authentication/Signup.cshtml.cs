@@ -25,16 +25,56 @@ namespace PRN221_Assignment.Pages.Authentication
 
         public IActionResult OnPost()
         {
+            Account acc = new Account {
+                Email = Account.Email,
+                Password = Account.Password,
+                Status = true,
+            isActive = true,
+            };
+
+            
+            
+            
             string confirmPassword = Request.Form["confirmPassword"];
-            if (Account != null)
+            if (acc != null)
             {
-                if (confirmPassword != Account.Password)
+                if (confirmPassword != acc.Password)
                 {
                     return Page();
                 }
-                _context.Accounts.Add(Account);
+
+                foreach (var account in listAcc)
+                {
+                    if (acc.Email == account.Email)
+                    {
+                        return Page();
+                    }
+                }
+
+
+
+               
+
+                var demo = _context.Accounts.Add(acc);
+                
+                
                 _context.SaveChanges();
-                return RedirectToAction("/Authentication/Login");
+
+                Info info = new Info
+                {
+
+                    userName = Account.Info.userName,
+                    Name = Account.Info.Name,
+                    Story = String.Empty,
+                    Dob = Account.Info.Dob,
+                    Image = String.Empty,
+
+                };
+
+
+                _context.Info.Add(info);
+                _context.SaveChanges();
+                return RedirectToPage("/Authentication/Login");
             }
 
 
