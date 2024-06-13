@@ -43,13 +43,13 @@ namespace PRN221_Assignment.Pages.Authentication
                     return Page();
                 }
 
-                foreach (var account in listAcc)
-                {
-                    if (acc.Email == account.Email)
-                    {
-                        return Page();
-                    }
-                }
+                //foreach (var account in listAcc)
+                //{
+                //    if (acc.Email == account.Email)
+                //    {
+                //        return Page();
+                //    }
+                //}
 
 
 

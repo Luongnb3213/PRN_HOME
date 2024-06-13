@@ -59,7 +59,7 @@ namespace PRN221_Assignment.Pages
             {
                 ThreadImages newThreadImage = new ThreadImages();
                 newThreadImage.ThreadId = newThread.ThreadId;
-                newThreadImage.Media = $"~/uploadMedia/{file.FileName}";
+                newThreadImage.Media = $"uploadMedia/{file.FileName}";
                 context.ThreadImages.Add(newThreadImage);
                 context.SaveChanges();
             }
@@ -84,6 +84,7 @@ namespace PRN221_Assignment.Pages
                 .Include(x => x.ThreadComments)
                 .Include(x => x.Account)
                 .ThenInclude(account => account.Info)
+                .OrderByDescending(x => x.SubmitDate)
                 .ToList();
 
             foreach (var th in Threads)

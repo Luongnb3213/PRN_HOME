@@ -114,3 +114,7 @@ thread-main {
     color: var(--text-color);
     margin: 4px 0px;
 }
+
+.a-link-to-detail {
+    text-decoration: none;
+}

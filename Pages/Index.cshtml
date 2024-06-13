@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="thread_main col-w-custom" style="--col-width: calc(100% - 48px - 30px)">
                                         <div class="flex align-center justify-between">
-                                            <h3 class="author flex align-center fs-16"> diemquyngg</h3>
+                                            <h3 class="author flex align-center fs-16"></h3>
                                         </div>
 
                                         <div class="content">
@@ -104,7 +104,7 @@
                     </div>
                     <div class="thread_main col-w-custom" style="--col-width: calc(100% - 48px - 30px)">
                         <div class="flex align-center justify-between">
-                            <h3 class="author flex align-center fs-16"> @thread.Account.Info.userName <span class=""> 13 giờ </span> </h3>
+                            <h3 class="author flex align-center fs-16" data-submit-date="@thread.SubmitDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffff")"> @thread.Account.Info.userName <span class="time-elapsed"></span> </h3>
                             <div class="relative ">
                                 <icon class="pointer more_options flex align-center justify-content-center rounded-50">
                                     <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24" class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn" style="fill: #777777; --height: 20px; --width: 20px;"><title>Xem thêm</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
@@ -141,40 +141,49 @@
                             </div>
 
                         </div>
-
-                        <div class="content content-text">
-                            @thread.Content
-                        </div>
-                        @if (thread.ThreadImages.Count != 0)
-                        {
-                            <div class="slide-image w-full" style="height: 210px;">
-                                <slide-section class="swiper w-full free-scroll"
-                                               data-section-id="template--16740126261401__collection_list_VmEYkJ"
-                                               data-autoplay="false"
-                                               data-effect="slide"
-                                               data-loop="false"
-                                               data-speed="800"
-                                               data-autoplay-speed="5"
-                                               data-spacing="30"
-                                               data-mobile="1"
-                                               data-tablet="2"
-                                               data-desktop="1.5"
-                                               data-free-scroll="true"
-                                               data-pagination-progressbar="false">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <h1 style="color: white">abcd</h1>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <h1 style="color: white">abcd</h1>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <h1 style="color: white">abcd</h1>
-                                        </div>
-                                    </div>
-                                </slide-section>
+                        <a class="a-link-to-detail" href="/detailpost">
+                            <div class="content content-text">
+                                @thread.Content
                             </div>
-                        }
+                            @if (thread.ThreadImages.Count != 0)
+                            {
+                                <div class="slide-image w-full" style="height: 210px;">
+                                    <slide-section class="swiper w-full free-scroll"
+                                                   data-section-id="template--16740126261401__collection_list_VmEYkJ"
+                                                   data-autoplay="false"
+                                                   data-effect="slide"
+                                                   data-loop="false"
+                                                   data-speed="800"
+                                                   data-autoplay-speed="5"
+                                                   data-spacing="30"
+                                                   data-mobile="1"
+                                                   data-tablet="2"
+                                                   data-desktop="1.5"
+                                                   data-free-scroll="true"
+                                                   data-pagination-progressbar="false">
+                                        <div class="swiper-wrapper">
+                                            <div style="display: flex" class="swiper-slide">
+                                                @foreach (var i in thread.ThreadImages)
+                                                {
+                                                    if (i.Media.EndsWith("mp4"))
+                                                    {
+                                                        <div>
+                                                            <video style="width: 150px" src="@i.Media" controls></video>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div>
+                                                            <img style="width: 150px" src="@i.Media" />
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </slide-section>
+                                </div>
+                            }
+                        </a>
 
                         <div class="thread_main_icon flex gap-15 ">
                             <div class="heart">
