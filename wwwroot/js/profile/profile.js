@@ -16,6 +16,7 @@ const line = document.querySelector(".selected-line");
         });
         setTimeout(function () {
             localStorage.removeItem('currentScroll');
+            localStorage.removeItem('previous');
         }, 100);
     }
 })();
@@ -39,11 +40,12 @@ class threadUp extends PopupBase {
                 scrollY
             }
             console.log(currentScroll);
-            setTimeout(() => {
-                // Chuyển hướng đến href của thẻ <a>
-                window.location.href = e.target.href;
-            }, 100);
+            //setTimeout(() => {
+            //    // Chuyển hướng đến href của thẻ <a>
+            //    window.location.href = e.target.href;
+            //}, 100);
             localStorage.setItem('currentScroll', JSON.stringify(currentScroll));
+            localStorage.setItem('previous', '/profile');
         })
     }
 }

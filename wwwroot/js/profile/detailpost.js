@@ -1,4 +1,7 @@
-﻿//Comment-detail-like
+﻿var linkPrevious = document.querySelector('.a-back-page');
+linkPrevious.setAttribute('href', localStorage.getItem('previous'));
+
+//Comment-detail-like
 class commentAuthor extends PopupBase {
     constructor() {
         super();

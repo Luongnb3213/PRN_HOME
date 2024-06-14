@@ -8,6 +8,7 @@ class threadMain extends HTMLElement {
         this.heart = this.querySelector(".heart");
         this.number = this.querySelector(".number")
         this.init();
+        this.saveScroll();
     }
     init() {
         var _this = this
@@ -22,6 +23,25 @@ class threadMain extends HTMLElement {
                 _this.number.classList.add("active");
             }, 300)
 
+        })
+    }
+    saveScroll() {
+        var _this = this;
+        let aLink = _this.querySelector('.link-detail');
+        aLink.addEventListener('click', function () {
+            let scrollX = window.pageXOffset;
+            let scrollY = window.pageYOffset;
+            let currentScroll = {
+                scrollX,
+                scrollY
+            }
+            console.log(currentScroll);
+            //setTimeout(() => {
+            //    // Chuyển hướng đến href của thẻ <a>
+            //    window.location.href = e.target.href;
+            //}, 100);
+            localStorage.setItem('currentScroll', JSON.stringify(currentScroll));
+            localStorage.setItem('previous', '/');
         })
     }
 }  
