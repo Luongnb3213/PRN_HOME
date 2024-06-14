@@ -101,6 +101,8 @@ class popupCreate extends PopupBase {
         this.addEventListener("click", () => {
         
             _this.initPopup(_this.querySelector(".create_thread").innerHTML)
+            var slide = document.querySelector(".swiper-wrapper")
+           
         })
     }
 
@@ -204,12 +206,9 @@ class CustomTextArea extends HTMLTextAreaElement {
 
 
     resize() {
-        console.log("hi")
         this.style.height = 'auto';
         this.style.height = Math.min(this.scrollHeight, 200) + 'px';
     }
 }
 
 customElements.define('custom-text', CustomTextArea, { extends: 'textarea' });
-
-
