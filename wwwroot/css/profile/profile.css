@@ -412,6 +412,7 @@ thread-up {
 .post-pics-frame {
     margin-top: 4px;
     border-radius: 10px;
+    display: flex;
 }
 
 .post-pics {
@@ -998,4 +999,13 @@ thread-up {
 .share-box {
     border-radius: 10px;
     border: 1px solid var(--border-color);
+}
+
+.no-comment-wrapper {
+    padding: 24px 0 0;
+}
+
+.no-comment {
+    text-align: center;
+    color: var(--sub-text-color);
 }
