@@ -9,22 +9,30 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using PRN221_Assignment.Models;
+using System.ComponentModel.DataAnnotations;
+using static PRN221_Assignment.Pages.Authentication.LoginModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace PRN221_Assignment.Pages.Authentication
 {
     public class LoginModel : PageModel
     {
+        private readonly PRN221_Assignment.Respository.DataContext _context;
+
+       
+
         private readonly IConfiguration _config;
-        public LoginModel(IConfiguration config)
+        public LoginModel(IConfiguration config, PRN221_Assignment.Respository.DataContext context)
         {
             _config = config;
+            _context = context;
         }
         public void OnGet()
         {
         }
         public IActionResult OnGetIndex()
         {
-            return RedirectToPage("/Index"); 
+            return RedirectToPage("/Index");
         }
         public IActionResult OnGetLogingoogle()
         {
@@ -46,14 +54,37 @@ namespace PRN221_Assignment.Pages.Authentication
             {
             new Claim(ClaimTypes.Name, result.Principal.FindFirstValue(ClaimTypes.Name)),
             new Claim(ClaimTypes.Email, result.Principal.FindFirstValue(ClaimTypes.Email))
-        };
-
-            // check xem email da ton tai chua, neu chua thi tao moi , co roi thi lay tu database ra
-
+            };
+            string name = result.Principal.FindFirstValue(ClaimTypes.Name);
+            string email = result.Principal.FindFirstValue(ClaimTypes.Email);
             var picture = result.Principal.FindFirstValue("urn:google:picture");
-            Account user = new Account();
 
-            setCookies(user);
+
+            //Account user = new Account();
+            //if (!_context.Accounts.Any(a => a.Email == Input.Email))
+            //{
+            //    return RedirectToPage("/Authentication/Login");
+            //}
+
+            //else
+            //{
+            //    user = _context.Accounts.Where(x => x.Email == email).Include(x => x.Info).FirstOrDefault();
+            //}
+
+
+
+
+
+
+
+
+
+
+
+                // check xem email da ton tai chua, neu chua thi tao moi , co roi thi lay tu database ra
+
+
+            //setCookies(user);
 
             return RedirectToPage("/Index");
         }
@@ -62,7 +93,22 @@ namespace PRN221_Assignment.Pages.Authentication
         public UserLogin Input { get; set; }
         public IActionResult OnPost()
         {
+
+            if (!_context.Accounts.Any(a => a.Email == Input.Email))
+            {
+                ModelState.AddModelError("Email", "This account doesn't exist in system ");
+                return RedirectToPage("/Authentication/Login");
+
+            }
             var user = Authenticate(Input);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("Password", "Password was wrong");
+                return RedirectToPage("/Authentication/Login");
+            }
+
+
 
             if (user != null)
             {
@@ -87,9 +133,12 @@ namespace PRN221_Assignment.Pages.Authentication
             Response.Cookies.Append("jwtToken", token, cookieOptions);
         }
 
+        
+
         private Account Authenticate(UserLogin userLogin)
         {
-            return null;
+            Account acc = _context.Accounts.Where(x => x.Email == Input.Email && x.Password == Input.Password).Include(x => x.Info).FirstOrDefault();
+            return acc;
         }
 
         private string GenerateJwtToken(Account user)
@@ -114,7 +163,7 @@ namespace PRN221_Assignment.Pages.Authentication
 
         public class UserLogin
         {
-            public string Username { get; set; }
+            public string Email { get; set; }
             public string Password { get; set; }
         }
 
