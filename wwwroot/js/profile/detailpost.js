@@ -79,8 +79,8 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
         data: JSON.stringify(commentContent),
         success: function (data) {
             let commentBox = document.querySelector('.comment-box');
-            let noComment = document.querySelector('.no-comment-wrapper');
-            noComment.classList.add('hidden');
+            //let noComment = document.querySelector('.no-comment-wrapper');
+            //noComment.classList.add('hidden');
             commentBox.insertAdjacentHTML('beforeend', `
 <div class="comment-wrapper">
     <comment-author data-custom-class="comment-detail-like-box" class="comment-author">
@@ -197,9 +197,19 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
 </div>
 
             `)
+            document.querySelector('.write-comment-box-content').value = '';
         },
         dataType: "json",
         contentType: "application/json",
 
     });
+});
+
+var formComment = document.querySelector('#commentForm');
+formComment.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        // Thực hiện hành động khác nếu cần thiết
+        document.querySelector('.write-comment-btn-submit').click();
+    }
 });
