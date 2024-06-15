@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PRN221_Assignment.Respository;
+using System.Security.Claims;
 using System.Text;
 
 namespace PRN221_Assignment
@@ -58,6 +60,11 @@ namespace PRN221_Assignment
 {
     options.ClientId = "500915612685-fmucrlmjuti8p7q1jop9vbu0bk48sevi.apps.googleusercontent.com";
     options.ClientSecret = "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";
+    options.Scope.Add("profile");
+    options.Scope.Add("email");
+
+    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+
 }); 
             builder.Services.AddAuthorization();
 

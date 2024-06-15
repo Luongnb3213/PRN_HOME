@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
+using PRN221_Assignment.Models;
 
 namespace PRN221_Assignment.Pages.Authentication
 {
@@ -43,23 +44,16 @@ namespace PRN221_Assignment.Pages.Authentication
 
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, result.Principal.FindFirstValue(ClaimTypes.NameIdentifier)),
             new Claim(ClaimTypes.Name, result.Principal.FindFirstValue(ClaimTypes.Name)),
             new Claim(ClaimTypes.Email, result.Principal.FindFirstValue(ClaimTypes.Email))
         };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtOptions:SigningKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                issuer: _config["JwtOptions:Issuer"],
-                audience: _config["JwtOptions:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
+            // check xem email da ton tai chua, neu chua thi tao moi , co roi thi lay tu database ra
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            var picture = result.Principal.FindFirstValue("urn:google:picture");
+            Account user = new Account();
 
-            HttpContext.Response.Cookies.Append("jwtToken", jwt, new CookieOptions { HttpOnly = true });
+            setCookies(user);
 
             return RedirectToPage("/Index");
         }
@@ -72,34 +66,33 @@ namespace PRN221_Assignment.Pages.Authentication
 
             if (user != null)
             {
-                var token = GenerateJwtToken(user);
-                var expiration = DateTime.UtcNow.AddSeconds(Convert.ToInt32(_config["JwtOptions:ExpirationSeconds"]));
-                var cookieOptions = new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    SameSite = SameSiteMode.Strict,
-                    Expires = expiration
-                };
-           
-                Response.Cookies.Append("jwtToken", token, cookieOptions);
+                setCookies(user);
                 return RedirectToPage("/Index");
             }
 
             return Unauthorized();
         }
-
-        private UserModel Authenticate(UserLogin userLogin)
+        private void setCookies(Account user)
         {
-            if (userLogin.Username == "test1" && userLogin.Password == "123456")
+            var token = GenerateJwtToken(user);
+            var expiration = DateTime.UtcNow.AddSeconds(Convert.ToInt32(_config["JwtOptions:ExpirationSeconds"]));
+            var cookieOptions = new CookieOptions
             {
-                return new UserModel { Username = "test1", Email = "luongnb3213@gmail.com" };
-            }
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = expiration
+            };
 
+            Response.Cookies.Append("jwtToken", token, cookieOptions);
+        }
+
+        private Account Authenticate(UserLogin userLogin)
+        {
             return null;
         }
 
-        private string GenerateJwtToken(UserModel user)
+        private string GenerateJwtToken(Account user)
         {
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["JwtOptions:SigningKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -109,9 +102,9 @@ namespace PRN221_Assignment.Pages.Authentication
                 audience: _config["JwtOptions:Audience"],
                 claims: new List<Claim>
                 {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.MobilePhone, "0912800141")
+                new Claim(ClaimTypes.Name, user.Info?.Name),
+                new Claim(ClaimTypes.Email, user?.Email),
+                new Claim(ClaimTypes.Sid, user?.UserID+"")
                 },
                 expires: DateTime.Now.AddSeconds(Convert.ToInt32(_config["JwtOptions:ExpirationSeconds"])),
                 signingCredentials: creds);
@@ -125,10 +118,6 @@ namespace PRN221_Assignment.Pages.Authentication
             public string Password { get; set; }
         }
 
-        public class UserModel
-        {
-            public string Username { get; set; }
-            public string Email { get; set; }
-        }
+
     }
 }
