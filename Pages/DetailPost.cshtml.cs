@@ -1,7 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Assignment.Models;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace PRN221_Assignment.Pages.Profile
 {
@@ -61,7 +63,12 @@ namespace PRN221_Assignment.Pages.Profile
                 .Include(x => x.Comment.Account.Info)
                 .FirstOrDefault(x => x.CommentId == newComment.CommentId);
 
-            return new JsonResult(newOriginalComment);
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+
+            return new JsonResult(new { data = newOriginalComment }, options);
         }
     }
 }

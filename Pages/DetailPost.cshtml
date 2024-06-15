@@ -168,9 +168,9 @@
                     </div>
                     <div class="detail-separate-line"></div>
                 </div>
-                @if (Model.numOfComment != 0)
-                {
-                    <comment-box class="comment-box">
+                <comment-box class="comment-box">
+                    @if (Model.numOfComment != 0)
+                    {
                         @foreach (var box in Model.listOriginalComment)
                         {
                             @*comment-wrapper là bắt đầu khung hội thoại mới*@
@@ -974,16 +974,16 @@
                             <div class="detail-separate-line"></div>
                         </div>
                         @*kết thúc 1 khung hội thoại*@
-                    </comment-box>
-                }
-                else
-                {
-                    <div class="no-comment-wrapper">
-                        <div class="no-comment">
-                            There is no comment
+                    }
+                    else
+                    {
+                        <div class="no-comment-wrapper">
+                            <div class="no-comment">
+                                There is no comment
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+                </comment-box>
             </thread-detail>
         </div>
 
@@ -995,7 +995,7 @@
         <div class="write-comment-box-wrapper">
             <form id="commentForm" method="post">
                 <div class="currentThreadId" data-threadId="@Model.SelectedThread.ThreadId" hidden></div>
-                <input placeholder="Post your comment..." type="text" class="write-comment-box-content"/>
+                <input placeholder="Post your comment..." type="text" class="write-comment-box-content" />
             </form>
         </div>
         <div class="create_image relative heart">

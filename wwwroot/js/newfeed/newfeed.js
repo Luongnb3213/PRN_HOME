@@ -1,4 +1,6 @@
-﻿let msgStatus = document.querySelector('.msg-status');
+﻿localStorage.clear();
+
+let msgStatus = document.querySelector('.msg-status');
 console.log(msgStatus.dataset.msg)
 if (msgStatus.dataset.msg === "CreatedThread") {
     Swal.fire({
