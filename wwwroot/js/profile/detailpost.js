@@ -67,5 +67,24 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.querySelector('.write-comment-btn-submit').addEventListener('click', function () {
-    document.querySelector('#commentForm').submit();
+    let currentThreadId = document.querySelector('.currentThreadId');
+    let commentContent = document.querySelector('.write-comment-box-content').value;
+    $.ajax({
+        headers:
+        {
+            "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        url: `/detailpost?threadId=${currentThreadId.dataset.threadid}`,
+        method: 'POST',
+        data: JSON.stringify(commentContent), 
+        success: function (data) {
+            console.log('Success:', data);
+        },
+        error: function (xhr, textStatus, error) {
+            console.error('Error:', textStatus, error);
+        },
+        dataType: "json",
+        contentType: "application/json",
+        
+    });
 });

@@ -14,8 +14,8 @@ namespace PRN221_Assignment.Pages.Profile
         }
         [BindProperty(SupportsGet = true)]
         public int ThreadId { get; set; }
-        [BindProperty]
-        public string Comment { get; set; }
+        //[BindProperty]
+        //public string Comment { get; set; }
         public Models.Thread SelectedThread { get; set; }
         public int numOfComment { get; set; }
         public List<ThreadComment> listOriginalComment { get;set; }
@@ -39,10 +39,10 @@ namespace PRN221_Assignment.Pages.Profile
                 .ToList();
 
         }
-        public IActionResult OnPost()
+        public IActionResult OnPost([FromBody] string comment)
         {
             Comment newComment = new Comment();
-            newComment.Content = Comment;
+            newComment.Content = comment;
             newComment.React = 0;
             newComment.AuthorId = 1;
             newComment.CreatedAt = DateTime.Now;
@@ -54,7 +54,9 @@ namespace PRN221_Assignment.Pages.Profile
             newThreadComment.ThreadId = ThreadId;
             context.ThreadComment.Add(newThreadComment);
             context.SaveChanges();
-            return RedirectToPage("/detailpost", new { threadId = ThreadId });
+
+            ThreadComment newOriginalComment = context.ThreadComment.FirstOrDefault(x => x.CommentId == newComment.CommentId);
+            return new JsonResult(new { newComment = newOriginalComment });
         }
     }
 }
