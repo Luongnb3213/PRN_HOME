@@ -18,7 +18,7 @@ namespace PRN221_Assignment.Pages.Profile
         //public string Comment { get; set; }
         public Models.Thread SelectedThread { get; set; }
         public int numOfComment { get; set; }
-        public List<ThreadComment> listOriginalComment { get;set; }
+        public List<ThreadComment> listOriginalComment { get; set; }
         public void OnGet()
         {
             SelectedThread = context.Thread
@@ -55,8 +55,13 @@ namespace PRN221_Assignment.Pages.Profile
             context.ThreadComment.Add(newThreadComment);
             context.SaveChanges();
 
-            ThreadComment newOriginalComment = context.ThreadComment.FirstOrDefault(x => x.CommentId == newComment.CommentId);
-            return new JsonResult(new { newComment = newOriginalComment });
+            ThreadComment newOriginalComment = context.ThreadComment
+                .Include(x => x.Comment)
+                .Include(x => x.Conversations)
+                .Include(x => x.Comment.Account.Info)
+                .FirstOrDefault(x => x.CommentId == newComment.CommentId);
+
+            return new JsonResult(newOriginalComment);
         }
     }
 }

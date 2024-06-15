@@ -76,15 +76,13 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
         },
         url: `/detailpost?threadId=${currentThreadId.dataset.threadid}`,
         method: 'POST',
-        data: JSON.stringify(commentContent), 
+        data: JSON.stringify(commentContent),
         success: function (data) {
-            console.log('Success:', data);
-        },
-        error: function (xhr, textStatus, error) {
-            console.error('Error:', textStatus, error);
+            let commentBox = document.querySelector('.comment-box');
+            console.log(data);
         },
         dataType: "json",
         contentType: "application/json",
-        
+
     });
 });
