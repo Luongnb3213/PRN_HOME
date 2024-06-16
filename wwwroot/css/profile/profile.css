@@ -453,6 +453,7 @@ thread-up {
     border-radius: 15px;
     padding: 6px 0 4px 8px;
     margin-right: 8px;
+    user-select: none;
 }
 
 .separate-post {
@@ -1008,4 +1009,61 @@ thread-up {
 .no-comment {
     text-align: center;
     color: var(--sub-text-color);
+}
+/*Reply*/
+.write-reply-wrapper {
+    width: 100%;
+    background-color: var(--secondary-color);
+    padding-left: 52px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.write-reply-account-avt {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.write-reply-account,
+.write-reply-btn-emoji,
+.write-reply-btn-submit {
+    flex: 1
+}
+
+.write-reply-box-wrapper {
+    flex: 6
+}
+
+.write-reply-box-content {
+    /*    margin-left: 12px;*/
+    outline: none;
+    font-size: 1.4rem !important;
+    color: var(--text-color) !important;
+    background-color: var(--primary-color) !important;
+    border: 1px solid var(--border-color) !important;
+    width: 100%;
+}
+
+.write-reply-btn-submit,
+.write-reply-btn-emoji {
+    text-align: center;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.6rem;
+}
+
+    .write-reply-btn-emoji:hover,
+    .write-reply-btn-submit:hover {
+        opacity: .8;
+    }
+
+.write-reply-box-content::placeholder {
+    color: var(--sub-text-color);
+    font-style: normal;
 }

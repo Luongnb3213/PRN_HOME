@@ -66,11 +66,11 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 });
 
+//AJAX
 document.querySelector('.write-comment-btn-submit').addEventListener('click', function () {
     let currentThreadId = document.querySelector('.currentThreadId');
     let commentContent = document.querySelector('.write-comment-box-content').value;
     let commentPic = document.querySelector('.write-comment-pics').files;
-    console.log(commentPic);
 
     let formData = new FormData();
     formData.append('content', commentContent);
@@ -86,12 +86,10 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
         },
         url: `/detailpost?threadId=${currentThreadId.dataset.threadid}`,
         method: 'POST',
-        processData: false,  
+        processData: false,
         contentType: false,
         data: formData,
         success: function (data) {
-            console.log(data);
-            console.log(data.data.Comment.CommentImages.$values[0]);
             let commentBox = document.querySelector('.comment-box');
             //let noComment = document.querySelector('.no-comment-wrapper');
             //noComment.classList.add('hidden');
@@ -209,10 +207,12 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
 
             `)
             document.querySelector('.write-comment-box-content').value = '';
+            document.querySelector('#commentForm').reset();
         }
     });
 });
 
+//Form
 var formComment = document.querySelector('#commentForm');
 formComment.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
@@ -221,3 +221,15 @@ formComment.addEventListener('keydown', function (e) {
         document.querySelector('.write-comment-btn-submit').click();
     }
 });
+
+//Reply
+function clickReply(event) {
+    let father = event.target.closest('.comment-wrapper');
+    let replyBox = father.querySelector('.reply-box');
+    if (replyBox.classList.contains('hidden')) {
+        replyBox.classList.remove('hidden');
+    } else {
+        replyBox.classList.add('hidden');
+    }
+}
+
