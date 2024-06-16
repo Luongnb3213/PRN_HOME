@@ -38,13 +38,14 @@ namespace PRN221_Assignment.Pages.Profile
                 .Include(x => x.Comment)
                 .ThenInclude(x => x.CommentImages)
                 .Include(x => x.Conversations)
+                .OrderByDescending(x => x.Comment.CreatedAt)
                 .ToList();
 
         }
-        public IActionResult OnPost([FromBody] string comment)
+        public async Task<IActionResult> OnPost([FromForm] MyComment comment)
         {
             Comment newComment = new Comment();
-            newComment.Content = comment;
+            newComment.Content = comment.Content == null ? string.Empty : comment.Content;
             newComment.React = 0;
             newComment.AuthorId = 1;
             newComment.CreatedAt = DateTime.Now;
@@ -57,10 +58,26 @@ namespace PRN221_Assignment.Pages.Profile
             context.ThreadComment.Add(newThreadComment);
             context.SaveChanges();
 
+            if (comment.Pictures != null)
+            {
+                var filePath = Path.Combine("wwwroot/commentMedia", comment.Pictures.FileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await comment.Pictures.CopyToAsync(stream);
+                }
+                CommentImages newCommentImage = new CommentImages();
+                newCommentImage.CommentId = newComment.CommentId;
+                newCommentImage.Media = "commentMedia/" + comment.Pictures.FileName;
+                context.CommentImages.Add(newCommentImage);
+                context.SaveChanges();
+            }
+
             ThreadComment newOriginalComment = context.ThreadComment
                 .Include(x => x.Comment)
                 .Include(x => x.Conversations)
                 .Include(x => x.Comment.Account.Info)
+                .Include(x => x.Comment.CommentImages)
                 .FirstOrDefault(x => x.CommentId == newComment.CommentId);
 
             var options = new JsonSerializerOptions
@@ -69,6 +86,11 @@ namespace PRN221_Assignment.Pages.Profile
             };
 
             return new JsonResult(new { data = newOriginalComment }, options);
+        }
+        public class MyComment()
+        {
+            public string Content { get; set; }
+            public IFormFile Pictures { get; set; }
         }
     }
 }

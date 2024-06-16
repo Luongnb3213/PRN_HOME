@@ -69,6 +69,16 @@ document.addEventListener('DOMContentLoaded', function () {
 document.querySelector('.write-comment-btn-submit').addEventListener('click', function () {
     let currentThreadId = document.querySelector('.currentThreadId');
     let commentContent = document.querySelector('.write-comment-box-content').value;
+    let commentPic = document.querySelector('.write-comment-pics').files;
+    console.log(commentPic);
+
+    let formData = new FormData();
+    formData.append('content', commentContent);
+
+    for (let i = 0; i < commentPic.length; i++) {
+        formData.append('pictures', commentPic[i]);
+    }
+
     $.ajax({
         headers:
         {
@@ -76,12 +86,20 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
         },
         url: `/detailpost?threadId=${currentThreadId.dataset.threadid}`,
         method: 'POST',
-        data: JSON.stringify(commentContent),
+        processData: false,  
+        contentType: false,
+        data: formData,
         success: function (data) {
+            console.log(data);
+            console.log(data.data.Comment.CommentImages.$values[0]);
             let commentBox = document.querySelector('.comment-box');
             //let noComment = document.querySelector('.no-comment-wrapper');
             //noComment.classList.add('hidden');
-            commentBox.insertAdjacentHTML('beforeend', `
+            let commentImageHTML = '';
+            if (data.data.Comment.CommentImages.$values.length !== 0) {
+                commentImageHTML = `<img src="${data.data.Comment.CommentImages.$values[0].Media}" class="comment-picture">`;
+            }
+            commentBox.insertAdjacentHTML('afterbegin', `
 <div class="comment-wrapper">
     <comment-author data-custom-class="comment-detail-like-box" class="comment-author">
         <comment-detail-like class="wrapper-detail-like-box hidden">
@@ -138,13 +156,14 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
             <div class="author-comment-content">
                 <div class="author-comment-header">
                     <a href="" class="author-name">${data.data.Comment.Account.Info.userName}</a>
-                    <div data-submit-date="${data.data.Comment.CreatedAt}" class="author-comment-time"></div>
+                    <div data-submit-date="${data.data.Comment.CreatedAt}" class="author-comment-time">Just now</div>
                 </div>
                 <div class="author-comment-body">
                     <div class="comment-content">${data.data.Comment.Content}</div>
+                    ${commentImageHTML}
                 </div>
                 <div class="author-comment-footer">
-                    <div class="react-wrapper author-comment-react more-reply">
+                    <div class="react-wrapper author-comment-react">
                         <div class="wrapper-react-num">
                             <div class="heart">
                                 <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
@@ -184,24 +203,13 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
                 </icon>
             </div>
         </div>
-        <div class="view-reply-wrapper">
-            <div class="view-reply-line "></div>
-            <div class="view-reply ">View (1) more reply</div>
-        </div>
-        <div class="view-reply-wrapper">
-            <div class="view-reply-line hidden"></div>
-            <div class="hide-reply hidden">Hide all replies</div>
-        </div>
     </comment-author>
     <div class="detail-separate-line"></div>
 </div>
 
             `)
             document.querySelector('.write-comment-box-content').value = '';
-        },
-        dataType: "json",
-        contentType: "application/json",
-
+        }
     });
 });
 
