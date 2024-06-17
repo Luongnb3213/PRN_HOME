@@ -1,5 +1,5 @@
 ﻿var linkPrevious = document.querySelector('.a-back-page');
-linkPrevious.setAttribute('href', localStorage.getItem('previous'));
+linkPrevious.setAttribute('href', sessionStorage.getItem('previous'));
 
 //Comment-detail-like
 class commentAuthor extends PopupBase {

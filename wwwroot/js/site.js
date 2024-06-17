@@ -40,8 +40,8 @@ class threadMain extends HTMLElement {
             //    // Chuyển hướng đến href của thẻ <a>
             //    window.location.href = e.target.href;
             //}, 100);
-            localStorage.setItem('currentScroll', JSON.stringify(currentScroll));
-            localStorage.setItem('previous', '/');
+            sessionStorage.setItem('currentScroll', JSON.stringify(currentScroll));
+            sessionStorage.setItem('previous', '/');
         })
     }
 }  

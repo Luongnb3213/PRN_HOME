@@ -7,7 +7,7 @@ const line = document.querySelector(".selected-line");
 
 //Get coordinates
 (function () {
-    var currentScrollObj = JSON.parse(localStorage.getItem('currentScroll'));
+    var currentScrollObj = JSON.parse(sessionStorage.getItem('currentScroll'));
     if (currentScrollObj) {
         window.scrollTo({
             top: currentScrollObj.scrollY,
@@ -15,8 +15,8 @@ const line = document.querySelector(".selected-line");
             behavior: "instant"
         });
         setTimeout(function () {
-            localStorage.removeItem('currentScroll');
-            localStorage.removeItem('previous');
+            sessionStorage.removeItem('currentScroll');
+            sessionStorage.removeItem('previous');
         }, 100);
     }
 })();
@@ -44,8 +44,8 @@ class threadUp extends PopupBase {
             //    // Chuyển hướng đến href của thẻ <a>
             //    window.location.href = e.target.href;
             //}, 100);
-            localStorage.setItem('currentScroll', JSON.stringify(currentScroll));
-            localStorage.setItem('previous', '/profile');
+            sessionStorage.setItem('currentScroll', JSON.stringify(currentScroll));
+            sessionStorage.setItem('previous', '/profile');
         })
     }
 }
