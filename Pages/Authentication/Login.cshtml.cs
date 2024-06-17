@@ -19,7 +19,7 @@ namespace PRN221_Assignment.Pages.Authentication
     {
         private readonly PRN221_Assignment.Respository.DataContext _context;
 
-       
+
 
         private readonly IConfiguration _config;
         public LoginModel(IConfiguration config, PRN221_Assignment.Respository.DataContext context)
@@ -50,41 +50,66 @@ namespace PRN221_Assignment.Pages.Authentication
                 return RedirectToPage("/Error");
             }
 
-            var claims = new[]
-            {
-            new Claim(ClaimTypes.Name, result.Principal.FindFirstValue(ClaimTypes.Name)),
-            new Claim(ClaimTypes.Email, result.Principal.FindFirstValue(ClaimTypes.Email))
-            };
+
             string name = result.Principal.FindFirstValue(ClaimTypes.Name);
             string email = result.Principal.FindFirstValue(ClaimTypes.Email);
             var picture = result.Principal.FindFirstValue("urn:google:picture");
+            string userName = name.Replace(" ", "_");
 
+            Account user = new Account();
+            if (!_context.Accounts.Any(a => a.Email == email))
+            {
+                // create new account
+                try
+                {
+                    user.Email = email;
+                    user.Password = "default Password";
+                    //_context.Accounts.Add(user);
+                    // _context.SaveChanges();
+                    Info info = new Info
+                    {
+                        UserID = user.UserID,
+                        Dob = DateTime.Now,
+                        Image = picture,
+                        Name = name,
+                        Story = "",
+                        userName = userName,
+                    };
+                    //_context.Info.Add(info);
+                    //_context.SaveChanges();
+                    user.Info = info;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return Page();
+                }
+            }
 
-            //Account user = new Account();
-            //if (!_context.Accounts.Any(a => a.Email == Input.Email))
-            //{
-            //    return RedirectToPage("/Authentication/Login");
-            //}
+            else
+            {
+                user = _context.Accounts.Where(x => x.Email == email).Include(x => x.Info).FirstOrDefault();
+            }
+            if (user != null)
+            {
+                //var claims = new[]
+                // {
+                //    new Claim(ClaimTypes.Name, result.Principal.FindFirstValue(ClaimTypes.Name)),
+                //    new Claim(ClaimTypes.Email, result.Principal.FindFirstValue(ClaimTypes.Email))
+                // };
+                //var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["JwtOptions:SigningKey"]));
+                //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                //var token = new JwtSecurityToken(
+                //                    issuer: _config["JwtOptions:Issuer"],
+                //                    audience: _config["JwtOptions:Audience"],
+                //                    claims: claims,
+                //                   expires: DateTime.Now.AddSeconds(Convert.ToInt32(_config["JwtOptions:ExpirationSeconds"])),
+                //                    signingCredentials: creds);
+                //var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+                //HttpContext.Response.Cookies.Append("jwtToken", jwt, new CookieOptions { HttpOnly = true });
+                setCookies(user);
+            }
 
-            //else
-            //{
-            //    user = _context.Accounts.Where(x => x.Email == email).Include(x => x.Info).FirstOrDefault();
-            //}
-
-
-
-
-
-
-
-
-
-
-
-                // check xem email da ton tai chua, neu chua thi tao moi , co roi thi lay tu database ra
-
-
-            //setCookies(user);
 
             return RedirectToPage("/Index");
         }
@@ -94,7 +119,7 @@ namespace PRN221_Assignment.Pages.Authentication
         public IActionResult OnPost()
         {
 
-            if (!_context.Accounts.Any(a => a.Email == Input.Email))
+            if (!_context.Accounts.Any(a => a.Email.Equals(Input.Email)))
             {
                 ModelState.AddModelError("Email", "This account doesn't exist in system ");
                 return RedirectToPage("/Authentication/Login");
@@ -107,8 +132,6 @@ namespace PRN221_Assignment.Pages.Authentication
                 ModelState.AddModelError("Password", "Password was wrong");
                 return RedirectToPage("/Authentication/Login");
             }
-
-
 
             if (user != null)
             {
@@ -126,14 +149,13 @@ namespace PRN221_Assignment.Pages.Authentication
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.Strict,
                 Expires = expiration
             };
 
-            Response.Cookies.Append("jwtToken", token, cookieOptions);
+            HttpContext.Response.Cookies.Append("jwtToken", token, cookieOptions);
         }
 
-        
+
 
         private Account Authenticate(UserLogin userLogin)
         {

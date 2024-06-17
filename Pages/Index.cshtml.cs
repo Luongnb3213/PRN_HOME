@@ -76,16 +76,16 @@ namespace PRN221_Assignment.Pages
             //var username = User.Identity;
             //var isAuthenticate = User.Identity?.IsAuthenticated ?? false;
             //var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-
-            //return new JsonResult(new { username, isAuthenticate, email });
+            //var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+            //return new JsonResult(new { username, isAuthenticate, email, userId });
 
             Threads = context.Thread
-                .Include(x => x.ThreadImages)
+               .Include(x => x.ThreadImages)
                 .Include(x => x.ThreadComments)
                 .Include(x => x.Account)
-                .ThenInclude(account => account.Info)
+               .ThenInclude(account => account.Info)
                 .OrderByDescending(x => x.SubmitDate)
-                .ToList();
+              .ToList();
 
             foreach (var th in Threads)
             {

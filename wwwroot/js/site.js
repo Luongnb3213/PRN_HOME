@@ -2,6 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
 class threadMain extends HTMLElement {
     constructor() {
         super();
@@ -212,3 +213,13 @@ class CustomTextArea extends HTMLTextAreaElement {
 }
 
 customElements.define('custom-text', CustomTextArea, { extends: 'textarea' });
+
+
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/hub")
+    .withAutomaticReconnect([0, 0, 10000])
+    .build();
+connection.start().then(() => {
+    console.log(connection.connection.connectionId)
+}).catch(err => console.log(err.toString()));
+

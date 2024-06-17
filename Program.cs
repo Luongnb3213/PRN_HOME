@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PRN221_Assignment.Hubs;
 using PRN221_Assignment.Respository;
 using System.Security.Claims;
 using System.Text;
@@ -67,9 +68,10 @@ namespace PRN221_Assignment
 
 }); 
             builder.Services.AddAuthorization();
-
+            
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddSignalR();
 
             var app = builder.Build();
 
@@ -83,13 +85,12 @@ namespace PRN221_Assignment
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapRazorPages();
-
+            app.MapHub<chatHub>("/hub");
             app.Run();
         }
     }
