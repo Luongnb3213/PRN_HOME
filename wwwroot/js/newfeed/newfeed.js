@@ -1,11 +1,4 @@
 ﻿
-document.addEventListener('DOMContentLoaded', function () {
-    // Code xử lý khi trang được load lần đầu tiên
-    console.log('Trang đã được load lần đầu tiên.');
-
-    // Thêm các đoạn mã xử lý khác tại đây
-});
-
 let msgStatus = document.querySelector('.msg-status');
 console.log(msgStatus.dataset.msg)
 if (msgStatus.dataset.msg === "CreatedThread") {
