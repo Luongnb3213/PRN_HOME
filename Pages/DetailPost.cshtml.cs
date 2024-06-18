@@ -54,14 +54,19 @@ namespace PRN221_Assignment.Pages.Profile
 
             if (comment.Type.Equals("original"))
             {
-            ThreadComment newThreadComment = new ThreadComment();
-            newThreadComment.CommentId = newComment.CommentId;
-            newThreadComment.ThreadId = ThreadId;
-            context.ThreadComment.Add(newThreadComment);
-            context.SaveChanges();
-            } else
+                ThreadComment newThreadComment = new ThreadComment();
+                newThreadComment.CommentId = newComment.CommentId;
+                newThreadComment.ThreadId = ThreadId;
+                context.ThreadComment.Add(newThreadComment);
+                context.SaveChanges();
+            }
+            else
             {
-
+                Conversation newConversation = new Conversation();
+                newConversation.CommentId = newComment.CommentId;
+                newConversation.ThreadCommentId = Int32.Parse(comment.ThreadCommentId);
+                context.Conversation.Add(newConversation);
+                context.SaveChanges();
             }
 
             if (comment.Pictures != null)
@@ -79,25 +84,42 @@ namespace PRN221_Assignment.Pages.Profile
                 context.SaveChanges();
             }
 
-            ThreadComment newOriginalComment = context.ThreadComment
-                .Include(x => x.Comment)
-                .Include(x => x.Conversations)
-                .Include(x => x.Comment.Account.Info)
-                .Include(x => x.Comment.CommentImages)
-                .FirstOrDefault(x => x.CommentId == newComment.CommentId);
-
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve
             };
 
-            return new JsonResult(new { data = newOriginalComment }, options);
+            if (comment.Type.Equals("original"))
+            {
+                ThreadComment newOriginalComment = context.ThreadComment
+                    .Include(x => x.Comment)
+                    .Include(x => x.Conversations)
+                    .Include(x => x.Comment.Account.Info)
+                    .Include(x => x.Comment.CommentImages)
+                    .FirstOrDefault(x => x.CommentId == newComment.CommentId);
+
+                return new JsonResult(new { data = newOriginalComment }, options);
+            }
+            else
+            {
+                Conversation newReplyComment = context.Conversation
+                    .Include(x => x.ThreadComment)
+                    .Include(x => x.ThreadComment.Comment)
+                    .Include(x => x.ThreadComment.Conversations)
+                    .Include(x => x.ThreadComment.Comment.Account.Info)
+                    .Include(x => x.ThreadComment.Comment.CommentImages)
+                    .FirstOrDefault(x => x.CommentId == newComment.CommentId);
+
+                return new JsonResult(new { data = newReplyComment }, options);
+            }
+
         }
         public class MyComment()
         {
             public string Content { get; set; }
             public IFormFile Pictures { get; set; }
             public string Type { get; set; }
+            public string? ThreadCommentId { get; set; }
         }
     }
 }

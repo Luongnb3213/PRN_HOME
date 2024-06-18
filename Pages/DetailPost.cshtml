@@ -152,7 +152,7 @@
                                     </slide-section>
                                 </div>
                             }
-                           
+
                         </div>
                     </div>
                     <div class="detail-react">
@@ -324,7 +324,9 @@
                                             <img src="../pics/profile/shh.jpg" class="write-reply-account-avt" />
                                         </div>
                                         <div class="write-reply-box-wrapper">
-                                            <div class="currentThreadId" data-threadId="@Model.SelectedThread.ThreadId" hidden></div>
+                                            <div class="currentThreadId-reply" data-threadId="@Model.SelectedThread.ThreadId" hidden></div>
+                                            <div class="type-comment-reply" data-type="reply" hidden></div>
+                                            <div class="threadCommentIdInsert" data-threadCommentId="@box.ThreadCommentId" hidden></div>
                                             <input placeholder="Reply to @(box.Comment.Account.Info.userName)" type="text" class="write-reply-box-content" />
                                         </div>
                                         <div class="create_image relative thread_main_icon heart">
@@ -1048,8 +1050,8 @@
                 <img src="../pics/profile/shh.jpg" class="write-comment-account-avt" />
             </div>
             <div class="write-comment-box-wrapper">
-                <div class="currentThreadId" data-threadId="@Model.SelectedThread.ThreadId" hidden></div>
-                <div class="type-comment" data-type="original" hidden></div>
+                <div class="currentThreadId-origin" data-threadId="@Model.SelectedThread.ThreadId" hidden></div>
+                <div class="type-comment-origin" data-type="original" hidden></div>
                 <input placeholder="Post your comment..." type="text" class="write-comment-box-content" />
             </div>
             <div class="create_image relative thread_main_icon heart">
