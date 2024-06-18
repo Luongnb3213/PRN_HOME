@@ -47,16 +47,22 @@ namespace PRN221_Assignment.Pages.Profile
             Comment newComment = new Comment();
             newComment.Content = comment.Content == null ? string.Empty : comment.Content;
             newComment.React = 0;
-            newComment.AuthorId = 1;
+            newComment.AuthorId = 1; //Cái này sau phải chuyển theo account khác
             newComment.CreatedAt = DateTime.Now;
             context.Comment.Add(newComment);
             context.SaveChanges();
 
+            if (comment.Type.Equals("original"))
+            {
             ThreadComment newThreadComment = new ThreadComment();
             newThreadComment.CommentId = newComment.CommentId;
             newThreadComment.ThreadId = ThreadId;
             context.ThreadComment.Add(newThreadComment);
             context.SaveChanges();
+            } else
+            {
+
+            }
 
             if (comment.Pictures != null)
             {
@@ -91,6 +97,7 @@ namespace PRN221_Assignment.Pages.Profile
         {
             public string Content { get; set; }
             public IFormFile Pictures { get; set; }
+            public string Type { get; set; }
         }
     }
 }

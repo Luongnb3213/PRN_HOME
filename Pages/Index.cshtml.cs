@@ -48,7 +48,7 @@ namespace PRN221_Assignment.Pages
             {
                 newThread.Content = Thread.Content;
             }
-            newThread.AuthorId = 1;
+            newThread.AuthorId = 1; //Cái này sau phải đổi với account khác
             newThread.React = 0;
             newThread.Share = 0;
             newThread.SubmitDate = DateTime.Now;

@@ -69,11 +69,13 @@ document.addEventListener('DOMContentLoaded', function () {
 //AJAX
 document.querySelector('.write-comment-btn-submit').addEventListener('click', function () {
     let currentThreadId = document.querySelector('.currentThreadId');
+    let typeComment = document.querySelector('.type-comment');
     let commentContent = document.querySelector('.write-comment-box-content').value;
     let commentPic = document.querySelector('.write-comment-pics').files;
 
     let formData = new FormData();
     formData.append('content', commentContent);
+    formData.append('type', typeComment.dataset.type)
 
     for (let i = 0; i < commentPic.length; i++) {
         formData.append('pictures', commentPic[i]);
