@@ -6,7 +6,7 @@ const line = document.querySelector(".selected-line");
 
 
 //Get coordinates
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
     var currentScrollObj = JSON.parse(sessionStorage.getItem('currentScroll'));
     if (currentScrollObj) {
         window.scrollTo({
@@ -19,7 +19,7 @@ const line = document.querySelector(".selected-line");
             sessionStorage.removeItem('previous');
         }, 100);
     }
-})();
+})
 
 //Thread-up
 class threadUp extends PopupBase {

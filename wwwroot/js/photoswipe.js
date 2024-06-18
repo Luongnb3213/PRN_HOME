@@ -10,15 +10,19 @@ class customImage extends HTMLElement {
     }
     init() {
 
-        var naturalHeight = parseFloat(this.element.naturalHeight);
-        var naturalWidth = parseFloat(this.element.naturalWidth);
+        var naturalHeight = parseFloat(this.element.naturalHeight) || parseFloat(this.element.videoHeight);
+        var naturalWidth = parseFloat(this.element.naturalWidth) || parseFloat(this.element.videoWidth);
+        console.log(naturalHeight)
+        console.log(naturalWidth)
         var aspect_ratio = naturalWidth / naturalHeight
         this.style = `--aspect-ratio :  ${aspect_ratio}`
         var fixedHeight = 1500; 
         var calculatedWidth = fixedHeight * aspect_ratio;
-
-        this.a.setAttribute("data-pswp-width", calculatedWidth);
-        this.a.setAttribute("data-pswp-height", fixedHeight);
+        if (this.a) {
+            this.a.setAttribute("data-pswp-width", calculatedWidth);
+            this.a.setAttribute("data-pswp-height", fixedHeight);
+        }
+     
     }
 }
 customElements.define("custom-media", customImage);
