@@ -27,23 +27,23 @@ class threadMain extends HTMLElement {
         })
     }
     saveScroll() {
-    //    var _this = this;
-    //    let aLink = _this.querySelector('.link-detail');
-    //    aLink.addEventListener('click', function () {
-    //        let scrollX = window.pageXOffset;
-    //        let scrollY = window.pageYOffset;
-    //        let currentScroll = {
-    //            scrollX,
-    //            scrollY
-    //        }
-    //        console.log(currentScroll);
-    //        //setTimeout(() => {
-    //        //    // Chuyển hướng đến href của thẻ <a>
-    //        //    window.location.href = e.target.href;
-    //        //}, 100);
-    //        sessionStorage.setItem('currentScroll', JSON.stringify(currentScroll));
-    //        sessionStorage.setItem('previous', '/');
-    //    })
+        var _this = this;
+        let aLink = _this.querySelector('.link-detail');
+        
+        aLink.addEventListener('click', function () {
+            let scrollX = window.pageXOffset;
+            let scrollY = window.pageYOffset;
+            let currentScroll = {
+                scrollX,
+                scrollY
+            }
+            //setTimeout(() => {
+            //    // Chuyển hướng đến href của thẻ <a>
+            //    window.location.href = e.target.href;
+            //}, 100);
+            sessionStorage.setItem('currentScroll', JSON.stringify(currentScroll));
+            sessionStorage.setItem('previous', '/');
+        })
     }
 }  
 customElements.define("thread-main", threadMain)

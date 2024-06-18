@@ -112,7 +112,8 @@ thread-main {
 
 .content.content-text {
     color: var(--text-color);
-    margin: 4px 0px;
+    margin: 4px 0px 12px;
+    display: block;
 }
 
 .link-detail {
