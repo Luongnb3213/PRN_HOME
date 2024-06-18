@@ -3079,3 +3079,22 @@ cookie-bar {
 .ml-10{
     margin-left: 10px;
 }
+.transition {
+    transition: all 0.2s linear;
+}
+.translate-y--50 {
+    transform: translateY(-100%);
+}
+
+@keyframes slide-upp {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}
+.slide-upp {
+     animation: slide-upp 0.2s linear;
+}

@@ -10,21 +10,58 @@ class threadMain extends HTMLElement {
         this.number = this.querySelector(".number")
         this.init();
         this.saveScroll();
+        this.number.appendChild(this.createMainNumber(767, "new"));
+        this.realTimeHeart();
+        setTimeout(() => {
+            this.realTimeHeart();
+        }, 3000)
+        setTimeout(() => {
+            this.realTimeHeart();
+        }, 6000)
     }
     init() {
         var _this = this
-        this.heart.addEventListener("click", (e) => {
-            _this.number.innerHTML = `<div style="transition: all 0.2s linear" class="number_1 fs-15">
-                767
-            </div>
-            <div style="transition: all 0.2s linear" class="main-number fs-15">
-                763
-            </div>`
-            setTimeout(() => {
-                _this.number.classList.add("active");
-            }, 300)
-
+        this.heart.addEventListener("click", _this.likeSlideUp.bind(_this))
+    }
+    realTimeHeart() {
+        var _this = this
+        var heart_realtime = this.createMainNumber(989, "heart-reatltime")
+        this.number.appendChild(heart_realtime);
+       
+        if (_this.number.querySelector(".main_number.new")) {
+            _this.number.querySelector(".main_number.new").remove(); 
+        }
+        heart_realtime.classList.add("slide-upp")
+        _this.number.querySelector(".main_number:not(.slide-upp)").classList.add("opacity-0")
+        heart_realtime.addEventListener("animationend", (e) => {
+            _this.number.querySelector(".main_number:not(.slide-upp)").remove();
+            e.target.classList.remove("slide-upp");
         })
+        
+    }
+    likeSlideUp() {
+        var _this = this
+        if (!_this.number.querySelector(".new")) {
+            this.number.appendChild(this.createMainNumber(767, "new"));
+        }
+        if (_this.number.classList.contains("active")) {
+            _this.number.querySelectorAll(".main_number").forEach((item) => {
+                item.classList.remove("translate-y--50")
+            })
+            _this.number.classList.remove("active");
+        } else {
+            _this.number.classList.add("active");
+            _this.number.querySelectorAll(".main_number").forEach((item) => {
+                item.classList.add("translate-y--50")
+            })
+
+        }
+    }
+    createMainNumber(number, classes) {
+        var mainNumber = document.createElement("div")
+        mainNumber.classList.add("transition", "fs-15", "main_number", classes )
+        mainNumber.innerHTML = number;
+        return mainNumber
     }
     saveScroll() {
         var _this = this;
@@ -126,4 +163,19 @@ class CustomTextArea extends HTMLTextAreaElement {
 
 customElements.define('custom-text', CustomTextArea, { extends: 'textarea' });
 
+class commentPopup extends PopupBase {
+    constructor() {
+        super()
+        this.init()
+    }
+    init() {
+        var _this = this
+        this.addEventListener("click", () => {
 
+            _this.initPopup(_this.querySelector(".create_comment").innerHTML)
+
+        })
+    }
+}
+
+customElements.define("comment-popup", commentPopup)

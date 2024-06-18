@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="~/css/library/tingle.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/profile/profile.css" />
+    <link href="~/css/library/photoswipe.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -108,26 +109,50 @@
                     <div class="detail-caption">
                         <div class="view-detail-post">
                             <div class="caption detail">@Model.SelectedThread.Content</div>
-                            @if (Model.SelectedThread.ThreadImages.Count != 0)
+
+                            @if (@Model.SelectedThread.ThreadImages.Count != 0)
                             {
-                                <div class="post-pics-frame detail swiper-slide">
-                                    @foreach (var i in Model.SelectedThread.ThreadImages)
-                                    {
-                                        if (i.Media.EndsWith("mp4"))
-                                        {
-                                            <div>
-                                                <video class="post-pics" style="width: 150px" src="@i.Media" controls></video>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div>
-                                                <img class="post-pics" style="width: 150px" src="@i.Media" />
-                                            </div>
-                                        }
-                                    }
+                                <div class="slide-image w-full">
+                                    <slide-section class="swiper w-full free-scroll"
+                                                   data-section-id="template--16740126261401__collection_list_VmEYkJ"
+                                                   data-autoplay="false"
+                                                   data-effect="slide"
+                                                   data-loop="false"
+                                                   data-speed="800"
+                                                   data-autoplay-speed="5"
+                                                   data-spacing="10"
+                                                   data-mobile="1"
+                                                   data-tablet="2"
+                                                   data-desktop="1.5"
+                                                   data-free-scroll="true"
+                                                   data-pagination-progressbar="false"
+                                                   id="1">
+                                        <div class="swiper-wrapper" id="gallery--getting-started-1">
+                                            @foreach (var i in @Model.SelectedThread.ThreadImages)
+                                            {
+                                                <div class="swiper-slide">
+                                                    @if (i.Media.EndsWith("mp4"))
+                                                    {
+                                                        <custom-media class="h-full pointer d-block">
+                                                            <video src="@i.Media" controls></video>
+                                                        </custom-media>
+                                                    }
+                                                    else
+                                                    {
+                                                        <custom-media class="h-full rounded-style ">
+                                                            <a data-pswp-src="@i.Media">
+                                                                <img src="@i.Media" class="w-full rounded-10" />
+                                                            </a>
+                                                        </custom-media>
+                                                    }
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </slide-section>
                                 </div>
                             }
+                           
                         </div>
                     </div>
                     <div class="detail-react">
@@ -1041,8 +1066,11 @@
     </form>
 </body>
 </html>
+<script src="~/js/lib/swiper-bundle.min.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/lib/tingle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/js/profile/detailpost.js"></script>
+<script type="module" src="~/js/photoswipe.js"></script>
 

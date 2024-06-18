@@ -5,18 +5,21 @@ class customImage extends HTMLElement {
     constructor() {
         super();
         this.element = this.querySelector("img") || this.querySelector("video");
-        this.a = this.querySelector("a")
-        this.init();
-    }
-    init() {
+        this.a = this.querySelector("a");
 
+        if (this.element.complete) {
+            this.init();
+        } else {
+            this.element.addEventListener('load', () => this.init());
+        }
+    }
+
+    init() {
+        var fixedHeight = 1500;
         var naturalHeight = parseFloat(this.element.naturalHeight) || parseFloat(this.element.videoHeight);
         var naturalWidth = parseFloat(this.element.naturalWidth) || parseFloat(this.element.videoWidth);
-        console.log(naturalHeight)
-        console.log(naturalWidth)
         var aspect_ratio = naturalWidth / naturalHeight
         this.style = `--aspect-ratio :  ${aspect_ratio}`
-        var fixedHeight = 1500; 
         var calculatedWidth = fixedHeight * aspect_ratio;
         if (this.a) {
             this.a.setAttribute("data-pswp-width", calculatedWidth);
@@ -72,7 +75,6 @@ class SlideSection extends HTMLElement {
         if (direction == "vertical") {
             _this.style.maxHeight = _this.offsetHeight + "px";
         }
-        console.log(itemDesktop)
         this.globalSlide = new Swiper(_this, {
             slidesPerView: autoItem ? "auto" : itemMobile,
             spaceBetween: spacing >= 15 ? 15 : spacing,

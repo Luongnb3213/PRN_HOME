@@ -92,3 +92,8 @@ thread_settings ul li {
         visibility: visible;
     }
 }
+.main_number{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}

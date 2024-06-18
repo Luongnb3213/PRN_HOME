@@ -1067,3 +1067,11 @@ thread-up {
     color: var(--sub-text-color);
     font-style: normal;
 }
+custom-media img {
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+
+    custom-media:active img {
+        transform: scale(0.98);
+    }

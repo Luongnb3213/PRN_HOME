@@ -96,10 +96,11 @@ thread-main {
     opacity:0;
 }
 .heart, .comment,.re-post{
+    cursor: pointer;
       transition: all 0.2s linear;
 }
 .heart:active, .comment:active, .re-post:active{
-   transform : scale(0.5);
+   transform : scale(0.9);
 }
 
 .icon-header.new-noti svg {
@@ -118,4 +119,12 @@ thread-main {
 
 .link-detail {
     text-decoration: none;
+}
+custom-media img {
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+
+custom-media:active img {
+    transform: scale(0.98);
 }

@@ -3,11 +3,6 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<style>
-    .number.active .number_1, .number.active .main-number {
-        transform: translateY(-100%);
-    }
-</style>
 
 <div class="fluid_container">
     <div class="thread_wrapper">
@@ -142,7 +137,7 @@
 
                         </div>
                         <div class="link-detail">
-                            <a href="/detailpost?threadId=@thread.ThreadId" class="content content-text text-decoration-none">
+                            <a href="/detailpost?threadId=@thread.ThreadId" class="content w-full content-text text-decoration-none">
                                 @thread.Content
                             </a>
                             @if (thread.ThreadImages.Count != 0)
@@ -155,7 +150,7 @@
                                                    data-loop="false"
                                                    data-speed="800"
                                                    data-autoplay-speed="5"
-                                                   data-spacing="30"
+                                                   data-spacing="10"
                                                    data-mobile="1"
                                                    data-tablet="2"
                                                    data-desktop="1.5"
@@ -168,12 +163,12 @@
                                                 <div class="swiper-slide">
                                                     @if (i.Media.EndsWith("mp4"))
                                                     {
-                                                        <custom-media class="h-full">
+                                                        <custom-media class="h-full pointer d-block">
                                                             <video src="@i.Media" controls></video>
                                                         </custom-media>
                                                     }
                                                     else
-                                                    {
+                                                    {      
                                                         <custom-media class="h-full rounded-style  overflow-hidden">
                                                             <a  data-pswp-src="@i.Media">
                                                                 <img src="@i.Media" class="w-full rounded-10" />
@@ -193,9 +188,82 @@
                                 <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22" style="--fill: transparent; --height: 19px; --width: 20px;"><title>Thích</title><path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z"></path></svg>
 
                             </div>
-                            <div class="comment">
+                            <comment-popup class="comment">
                                 <svg width="20" height="19" aria-label="Trả lời" role="img" viewBox="0 0 24 24" style="--fill: currentColor; --height: 20px; --width: 20px;"><title>Trả lời</title><path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"></path></svg>
-                            </div>
+                                <div class="create_comment hidden">
+                                    <div class="flex flex-column py-15 px-25">
+                                        <div class="flex flex-cols gap-20 flex-wrap">
+                                            <div class="thread_info col-w-custom" style="width: 48px">
+                                                <div class="flex h-full flex-column">
+                                                    <img width="48" height="48" />
+                                                    <div class="line_main mx-auto flex-1">
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="thread_main col-w-custom" style="--col-width: calc(100% - 48px - 30px)">
+                                                <div class="flex align-center justify-between">
+                                                    <h3 class="author flex align-center fs-16" data-submit-date="@thread.SubmitDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffff")"> @thread.Account.Info.userName <span class="time-elapsed"></span> </h3>
+                                              
+                                                </div>
+                                                <div class="link-detail">
+                                                    <div class="content w-full content-text">
+                                                        @thread.Content
+                                                    </div>
+                                                    @if (thread.ThreadImages.Count != 0)
+                                                    {
+                                                        <div class="slide-image w-full">
+                                                            <slide-section class="swiper w-full free-scroll"
+                                                                           data-section-id="template--16740126261401__collection_list_VmEYkJ"
+                                                                           data-autoplay="false"
+                                                                           data-effect="slide"
+                                                                           data-loop="false"
+                                                                           data-speed="800"
+                                                                           data-autoplay-speed="5"
+                                                                           data-spacing="10"
+                                                                           data-mobile="1"
+                                                                           data-tablet="2"
+                                                                           data-desktop="1.5"
+                                                                           data-free-scroll="true"
+                                                                           data-pagination-progressbar="false"
+                                                                           id="@thread.ThreadId">
+                                                                <div class="swiper-wrapper" id="gallery--getting-started-@thread.ThreadId">
+                                                                    @foreach (var i in thread.ThreadImages)
+                                                                    {
+                                                                        <div class="swiper-slide">
+                                                                            @if (i.Media.EndsWith("mp4"))
+                                                                            {
+                                                                                <custom-media class="h-full pointer d-block">
+                                                                                    <video src="@i.Media" controls></video>
+                                                                                </custom-media>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <custom-media class="h-full pointer d-block">
+                                                                                    <a data-pswp-src="@i.Media">
+                                                                                        <img src="@i.Media" class="w-full" />
+                                                                                    </a>
+                                                                                </custom-media>
+                                                                            }
+                                                                        </div>
+                                                                    }
+
+                                                                </div>
+                                                            </slide-section>
+                                                        </div>
+                                                    }
+                                                </div>
+                                           
+                                            </div>
+                                        </div>
+
+                                
+
+
+                                    </div>
+                                </div>
+                            </comment-popup>
                             <div class="re-post">
                                 <svg width="20" height="19" aria-label="Đăng lại" role="img" viewBox="0 0 24 24" style="--fill: currentColor; --height: 20px; --width: 20px; stroke-width: 1.2;"><title>Đăng lại</title><path d="M19.998 9.497a1 1 0 0 0-1 1v4.228a3.274 3.274 0 0 1-3.27 3.27h-5.313l1.791-1.787a1 1 0 0 0-1.412-1.416L7.29 18.287a1.004 1.004 0 0 0-.294.707v.001c0 .023.012.042.013.065a.923.923 0 0 0 .281.643l3.502 3.504a1 1 0 0 0 1.414-1.414l-1.797-1.798h5.318a5.276 5.276 0 0 0 5.27-5.27v-4.228a1 1 0 0 0-1-1Zm-6.41-3.496-1.795 1.795a1 1 0 1 0 1.414 1.414l3.5-3.5a1.003 1.003 0 0 0 0-1.417l-3.5-3.5a1 1 0 0 0-1.414 1.414l1.794 1.794H8.27A5.277 5.277 0 0 0 3 9.271V13.5a1 1 0 0 0 2 0V9.271a3.275 3.275 0 0 1 3.271-3.27Z"></path></svg>
 
@@ -214,14 +282,10 @@
                         </div>
                         <span class="dots px-2">&nbsp;·&nbsp;</span>
                         <div class="thread_likes flex">
-                            <div style="transition: all 0.2s linear;" class="number ">
-                                <div style="transition: all 0.2s linear" class="number_1 fs-15">
+                            <div class="number transition">
+                                <div class="main_number transition fs-15">
                                     @thread.React
                                 </div>
-                                <div style="transition: all 0.2s linear" class="main-number fs-15">
-                                    763
-                                </div>
-
                             </div>
                             <span style="margin-left: 5px;" class="fs-15">lượt thích</span>
                         </div>
