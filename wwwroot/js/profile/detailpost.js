@@ -95,7 +95,7 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
             let commentBox = document.querySelector('.comment-box');
             //let noComment = document.querySelector('.no-comment-wrapper');
             //noComment.classList.add('hidden');
-
+            console.log(data)
             let commentImageHTML = '';
             if (data.data.Comment.CommentImages.$values.length !== 0) {
                 commentImageHTML = `<img src="${data.data.Comment.CommentImages.$values[0].Media}" class="comment-picture">`;
@@ -206,13 +206,15 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
         </div>
     </comment-author>
     <div class="reply-box hidden">
-                                <form id="replyForm" method="post">
+                                <form class="replyForm" method="post">
                                     <div class="write-reply-wrapper">
                                         <div class="write-reply-account">
                                             <img src="../pics/profile/shh.jpg" class="write-reply-account-avt" />
                                         </div>
                                         <div class="write-reply-box-wrapper">
-                                            <div class="currentThreadId" data-threadId="${data.data.ThreadId}" hidden></div>
+                                            <div class="currentThreadId-reply" data-threadId="${data.data.ThreadId}" hidden></div>
+                                            <div class="type-comment-reply" data-type="reply" hidden></div>
+                                            <div class="threadCommentIdInsert" data-threadCommentId="${data.data.ThreadCommentId}" hidden></div>
                                             <input placeholder="Reply to ${data.data.Comment.Account.Info.userName}" type="text" class="write-reply-box-content" />
                                         </div>
                                         <div class="create_image relative thread_main_icon heart">
@@ -222,7 +224,7 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
                                         <div class="write-reply-btn-emoji">
                                             <i class="fa-solid fa-face-smile"></i>
                                         </div>
-                                        <div class="write-reply-btn-submit">
+                                        <div class="write-reply-btn-submit" onclick="clickReplyBtn(this)">
                                             <i class="fa-solid fa-paper-plane icon-submit"></i>
                                         </div>
                                     </div>
@@ -239,12 +241,14 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
 });
 
 //AJAX reply comment
-document.querySelector('.write-reply-btn-submit').addEventListener('click', function () {
-    let currentThreadId = document.querySelector('.currentThreadId-reply');
-    let typeComment = document.querySelector('.type-comment-reply');
-    let threadCommentId = document.querySelector('.threadCommentIdInsert');
-    let commentContent = document.querySelector('.write-reply-box-content').value;
-    let commentPic = document.querySelector('.write-reply-pics').files;
+//document.querySelector('.write-reply-btn-submit').addEventListener('click',
+function clickReplyBtn(current) {
+    let element = current.closest('.comment-wrapper');
+    let currentThreadId = element.querySelector('.currentThreadId-reply');
+    let typeComment = element.querySelector('.type-comment-reply');
+    let threadCommentId = element.querySelector('.threadCommentIdInsert');
+    let commentContent = element.querySelector('.write-reply-box-content').value;
+    let commentPic = element.querySelector('.write-reply-pics').files;
 
     let formData = new FormData();
     formData.append('content', commentContent);
@@ -271,7 +275,7 @@ document.querySelector('.write-reply-btn-submit').addEventListener('click', func
             if (data.data.CommentImages.$values.length !== 0) {
                 commentImageHTML = `<img src="${data.data.CommentImages.$values[0].Media}" class="comment-picture">`;
             }
-            let replyArea = document.querySelector('.reply-area');
+            let replyArea = element.querySelector('.reply-area');
             replyArea.insertAdjacentHTML('beforeend', `
             <comment-author data-custom-class="comment-detail-like-box" class="comment-author comment-reply">
                             <comment-detail-like class="wrapper-detail-like-box hidden">
@@ -368,11 +372,11 @@ document.querySelector('.write-reply-btn-submit').addEventListener('click', func
                         </comment-author>
                         <div class="detail-separate-line"></div>
             `)
-            document.querySelector('.write-reply-box-content').value = '';
-            document.querySelector('#replyForm').reset();
+            element.querySelector('.write-reply-box-content').value = '';
+            element.querySelector('.replyForm').reset();
         }
     });
-});
+}
 
 //Form Comment
 var formComment = document.querySelector('#commentForm');
@@ -384,13 +388,15 @@ formComment.addEventListener('keydown', function (e) {
 });
 
 //Form Reply
-var formReply = document.querySelector('#replyForm');
-formReply.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        document.querySelector('.write-reply-btn-submit').click();
-    }
-});
+var formReplies = document.querySelectorAll('.replyForm');
+formReplies.forEach((formReply) => {
+    formReply.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            formReply.querySelector('.write-reply-btn-submit').click();
+        }
+    });
+})
 
 //Reply
 function clickReply(event) {
@@ -403,3 +409,31 @@ function clickReply(event) {
     }
 }
 
+//View more
+function showMoreReply(element) {
+    let fatherWrapper = element.closest('.comment-wrapper');
+    let btnViewLess = fatherWrapper.querySelector('.btn-view-less');
+    Array.from(btnViewLess.children).forEach((element) => {
+        element.classList.remove('hidden')
+    })
+    Array.from(element.closest('.view-reply-wrapper').children).forEach((element) => {
+        element.classList.add('hidden')
+    })
+
+    let replyArea = fatherWrapper.querySelector('.reply-area');
+    replyArea.classList.remove('hidden');
+}
+
+function hideReply(element) {
+    let fatherWrapper = element.closest('.comment-wrapper');
+    let btnViewMore = fatherWrapper.querySelector('.btn-view-more');
+    Array.from(btnViewMore.children).forEach((element) => {
+        element.classList.remove('hidden')
+    })
+    Array.from(element.closest('.view-reply-wrapper').children).forEach((element) => {
+        element.classList.add('hidden')
+    })
+
+    let replyArea = fatherWrapper.querySelector('.reply-area');
+    replyArea.classList.add('hidden');
+}

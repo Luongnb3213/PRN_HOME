@@ -887,6 +887,7 @@ thread-up {
     font-size: 1.2rem;
     color: var(--sub-text-color);
     cursor: pointer;
+    user-select: none;
 }
 
 .hide-reply:hover,

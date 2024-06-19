@@ -21,6 +21,7 @@ namespace PRN221_Assignment.Pages.Profile
         public Models.Thread SelectedThread { get; set; }
         public int numOfComment { get; set; }
         public List<ThreadComment> listOriginalComment { get; set; }
+        public List<dynamic> listReplyDetail { get; set; }
         public void OnGet()
         {
             SelectedThread = context.Thread
@@ -47,6 +48,59 @@ namespace PRN221_Assignment.Pages.Profile
                 .OrderByDescending(x => x.Comment.CreatedAt)
                 .ToList();
 
+            //List<dynamic> listReplyall = (from a in context.Comment
+            //                              join b in context.Conversation on a.CommentId equals b.CommentId
+            //                              join c in context.ThreadComment on b.ThreadCommentId equals c.ThreadCommentId
+            //                              join d in context.Accounts on a.AuthorId equals d.UserID
+            //                              join e in context.Info on d.UserID equals e.UserID
+            //                              join f in context.CommentImages on a.CommentId equals f.CommentId
+            //                              select new
+            //                              {
+            //                                  ReplyId = a.CommentId,
+            //                                  a.Content,
+            //                                  a.React,
+            //                                  a.AuthorId,
+            //                                  a.CreatedAt,
+            //                                  b.ConversationId,
+            //                                  b.ThreadCommentId,
+            //                                  OriginalId = c.CommentId,
+            //                                  DetailThreadId = c.ThreadId,
+            //                                  d.UserID,
+            //                                  e.userName,
+            //                                  e.Image,
+            //                                  f.Media
+            //                              }).ToList().Cast<dynamic>().ToList();
+            var fullJoin = (from a in context.Comment
+                            join b in context.Conversation on a.CommentId equals b.CommentId into gjb
+                            from subb in gjb.DefaultIfEmpty()
+                            join c in context.ThreadComment on subb.ThreadCommentId equals c.ThreadCommentId into gjc
+                            from subc in gjc.DefaultIfEmpty()
+                            join d in context.Accounts on a.AuthorId equals d.UserID into gjd
+                            from subd in gjd.DefaultIfEmpty()
+                            join e in context.Info on subd.UserID equals e.UserID into gje
+                            from sube in gje.DefaultIfEmpty()
+                            join f in context.CommentImages on a.CommentId equals f.CommentId into gjf
+                            from subf in gjf.DefaultIfEmpty()
+                            select new
+                            {
+                                ReplyId = a.CommentId,
+                                Content = a.Content,
+                                React = a.React,
+                                AuthorId = a.AuthorId,
+                                CreatedAt = a.CreatedAt,
+                                ConversationId = subb != null ? subb.ConversationId : (int?)null,
+                                ThreadCommentId = subb != null ? subb.ThreadCommentId : (int?)null,
+                                OriginalId = subc != null ? subc.CommentId : (int?)null,
+                                DetailThreadId = subc != null ? subc.ThreadId : (int?)null,
+                                UserID = subd != null ? subd.UserID : (int?)null,
+                                userName = sube != null ? sube.userName : null,
+                                Image = sube != null ? sube.Image : null,
+                                Media = subf != null ? subf.Media : null
+                            }).ToList();
+
+            List<dynamic> listReplyall = fullJoin.Cast<dynamic>().ToList();
+
+            listReplyDetail = listReplyall.Where(x => x.DetailThreadId == ThreadId).ToList();
         }
         public async Task<IActionResult> OnPost([FromForm] MyComment comment)
         {
