@@ -92,8 +92,7 @@ namespace PRN221_Assignment.Pages
             {
                 int totalOriginal = context.ThreadComment.Count(x => x.ThreadId == th.ThreadId);
                 int totalReply = context.Conversation
-                            .Count(x => context.ThreadComment
-                            .Select(tc => tc.ThreadCommentId)
+                            .Count(x => context.ThreadComment.Where(x => x.ThreadId == th.ThreadId).Select(x => x.ThreadCommentId)
                             .Contains(x.ThreadCommentId));
 
                 int countComment = totalOriginal + totalReply;
