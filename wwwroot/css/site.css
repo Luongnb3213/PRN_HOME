@@ -89,11 +89,13 @@ thread-main {
     .tingle-modal-box__content .thread_main_icon svg {
         stroke-width: 0.5;
     }
-.create_image input{
+.create_image input {
     position: absolute;
     width: 20px;
-    height:20px;
-    opacity:0;
+    height: 20px;
+    opacity: 0;
+    padding: 10px;
+    z-index: 2;
 }
 .heart, .comment,.re-post{
     cursor: pointer;

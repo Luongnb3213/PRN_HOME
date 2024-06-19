@@ -11,13 +11,6 @@ class threadMain extends HTMLElement {
         this.init();
         this.saveScroll();
         this.number.appendChild(this.createMainNumber(767, "new"));
-        this.realTimeHeart();
-        setTimeout(() => {
-            this.realTimeHeart();
-        }, 3000)
-        setTimeout(() => {
-            this.realTimeHeart();
-        }, 6000)
     }
     init() {
         var _this = this
@@ -91,6 +84,8 @@ class PopupBase extends HTMLElement {
         super();
         this.customClass = this.dataset.customClass;
         this.modal = null;
+        this.fnClose = null;
+        this.fnOpen = null;
     }
 
     initPopup(content, text) {
@@ -101,7 +96,11 @@ class PopupBase extends HTMLElement {
             closeMethods: ["overlay", "button", "escape"],
             cssClass: [this.customClass],
             onOpen: function () { },
-            onClose: function () { },
+            onClose: function () {
+                if (this.fnClose) {
+                    this.fnClose()
+                }
+            },
             beforeClose: function () {
                 _this.onCloseEvent();
                 return true;
@@ -129,6 +128,48 @@ class PopupBase extends HTMLElement {
     onCloseEvent() { }
 }
 
+var blsInputAppendImage = (function () {
+    return {
+        init: function () {
+            var inputImages = document.querySelector('.tingle-modal-box input[name="UploadedFiles"]');
+            var slideSection = document.querySelector('.tingle-modal-box slide-section .swiper-wrapper');
+            
+            if (inputImages) {
+                inputImages.addEventListener('change', (e) => {
+                    slideSection.innerHTML = '';
+                    if (e.target.files) { 
+                        Array.from(e.target.files).forEach((item) => {
+                            var fileURL = URL.createObjectURL(item);
+                            var swiperSlide = document.createElement("div")
+                            swiperSlide.classList.add("swiper-slide")
+                            if (item.type.includes("mp4")) {
+                                swiperSlide.innerHTML = `<custom-media class="h-full pointer d-block">
+                                                   <video src="${fileURL}" controls></video>
+                                               </custom-media>`;
+                            } else {
+                                swiperSlide.innerHTML = `<custom-media class="h-full pointer d-block">
+                                                   <a data-pswp-src="${fileURL}">
+                                                       <img src="${fileURL}" class="w-full" />
+                                                   </a>
+                                               </custom-media>`;
+                            }
+                            slideSection.appendChild(swiperSlide)
+
+
+                        });
+                    }
+                  
+                });
+            }
+        },
+        deleteSlide: function () {
+            var slideSection = document.querySelector('.tingle-modal-box slide-section .swiper-wrapper');
+            slideSection.innerHTML= ''
+        }
+    }
+
+})()
+
 class popupCreate extends PopupBase {
     constructor() {
         super()
@@ -137,10 +178,10 @@ class popupCreate extends PopupBase {
     init() {
         var _this = this
         this.addEventListener("click", () => {
-        
+            _this.fnClose = blsInputAppendImage.deleteSlide;
             _this.initPopup(_this.querySelector(".create_thread").innerHTML)
             var slide = document.querySelector(".swiper-wrapper")
-           
+            blsInputAppendImage.init()
         })
     }
 
@@ -179,3 +220,43 @@ class commentPopup extends PopupBase {
 }
 
 customElements.define("comment-popup", commentPopup)
+
+
+
+class commentReply extends HTMLElement {
+    constructor() {
+        super()
+        this.inputImage = this.querySelector('input[name="UploadedFiles"]')
+        
+        this.init()
+    }
+    init() { 
+        var _this = this
+        if (_this.inputImage) {
+            _this.inputImage.addEventListener("change", (e) => {
+                var custom_media = _this.querySelector(".custom_media")
+                if (custom_media) {
+                    custom_media.remove();
+                }
+                if (e.target.files[0]) { 
+                    var fileURL = URL.createObjectURL(e.target.files[0]);
+                    var custom_media_1 = document.createElement("div")
+                    custom_media_1.classList.add("mt-10", "w-50", "mb-10", "relative", 'custom_media')
+                    custom_media_1.innerHTML += `  <custom-media>
+                                                <img src="${fileURL}"  />
+                                                <span class="shutdonw_icon absolute transition pointer top-0 right-0">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M19 5L5 19" stroke="#333333" stroke-width="4" stroke-linecap="round" />
+                                                        <path d="M5 5L19 19" stroke="#333333" stroke-width="4" stroke-linecap="round" />
+                                                    </svg>
+                                                </span>
+                                                </custom-media>
+                                           `
+                    _this.appendChild(custom_media_1)
+                }
+                
+            })
+        }
+    }
+}
+customElements.define("comment-reply", commentReply)

@@ -945,9 +945,7 @@ thread-up {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    height: 100px;
     display: flex;
-    align-items: center;
 }
 
 .write-comment-account-avt {
@@ -1016,9 +1014,7 @@ thread-up {
     width: 100%;
     background-color: var(--secondary-color);
     padding-left: 52px;
-    height: 80px;
     display: flex;
-    align-items: center;
     justify-content: space-around;
 }
 
@@ -1076,3 +1072,6 @@ custom-media img {
     custom-media:active img {
         transform: scale(0.98);
     }
+.shutdonw_icon:active {
+    transform: scale(0.7);
+}

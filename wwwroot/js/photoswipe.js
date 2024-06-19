@@ -6,29 +6,55 @@ class customImage extends HTMLElement {
         super();
         this.element = this.querySelector("img") || this.querySelector("video");
         this.a = this.querySelector("a");
-
-        if (this.element.complete) {
-            this.init();
-        } else {
-            this.element.addEventListener('load', () => this.init());
+        if (this.element) {
+            if (this.element.complete || this.element.readyState === 4) {
+                this.init();
+                this.delete();
+            } else {
+                this.element.addEventListener('load', () => {
+                    this.init();
+                    this.delete()
+                }
+                );
+                this.element.addEventListener('loadedmetadata', () => {
+                    this.init();
+                    this.delete()
+                }
+                );
+            }
         }
+
     }
 
     init() {
         var fixedHeight = 1500;
         var naturalHeight = parseFloat(this.element.naturalHeight) || parseFloat(this.element.videoHeight);
         var naturalWidth = parseFloat(this.element.naturalWidth) || parseFloat(this.element.videoWidth);
-        var aspect_ratio = naturalWidth / naturalHeight
-        this.style = `--aspect-ratio :  ${aspect_ratio}`
+        var aspect_ratio = naturalWidth / naturalHeight;
+        this.style = `--aspect-ratio: ${aspect_ratio}`;
         var calculatedWidth = fixedHeight * aspect_ratio;
+
         if (this.a) {
             this.a.setAttribute("data-pswp-width", calculatedWidth);
             this.a.setAttribute("data-pswp-height", fixedHeight);
         }
-     
+    }
+    delete() {
+        var _this = this
+        var shutdonw_icon = this.querySelector(".shutdonw_icon")
+        if (shutdonw_icon) {
+            shutdonw_icon.addEventListener("click", (e) => {
+                _this.remove()
+            })
+        }
+    }
+    deleteSefl() {
+             this.remove()    
     }
 }
+
 customElements.define("custom-media", customImage);
+
 class SlideSection extends HTMLElement {
     constructor() {
         super();
