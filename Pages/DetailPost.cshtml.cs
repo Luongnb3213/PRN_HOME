@@ -32,7 +32,13 @@ namespace PRN221_Assignment.Pages.Profile
                 .Include(x => x.Account.Info)
                 .FirstOrDefault(x => x.ThreadId == ThreadId);
 
-            numOfComment = context.ThreadComment.Count(x => x.ThreadId == ThreadId);
+            int totalOriginal = context.ThreadComment.Count(x => x.ThreadId == ThreadId);
+            int totalReply = context.Conversation
+                        .Count(x => context.ThreadComment
+                        .Select(tc => tc.ThreadCommentId)
+                        .Contains(x.ThreadCommentId));
+
+            numOfComment = totalOriginal + totalReply;
 
             listOriginalComment = context.ThreadComment.Where(x => x.ThreadId == ThreadId)
                 .Include(x => x.Comment)
@@ -102,14 +108,14 @@ namespace PRN221_Assignment.Pages.Profile
             }
             else
             {
-                Conversation newReplyComment = context.Conversation
-                    .Include(x => x.ThreadComment)
-                    .Include(x => x.ThreadComment.Comment)
-                    .Include(x => x.ThreadComment.Conversations)
-                    .Include(x => x.ThreadComment.Comment.Account.Info)
-                    .Include(x => x.ThreadComment.Comment.CommentImages)
-                    .FirstOrDefault(x => x.CommentId == newComment.CommentId);
-
+                int maxConversationId = context.Conversation.Max(x => x.ConversationId);
+                var currentReply = context.Conversation.FirstOrDefault(x => x.ConversationId == maxConversationId);
+                Comment newReplyComment = context.Comment
+                    .Include(x => x.ThreadComments)
+                    .Include(x => x.CommentImages)
+                    .Include(x => x.Account)
+                    .Include(x => x.Account.Info)
+                    .FirstOrDefault(x => x.CommentId == currentReply.CommentId);
                 return new JsonResult(new { data = newReplyComment }, options);
             }
 

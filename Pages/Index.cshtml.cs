@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using PRN221_Assignment.Authorization;
 using PRN221_Assignment.Models;
 using System.Security.Claims;
+using System.Threading;
 using Thread = PRN221_Assignment.Models.Thread;
 
 namespace PRN221_Assignment.Pages
@@ -89,7 +90,13 @@ namespace PRN221_Assignment.Pages
 
             foreach (var th in Threads)
             {
-                int countComment = context.ThreadComment.Count(x => x.ThreadId == th.ThreadId);
+                int totalOriginal = context.ThreadComment.Count(x => x.ThreadId == th.ThreadId);
+                int totalReply = context.Conversation
+                            .Count(x => context.ThreadComment
+                            .Select(tc => tc.ThreadCommentId)
+                            .Contains(x.ThreadCommentId));
+
+                int countComment = totalOriginal + totalReply;
                 dicThreadComment[th.ThreadId.ToString()] = countComment;
             }
         }
