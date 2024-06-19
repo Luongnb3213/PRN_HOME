@@ -309,15 +309,11 @@
                                 {
                                     <div class="view-reply-wrapper btn-view-more">
                                         <div class="view-reply-line"></div>
-                                        <div class="view-reply" onclick="showMoreReply(this)">View (@(box.Conversations.Count)) more reply</div>
-                                    </div>
-                                    <div class="view-reply-wrapper btn-view-less">
-                                        <div class="view-reply-line hidden"></div>
-                                        <div class="hide-reply hidden" onclick="hideReply(this)">Hide all replies</div>
+                                        <div class="view-reply">(@(box.Conversations.Count)) more reply</div>
                                     </div>
                                 }
                             </comment-author>
-                            <div class="reply-area">
+                            <div class="reply-area hidden">
                                 @foreach (var rep in Model.listReplyDetail)
                                 {
                                     @if (rep.ThreadCommentId == box.ThreadCommentId)

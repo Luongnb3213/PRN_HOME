@@ -205,6 +205,7 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
             </div>
         </div>
     </comment-author>
+    <div class="reply-area hidden"></div>
     <div class="reply-box hidden">
                                 <form class="replyForm" method="post">
                                     <div class="write-reply-wrapper">
@@ -249,6 +250,8 @@ function clickReplyBtn(current) {
     let threadCommentId = element.querySelector('.threadCommentIdInsert');
     let commentContent = element.querySelector('.write-reply-box-content').value;
     let commentPic = element.querySelector('.write-reply-pics').files;
+
+    console.log(commentContent)
 
     let formData = new FormData();
     formData.append('content', commentContent);
@@ -374,6 +377,9 @@ function clickReplyBtn(current) {
             `)
             element.querySelector('.write-reply-box-content').value = '';
             element.querySelector('.replyForm').reset();
+            replyArea.classList.remove('hidden');
+            let currentCount = element.querySelector('.num-comment.detail-comment').innerHTML
+            element.querySelector('.num-comment.detail-comment').innerHTML = currentCount * 1 + 1;
         }
     });
 }
@@ -387,16 +393,13 @@ formComment.addEventListener('keydown', function (e) {
     }
 });
 
-//Form Reply
-var formReplies = document.querySelectorAll('.replyForm');
-formReplies.forEach((formReply) => {
-    formReply.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            formReply.querySelector('.write-reply-btn-submit').click();
-        }
-    });
-})
+
+document.addEventListener('keydown', function (e) {
+    if (e.target.matches('.replyForm .write-reply-box-content') && e.key === 'Enter') {
+        e.preventDefault();
+        e.target.closest('.replyForm').querySelector('.write-reply-btn-submit').click();
+    }
+});
 
 //Reply
 function clickReply(event) {
@@ -404,36 +407,24 @@ function clickReply(event) {
     let replyBox = father.querySelector('.reply-box');
     if (replyBox.classList.contains('hidden')) {
         replyBox.classList.remove('hidden');
+        if (father.querySelectorAll('.view-reply-wrapper').length > 0) {
+            showMoreReply(event.target);
+        }
     } else {
         replyBox.classList.add('hidden');
+        hideReply(event.target);
     }
 }
 
 //View more
 function showMoreReply(element) {
     let fatherWrapper = element.closest('.comment-wrapper');
-    let btnViewLess = fatherWrapper.querySelector('.btn-view-less');
-    Array.from(btnViewLess.children).forEach((element) => {
-        element.classList.remove('hidden')
-    })
-    Array.from(element.closest('.view-reply-wrapper').children).forEach((element) => {
-        element.classList.add('hidden')
-    })
-
     let replyArea = fatherWrapper.querySelector('.reply-area');
     replyArea.classList.remove('hidden');
 }
 
 function hideReply(element) {
     let fatherWrapper = element.closest('.comment-wrapper');
-    let btnViewMore = fatherWrapper.querySelector('.btn-view-more');
-    Array.from(btnViewMore.children).forEach((element) => {
-        element.classList.remove('hidden')
-    })
-    Array.from(element.closest('.view-reply-wrapper').children).forEach((element) => {
-        element.classList.add('hidden')
-    })
-
     let replyArea = fatherWrapper.querySelector('.reply-area');
     replyArea.classList.add('hidden');
 }
