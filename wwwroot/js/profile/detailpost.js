@@ -489,9 +489,9 @@ function clickReply(event) {
     let replyBox = father.querySelector('.reply-box');
     if (replyBox.classList.contains('hidden')) {
         replyBox.classList.remove('hidden');
-        if (father.querySelectorAll('.view-reply-wrapper').length > 0) {
+        //if (father.querySelectorAll('.view-reply-wrapper').length > 0) {
             showMoreReply(event.target);
-        }
+        //}
     } else {
         replyBox.classList.add('hidden');
         hideReply(event.target);

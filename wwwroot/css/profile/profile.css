@@ -840,6 +840,8 @@ thread-up {
 
 .author-comment-body {
     margin-top: 4px;
+    display: flex;
+    flex-direction: column; 
 }
 
 .comment-content {
@@ -1075,4 +1077,8 @@ custom-media img {
 }
 .heart {
     height: 20px;
+}
+
+.reply-box {
+    padding-bottom: 24px;
 }
