@@ -957,9 +957,7 @@ thread-up {
     cursor: pointer;
 }
 
-.write-comment-account,
-.write-comment-btn-emoji,
-.write-comment-btn-submit {
+.write-comment-account {
     flex: 1
 }
 
@@ -1027,9 +1025,7 @@ thread-up {
     cursor: pointer;
 }
 
-.write-reply-account,
-.write-reply-btn-emoji,
-.write-reply-btn-submit {
+.write-reply-account{
     flex: 1
 }
 

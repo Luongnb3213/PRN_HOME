@@ -130,3 +130,6 @@ custom-media img {
 custom-media:active img {
     transform: scale(0.98);
 }
+.emoji-picker__wrapper{
+    z-index: 4;
+}

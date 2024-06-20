@@ -8,21 +8,29 @@ class emojiBox extends HTMLElement {
     init() {
         emojione.emojiSize = 32;
         emojione.ascii = true;
-        const button = this.querySelector('#emoji-button');
-        const emojiContainer = this.querySelector('#emojiContainer');
-        const testEmojin = this.querySelector('#testEmojin');
+        const button = this.querySelector('.emoji-button');
+        const emojiContainer = this.closest("comment-reply")?.querySelector("input[name='comment']");
         const picker = new EmojiButton();
-
             picker.on('emoji', emoji => {
-                const emojiElement = document.createElement('span');
-                emojiElement.textContent = emoji.emoji;
-                emojiContainer.innerHTML += emoji.emoji + " ";
-                testEmojin.innerHTML = emojione.toShort(emojiContainer.innerHTML);
+                if (emojiContainer) {
+                    emojiContainer.value += emoji.emoji
+                }
             });
-
             button.addEventListener('click', () => {
                 picker.togglePicker(button);
             });
     }
 }
 customElements.define("emoji-box", emojiBox)
+
+
+class commetContent extends HTMLElement{
+    constructor() {
+        super();
+        this.init()
+    }
+    init() {
+        this.innerHTML = emojione.toImage(this.innerHTML);
+    }
+}
+customElements.define("commet-content", commetContent)

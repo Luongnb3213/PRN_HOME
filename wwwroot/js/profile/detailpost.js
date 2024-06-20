@@ -72,11 +72,10 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
     let typeComment = document.querySelector('.type-comment-origin');
     let commentContent = document.querySelector('.write-comment-box-content').value;
     let commentPic = document.querySelector('.write-comment-pics').files;
-
     let formData = new FormData();
-    formData.append('content', commentContent);
+    formData.append('content', emojione.toShort(commentContent));
     formData.append('type', typeComment.dataset.type)
-
+    
     for (let i = 0; i < commentPic.length; i++) {
         formData.append('pictures', commentPic[i]);
     }
@@ -160,7 +159,7 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
                     <div data-submit-date="${data.data.Comment.CreatedAt}" class="author-comment-time">Just now</div>
                 </div>
                 <div class="author-comment-body">
-                    <div class="comment-content">${data.data.Comment.Content}</div>
+                    <div class="comment-content">${emojione.toImage(data.data.Comment.Content)}</div>
                     ${commentImageHTML}
                 </div>
                 <div class="author-comment-footer">
@@ -250,11 +249,8 @@ function clickReplyBtn(current) {
     let threadCommentId = element.querySelector('.threadCommentIdInsert');
     let commentContent = element.querySelector('.write-reply-box-content').value;
     let commentPic = element.querySelector('.write-reply-pics').files;
-
-    console.log(commentContent)
-
     let formData = new FormData();
-    formData.append('content', commentContent);
+    formData.append('content', emojione.toShort(commentContent));
     formData.append('type', typeComment.dataset.type)
     formData.append('threadCommentId', threadCommentId.dataset.threadcommentid)
 
@@ -338,7 +334,7 @@ function clickReplyBtn(current) {
                                         <div data-submit-date="${data.data.CreatedAt}" class="author-comment-time">Just now</div>
                                     </div>
                                     <div class="author-comment-body">
-                                        <div class="comment-content">${data.data.Content}</div>
+                                        <div class="comment-content">${emojione.toImage(data.data.Content)}</div>
                                         ${commentImageHTML}
                                     </div>
                                     <div class="author-comment-footer">
