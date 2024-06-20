@@ -83,7 +83,7 @@
                     </thread-detail-like>
                     <div class="detail-header-wrapper">
                         <div class="detail-header-author">
-                            <img src="../pics/profile/shh.jpg" class="avt-author" />
+                            <img src="@Model.SelectedThread.Account.Info.Image" class="avt-author" />
                             <div class="wrapper-author">
                                 <div class="info-author">
                                     <a href="" class="username-author">@Model.SelectedThread.Account.Info.userName</a>
@@ -439,7 +439,7 @@
                                         <comment-reply class="write-reply-wrapper flex flex-column ">
                                             <div class="flex align-center w-full justify-content-around">
                                                 <div class="write-reply-account">
-                                                    <img src="../pics/profile/shh.jpg" class="write-reply-account-avt" />
+                                                    <img src="@Model.currentAccount.Info.Image" class="write-reply-account-avt" />
                                                 </div>
                                                 <div class="write-reply-box-wrapper ">
                                                     <div class="currentThreadId-reply" data-threadId="@Model.SelectedThread.ThreadId" hidden></div>
@@ -486,7 +486,7 @@
         <comment-reply class="write-comment-wrapper flex flex-column">
             <div class="flex align-center w-full justify-content-around">
                 <div class="write-comment-account">
-                    <img src="../pics/profile/shh.jpg" class="write-comment-account-avt" />
+                    <img src="@Model.currentAccount.Info.Image" class="write-comment-account-avt" />
                 </div>
                 <div class="write-comment-box-wrapper">
                     <div class="currentThreadId-origin" data-threadId="@Model.SelectedThread.ThreadId" hidden></div>

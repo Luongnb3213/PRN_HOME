@@ -28,6 +28,7 @@ namespace PRN221_Assignment.Pages
         public List<IFormFile> UploadedFiles { get; set; }
         public List<Thread> Threads { get; set; }
         public Dictionary<string, int> dicThreadComment { get; set; }
+        public Account currentAccount { get; set; }
         public async Task<IActionResult> OnPost()
         {
             foreach (var media in UploadedFiles)
@@ -49,7 +50,9 @@ namespace PRN221_Assignment.Pages
             {
                 newThread.Content = Thread.Content;
             }
-            newThread.AuthorId = 1; //Cái này sau phải đổi với account khác
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+            currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
+            newThread.AuthorId = currentAccount.UserID; //Cái này sau phải đổi với account khác
             newThread.React = 0;
             newThread.Share = 0;
             newThread.SubmitDate = DateTime.Now;
@@ -74,11 +77,7 @@ namespace PRN221_Assignment.Pages
             {
                 ViewData["msg"] = msg;
             }
-            //var username = User.Identity;
-            //var isAuthenticate = User.Identity?.IsAuthenticated ?? false;
-            //var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            //var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
-            //return new JsonResult(new { username, isAuthenticate, email, userId });
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
 
             Threads = context.Thread
                .Include(x => x.ThreadImages)
@@ -98,6 +97,8 @@ namespace PRN221_Assignment.Pages
                 int countComment = totalOriginal + totalReply;
                 dicThreadComment[th.ThreadId.ToString()] = countComment;
             }
+
+            currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
         }
     }
 }

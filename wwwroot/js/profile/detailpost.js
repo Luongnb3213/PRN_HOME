@@ -59,7 +59,7 @@ class threadDetail extends PopupBase {
         setTimeout(() => {
             this.realTimeHeart()
         }, 3000)
-       
+
         this.init();
     }
     realTimeHeart() {
@@ -152,7 +152,7 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
     let formData = new FormData();
     formData.append('content', emojione.toShort(commentContent));
     formData.append('type', typeComment.dataset.type)
-    
+
     for (let i = 0; i < commentPic.length; i++) {
         formData.append('pictures', commentPic[i]);
     }
@@ -287,9 +287,9 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
     <div class="reply-area hidden"></div>
     <div class="reply-box hidden">
                                 <form class="replyForm" method="post">
-                                    <div class="write-reply-wrapper">
+                                    <div class="write-reply-wrapper align-center">
                                         <div class="write-reply-account">
-                                            <img src="../pics/profile/shh.jpg" class="write-reply-account-avt" />
+                                            <img src="${data.data.Comment.Account.Info.Image}" class="write-reply-account-avt" />
                                         </div>
                                         <div class="write-reply-box-wrapper">
                                             <div class="currentThreadId-reply" data-threadId="${data.data.ThreadId}" hidden></div>
@@ -316,6 +316,11 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
             `)
             document.querySelector('.write-comment-box-content').value = '';
             document.querySelector('#commentForm').reset();
+            document.querySelector('.num-comment.detail-comment').innerHTML = document.querySelector('.num-comment.detail-comment').innerHTML * 1 + 1;
+            console.log(document.querySelector('.no-comment-wrapper'))
+            if (!document.querySelector('.no-comment-wrapper').classList.contains('hidden')) {
+                document.querySelector('.no-comment-wrapper').classList.add('hidden');
+            }
         }
     });
 });
@@ -462,6 +467,8 @@ function clickReplyBtn(current) {
             replyArea.classList.remove('hidden');
             let currentCount = element.querySelector('.num-comment.detail-comment').innerHTML
             element.querySelector('.num-comment.detail-comment').innerHTML = currentCount * 1 + 1;
+            document.querySelector('.num-comment.detail-comment').innerHTML = document.querySelector('.num-comment.detail-comment').innerHTML * 1 + 1;
+            
         }
     });
 }
@@ -490,7 +497,7 @@ function clickReply(event) {
     if (replyBox.classList.contains('hidden')) {
         replyBox.classList.remove('hidden');
         //if (father.querySelectorAll('.view-reply-wrapper').length > 0) {
-            showMoreReply(event.target);
+        showMoreReply(event.target);
         //}
     } else {
         replyBox.classList.add('hidden');

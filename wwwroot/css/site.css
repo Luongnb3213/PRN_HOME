@@ -133,3 +133,10 @@ custom-media:active img {
 .emoji-picker__wrapper{
     z-index: 4;
 }
+
+.avt-me,
+.avt-author {
+    border-radius: 50%;
+    object-fit: cover;
+    height: 48px !important;
+}

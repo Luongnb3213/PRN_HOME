@@ -8,7 +8,7 @@
     <div class="thread_wrapper">
         <div class="thread_post_header pointer py-20 px-25 align-center flex gap-10">
             <div class="user">
-                <img width="48" height="48" />
+                <img width="48" height="48" class="avt-me" src="@Model.currentAccount.Info.Image" />
             </div>
             <popup-create class="create_post flex-1">
                 <span class="fs-15">Start threading........</span>
@@ -20,12 +20,8 @@
                                 <div class="flex flex-cols gap-20 flex-wrap" style="--bs-gutter-x: 3rem">
                                     <div class="thread_info col-w-custom" style="width: 48px">
                                         <div class="flex h-full flex-column">
-                                            <img width="48" height="48" />
-                                            <div class="line_main mx-auto flex-1">
-                                            </div>
+                                            <img width="48" height="48" class="avt-me" src="@Model.currentAccount.Info.Image" />
                                         </div>
-
-
                                     </div>
                                     <div class="thread_main col-w-custom" style="--col-width: calc(100% - 48px - 30px)">
                                         <div class="flex align-center justify-between">
@@ -53,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="flex align-center pb-20">
-                                    <div class="thread_bottom flex overflow-hidden " style="height: 28px;">
+                                    <div class="thread_bottom flex overflow-hidden" style="height: 28px; display:none">
                                         <div style="width: 48px" class="flex align-center justify-content-center">
                                             <img width="16" height="16" />
                                         </div>
@@ -105,8 +101,8 @@
                 <div class="flex flex-cols gap-20 flex-wrap">
                     <div class="thread_info col-w-custom" style="width: 48px">
                         <div class="flex h-full flex-column">
-                            <img width="48" height="48" />
-                            <div class="line_main mx-auto flex-1">
+                            <img width="48" height="48" class="avt-author" src="@thread.Account.Info.Image" />
+                            <div class="line_main mx-auto flex-1 hidden">
                             </div>
                         </div>
 
@@ -285,7 +281,7 @@
 
                 <div class="thread_bottom mt-10 flex overflow-hidden " style="height: 28px;">
                     <div style="width: 48px" class="flex align-center justify-content-center">
-                        <img width="16" height="16" />
+                        <img width="16" height="16" hidden/>
                     </div>
                     <div class="flex ml-10 bls_like_thread">
                         <div class="thread_comments fs-15">

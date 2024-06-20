@@ -64,8 +64,8 @@ namespace PRN221_Assignment.Pages.Authentication
                 {
                     user.Email = email;
                     user.Password = "default Password";
-                    //_context.Accounts.Add(user);
-                    // _context.SaveChanges();
+                    _context.Accounts.Add(user);
+                    _context.SaveChanges();
                     Info info = new Info
                     {
                         UserID = user.UserID,
@@ -75,8 +75,8 @@ namespace PRN221_Assignment.Pages.Authentication
                         Story = "",
                         userName = userName,
                     };
-                    //_context.Info.Add(info);
-                    //_context.SaveChanges();
+                    _context.Info.Add(info);
+                    _context.SaveChanges();
                     user.Info = info;
                 }
                 catch (Exception e)

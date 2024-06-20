@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PRN221_Assignment.Models;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Security.Claims;
 
 namespace PRN221_Assignment.Pages.Profile
 {
@@ -22,7 +23,9 @@ namespace PRN221_Assignment.Pages.Profile
         public int numOfComment { get; set; }
         public List<ThreadComment> listOriginalComment { get; set; }
         public List<dynamic> listReplyDetail { get; set; }
-        public void OnGet()
+        public Account currentAccount { get; set; }
+
+        public async Task OnGet()
         {
             SelectedThread = context.Thread
                 .Include(x => x.Account)
@@ -44,6 +47,8 @@ namespace PRN221_Assignment.Pages.Profile
                 .Include(x => x.Comment)
                 .ThenInclude(x => x.CommentImages)
                 .Include(x => x.Conversations)
+                .Include(x => x.Comment.Account)
+                .Include(x => x.Comment.Account.Info)
                 .OrderByDescending(x => x.Comment.CreatedAt)
                 .ToList();
 
@@ -69,7 +74,7 @@ namespace PRN221_Assignment.Pages.Profile
             //                                  e.Image,
             //                                  f.Media
             //                              }).ToList().Cast<dynamic>().ToList();
-            var fullJoin = (from a in context.Comment
+            var fullJoin = await (from a in context.Comment
                             join b in context.Conversation on a.CommentId equals b.CommentId into gjb
                             from subb in gjb.DefaultIfEmpty()
                             join c in context.ThreadComment on subb.ThreadCommentId equals c.ThreadCommentId into gjc
@@ -95,18 +100,23 @@ namespace PRN221_Assignment.Pages.Profile
                                 userName = sube != null ? sube.userName : null,
                                 Image = sube != null ? sube.Image : null,
                                 Media = subf != null ? subf.Media : null
-                            }).ToList();
+                            }).ToListAsync();
 
             List<dynamic> listReplyall = fullJoin.Cast<dynamic>().ToList();
 
             listReplyDetail = listReplyall.Where(x => x.DetailThreadId == ThreadId).ToList();
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+            currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
         }
         public async Task<IActionResult> OnPost([FromForm] MyComment comment)
         {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+            currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
+
             Comment newComment = new Comment();
             newComment.Content = comment.Content == null ? string.Empty : comment.Content;
             newComment.React = 0;
-            newComment.AuthorId = 1; //Cái này sau phải chuyển theo account khác
+            newComment.AuthorId = currentAccount.Info.UserID;
             newComment.CreatedAt = DateTime.Now;
             context.Comment.Add(newComment);
             context.SaveChanges();
