@@ -5,7 +5,35 @@ linkPrevious.setAttribute('href', sessionStorage.getItem('previous'));
 class commentAuthor extends PopupBase {
     constructor() {
         super();
+        this.heart = this.querySelector(".heart");
+        this.number = this.querySelector(".number")
+        this.heartSvg = this.querySelector(".heart svg");
+        this.number?.appendChild(this.createMainNumber(767, "new"));
         this.init();
+    }
+    likeSlideUp() {
+        var _this = this
+        if (!_this.number.querySelector(".new")) {
+            this.number.appendChild(this.createMainNumber(767, "new"));
+        }
+        if (_this.number.classList.contains("active")) {
+            _this.number.querySelectorAll(".main_number").forEach((item) => {
+                item.classList.remove("translate-y--50")
+            })
+            _this.number.classList.remove("active");
+        } else {
+            _this.number.classList.add("active");
+            _this.number.querySelectorAll(".main_number").forEach((item) => {
+                item.classList.add("translate-y--50")
+            })
+
+        }
+    }
+    createMainNumber(number, classes) {
+        var mainNumber = document.createElement("div")
+        mainNumber.classList.add("transition", "fs-12", "main_number", classes)
+        mainNumber.innerHTML = number;
+        return mainNumber
     }
 
     init() {
@@ -14,6 +42,7 @@ class commentAuthor extends PopupBase {
         link.addEventListener('click', function () {
             _this.initPopup(_this.querySelector('comment-detail-like').innerHTML);
         })
+        this.heartSvg.addEventListener("click", _this.likeSlideUp.bind(_this))
     }
 }
 customElements.define('comment-author', commentAuthor)
@@ -23,13 +52,61 @@ customElements.define('comment-author', commentAuthor)
 class threadDetail extends PopupBase {
     constructor() {
         super();
+        this.heart = this.querySelector(".heart");
+        this.number = this.querySelector(".number")
+        this.heartSvg = this.querySelector(".heart svg");
+        this.number.appendChild(this.createMainNumber(767, "new"));
+        setTimeout(() => {
+            this.realTimeHeart()
+        }, 3000)
+       
         this.init();
+    }
+    realTimeHeart() {
+        var _this = this
+        var heart_realtime = this.createMainNumber(989, "heart-reatltime")
+        this.number.appendChild(heart_realtime);
+
+        if (_this.number.querySelector(".main_number.new")) {
+            _this.number.querySelector(".main_number.new").remove();
+        }
+        heart_realtime.classList.add("slide-upp")
+        _this.number.querySelector(".main_number:not(.slide-upp)").classList.add("opacity-0")
+        heart_realtime.addEventListener("animationend", (e) => {
+            _this.number.querySelector(".main_number:not(.slide-upp)").remove();
+            e.target.classList.remove("slide-upp");
+        })
+
+    }
+    likeSlideUp() {
+        var _this = this
+        if (!_this.number.querySelector(".new")) {
+            this.number.appendChild(this.createMainNumber(767, "new"));
+        }
+        if (_this.number.classList.contains("active")) {
+            _this.number.querySelectorAll(".main_number").forEach((item) => {
+                item.classList.remove("translate-y--50")
+            })
+            _this.number.classList.remove("active");
+        } else {
+            _this.number.classList.add("active");
+            _this.number.querySelectorAll(".main_number").forEach((item) => {
+                item.classList.add("translate-y--50")
+            })
+
+        }
+    }
+    createMainNumber(number, classes) {
+        var mainNumber = document.createElement("div")
+        mainNumber.classList.add("transition", "fs-12", "main_number", classes)
+        mainNumber.innerHTML = number;
+        return mainNumber
     }
 
     init() {
         var _this = this;
+        this.heartSvg.addEventListener("click", _this.likeSlideUp.bind(_this))
         var numLike = _this.querySelector('.num-like.detail-like.detail');
-        //console.log(numLike);
         numLike.addEventListener('click', function () {
             _this.initPopup(_this.querySelector('thread-detail-like .detail-like-box').innerHTML);
         })
@@ -165,15 +242,18 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
                 <div class="author-comment-footer">
                     <div class="react-wrapper author-comment-react">
                         <div class="wrapper-react-num">
-                            <div class="heart">
+                            <div class="heart flex">
                                 <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
                                      style="--fill: transparent; --height: 19px; --width: 20px;">
                                     <title>Thích</title>
                                     <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
                                     </path>
                                 </svg>
+                                 <div class="num-like number transition detail-like detail comment-detail-like-link overflow-hidden  flex-column">  <div class="main_number transition fs-12">
+                                            ${data.data.Comment.React}
+                                        </div></div>
                             </div>
-                            <div class="num-like detail-like detail comment-detail-like-link">${data.data.Comment.React}</div>
+                           
                         </div>
                         <div class="wrapper-react-num" onclick="clickReply(event)">
                             <div class="comment">
@@ -217,14 +297,14 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
                                             <div class="threadCommentIdInsert" data-threadCommentId="${data.data.ThreadCommentId}" hidden></div>
                                             <input placeholder="Reply to ${data.data.Comment.Account.Info.userName}" type="text" class="write-reply-box-content" />
                                         </div>
-                                        <div class="create_image relative thread_main_icon heart">
+                                        <div class="create_image relative thread_main_icon px-2 heart">
                                             <svg width="20" height="20" aria-label="Đính kèm file phương tiện" role="img" viewBox="0 0 24 24" class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn" style="--fill: currentColor; --height: 20px; --width: 20px;"><title>Đính kèm file phương tiện</title><g><path clip-rule="evenodd" d="M2.00207 9.4959C1.65132 7.00019 1.47595 5.75234 1.82768 4.73084C2.13707 3.83231 2.72297 3.05479 3.50142 2.50971C4.38639 1.89005 5.63425 1.71467 8.12996 1.36392L10.7047 1.00207C13.2004 0.651325 14.4482 0.47595 15.4697 0.827679C16.3682 1.13707 17.1458 1.72297 17.6908 2.50142C17.9171 2.82454 18.0841 3.19605 18.2221 3.65901C17.7476 3.64611 17.2197 3.64192 16.6269 3.64055C16.5775 3.5411 16.5231 3.44881 16.4621 3.36178C16.0987 2.84282 15.5804 2.45222 14.9814 2.24596C14.3004 2.01147 13.4685 2.12839 11.8047 2.36222L7.44748 2.97458C5.78367 3.20841 4.95177 3.32533 4.36178 3.73844C3.84282 4.10182 3.45222 4.62017 3.24596 5.21919C3.01147 5.90019 3.12839 6.73209 3.36222 8.3959L3.97458 12.7531C4.15588 14.0431 4.26689 14.833 4.50015 15.3978C4.50083 16.3151 4.50509 17.0849 4.53201 17.7448C4.13891 17.4561 3.79293 17.1036 3.50971 16.6991C2.89005 15.8142 2.71467 14.5663 2.36392 12.0706L2.00207 9.4959Z" fill="currentColor" fill-rule="evenodd"></path><g><g clip-path="url(#:r2:)"><rect fill="none" height="15.5" rx="3.75" stroke="currentColor" stroke-width="1.5" width="15.5" x="6.75" y="5.8894"></rect><path d="M6.6546 17.8894L8.59043 15.9536C9.1583 15.3857 10.0727 15.3658 10.6647 15.9085L12.5062 17.5966C12.9009 17.9584 13.5105 17.9451 13.8891 17.5665L17.8181 13.6376C18.4038 13.0518 19.3536 13.0518 19.9394 13.6375L22.0663 15.7644" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"></path><circle cx="10.75" cy="9.8894" fill="currentColor" r="1.25"></circle></g></g></g><defs><clipPath id=":r2:"><rect fill="white" height="17" rx="4.5" width="17" x="6" y="5.1394"></rect></clipPath></defs></svg>
                                             <input class="inset-0 write-reply-pics" type="file" accept="image/*,video/*" name="UploadedFiles">
                                         </div>
-                                        <div class="write-reply-btn-emoji">
+                                        <div class="write-reply-btn-emoji px-2">
                                             <i class="fa-solid fa-face-smile"></i>
                                         </div>
-                                        <div class="write-reply-btn-submit" onclick="clickReplyBtn(this)">
+                                        <div class="write-reply-btn-submit px-2" onclick="clickReplyBtn(this)">
                                             <i class="fa-solid fa-paper-plane icon-submit"></i>
                                         </div>
                                     </div>
@@ -340,15 +420,21 @@ function clickReplyBtn(current) {
                                     <div class="author-comment-footer">
                                         <div class="react-wrapper author-comment-react">
                                             <div class="wrapper-react-num">
-                                                <div class="heart">
+                                                <div class="heart flex">
                                                     <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
                                                          style="--fill: transparent; --height: 19px; --width: 20px;">
                                                         <title>Thích</title>
                                                         <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
                                                         </path>
                                                     </svg>
+                                                    <div class="num-like number transition detail-like detail comment-detail-like-link overflow-hidden  flex-column">
+                                        <div class="main_number transition fs-12">
+                                          ${data.data.React}
+                                        </div>
+    
+                                      </div>
                                                 </div>
-                                                <div class="num-like detail-like detail comment-detail-like-link">${data.data.React}</div>
+                          
                                             </div>
                                         </div>
                                     </div>

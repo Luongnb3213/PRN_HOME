@@ -16,9 +16,12 @@ class emojiBox extends HTMLElement {
                     emojiContainer.value += emoji.emoji
                 }
             });
+        if (button) {
             button.addEventListener('click', () => {
                 picker.togglePicker(button);
             });
+        }
+           
     }
 }
 customElements.define("emoji-box", emojiBox)

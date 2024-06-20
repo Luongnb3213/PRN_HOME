@@ -11,6 +11,7 @@ class threadMain extends HTMLElement {
         this.init();
         this.saveScroll();
         this.number.appendChild(this.createMainNumber(767, "new"));
+     
     }
     init() {
         var _this = this

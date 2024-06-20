@@ -428,6 +428,7 @@ thread-up {
     display: flex;
     align-items: center;
     margin: 12px 0;
+    height: 35px;
 }
 
     .react-wrapper svg {
@@ -946,6 +947,7 @@ thread-up {
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+    z-index: 3;
 }
 
 .write-comment-account-avt {
@@ -1070,4 +1072,7 @@ custom-media img {
     }
 .shutdonw_icon:active {
     transform: scale(0.7);
+}
+.heart {
+    height: 20px;
 }
