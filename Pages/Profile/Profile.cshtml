@@ -6,13 +6,13 @@
     <div class="main">
         <div class="profile">
             <div class="left">
-                <div class="username">Sát thủ đa tình</div>
-                <div class="fullname">giu_giot_le_sau</div>
-                <div class="story">ghét rán cá, thích uống rịu 🍶</div>
+                <div class="fullname">@Model.selectedAccount.Info.Name</div>
+                <div class="username">@Model.selectedAccount.Info.userName</div>
+                <div class="story">@Model.selectedAccount.Info.Story</div>
                 <a href="/followers" class="followers">50 followers</a>
             </div>
             <div class="right">
-                <avatar-user data-custom-class="custom-option-box" class="avatar">
+                <avatar-user data-custom-class="custom-option-box" class="avatar" style="background-image: url('@Model.selectedAccount.Info.Image')">
                     <div class="option-box hide">
                         <div class="new-avt">Upload new avatar</div>
                         <div class="divider"></div>
@@ -27,17 +27,17 @@
                 <form action="">
                     <div class="row">
                         <div class="label">Fullname</div>
-                        <input class="info username" value="Sát thủ đa tình" />
+                        <input class="info fullname" value="@Model.selectedAccount.Info.Name" />
                     </div>
                     <div class="seperate-line"></div>
                     <div class="row">
                         <div class="label">Username</div>
-                        <input class="info fullname" value="giu_giot_le_sau"/>
+                        <input class="info username" value="@Model.selectedAccount.Info.userName" />
                     </div>
                     <div class="seperate-line"></div>
                     <div class="row">
                         <div class="label">Biography</div>
-                        <input class="info story" value="ghét rán cá, thích uống rịu 🍶"/>
+                        <input class="info story" value="@Model.selectedAccount.Info.Story" />
                     </div>
                     <div class="seperate-line"></div>
                     <div class="row-private">
@@ -52,12 +52,123 @@
         </edit-info-box>
         
         <!-- Created Threads -->
+        @foreach(var th in Model.myThreads) {
+            <thread-up data-custom-class="custom-thread-detail">
+                <!--thread uploaded-->
+                <div class="post-wrapper">
+                    <div class="wrapper-avt">
+                        <img src="@th.Account.Info.Image" class="avt-author" />
+                    </div>
+                    <div class="wrapper-author">
+                        <div class="info-author">
+                            <a href="" class="username-author">@th.Account.Info.userName</a>
+                            <span class="time">13 giờ</span>
+                        </div>
+                        <div class="view-detail-post">
+                            <a href="/detailpost" class="caption link-detail">@th.Content</a>
+                            @if (th.ThreadImages.Count != 0)
+                            {
+                                <div class="slide-image w-full">
+                                    <slide-section class="swiper w-full free-scroll"
+                                                   data-section-id="template--16740126261401__collection_list_VmEYkJ"
+                                                   data-autoplay="false"
+                                                   data-effect="slide"
+                                                   data-loop="false"
+                                                   data-speed="800"
+                                                   data-autoplay-speed="5"
+                                                   data-spacing="10"
+                                                   data-mobile="1"
+                                                   data-tablet="2"
+                                                   data-desktop="1.5"
+                                                   data-free-scroll="true"
+                                                   data-pagination-progressbar="false"
+                                                   id="@th.ThreadId">
+                                        <div class="swiper-wrapper" id="gallery--getting-started-@th.ThreadId">
+                                            @foreach (var i in th.ThreadImages)
+                                            {
+                                                <div class="swiper-slide">
+                                                    @if (i.Media.EndsWith("mp4"))
+                                                    {
+                                                        <custom-media class="h-full pointer d-block">
+                                                            <video src="@i.Media" controls></video>
+                                                        </custom-media>
+                                                    }
+                                                    else
+                                                    {
+                                                        <custom-media class="h-full rounded-style  overflow-hidden">
+                                                            <a data-pswp-src="@i.Media">
+                                                                <img src="@i.Media" class="w-full rounded-10" />
+                                                            </a>
+                                                        </custom-media>
+                                                    }
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </slide-section>
+                                </div>
+                            }
+                        </div>
+                        <div class="react-wrapper">
+                            <div class="wrapper-react-num">
+                                <div class="heart">
+                                    <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
+                                         style="--fill: transparent; --height: 19px; --width: 20px;">
+                                        <title>Thích</title>
+                                        <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="num-like detail-like">555</div>
+                            </div>
+                            <div class="wrapper-react-num">
+
+                                <div class="comment">
+                                    <svg width="20" height="19" aria-label="Trả lời" role="img" viewBox="0 0 24 24"
+                                         style="--fill: currentColor; --height: 20px; --width: 20px;">
+                                        <title>Trả lời</title>
+                                        <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"></path>
+                                    </svg>
+                                </div>
+                                <div class="num-comment detail-comment">555</div>
+                            </div>
+                            <div class="wrapper-react-num">
+                                <div class="re-post">
+                                    <svg width="20" height="19" aria-label="Đăng lại" role="img" viewBox="0 0 24 24"
+                                         style="--fill: currentColor; --height: 20px; --width: 20px; stroke-width: 1.2;">
+                                        <title>Đăng lại</title>
+                                        <path d="M19.998 9.497a1 1 0 0 0-1 1v4.228a3.274 3.274 0 0 1-3.27 3.27h-5.313l1.791-1.787a1 1 0 0 0-1.412-1.416L7.29 18.287a1.004 1.004 0 0 0-.294.707v.001c0 .023.012.042.013.065a.923.923 0 0 0 .281.643l3.502 3.504a1 1 0 0 0 1.414-1.414l-1.797-1.798h5.318a5.276 5.276 0 0 0 5.27-5.27v-4.228a1 1 0 0 0-1-1Zm-6.41-3.496-1.795 1.795a1 1 0 1 0 1.414 1.414l3.5-3.5a1.003 1.003 0 0 0 0-1.417l-3.5-3.5a1 1 0 0 0-1.414 1.414l1.794 1.794H8.27A5.277 5.277 0 0 0 3 9.271V13.5a1 1 0 0 0 2 0V9.271a3.275 3.275 0 0 1 3.271-3.27Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="num-share detail-share">555</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option-icon">
+                        <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
+                            <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
+                                 class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
+                                 style="fill: #777777; --height: 20px; --width: 20px;">
+                                <title>Xem thêm</title>
+                                <circle cx="12" cy="12" r="1.5"></circle>
+                                <circle cx="6" cy="12" r="1.5"></circle>
+                                <circle cx="18" cy="12" r="1.5"></circle>
+                            </svg>
+                        </icon>
+                    </div>
+                </div>
+                <div class="separate-post">
+                </div>
+                <!--thread upload-->
+            </thread-up>
+        }
         <!--Thread 0-->
         <thread-up data-custom-class="custom-thread-detail">
             <!--thread uploaded-->
             <div class="post-wrapper">
                 <div class="wrapper-avt">
-                    <img src="~/pics/profile/shh.jpg" class="avt-author" />
+                    <img src="@Model.selectedAccount.Info.Image" class="avt-author" />
                 </div>
                 <div class="wrapper-author">
                     <div class="info-author">

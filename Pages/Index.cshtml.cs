@@ -99,6 +99,8 @@ namespace PRN221_Assignment.Pages
             }
 
             currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
+
+            ViewData["UserId"] = userId;
         }
     }
 }
