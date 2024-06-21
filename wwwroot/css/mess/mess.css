@@ -1,0 +1,10 @@
+﻿.online {
+    content: "";
+    background-color: green;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    bottom: 27px;
+    right: 0px;
+    border: 1px solid black; 
+}
