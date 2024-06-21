@@ -3,13 +3,14 @@
 @{
 }
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div class="container-fluid">
 
     <div class="row">
         <div class="col-md-4">
             <div class="mess_left_container flex flex-column " style="margin-left: 30px">
-                <div class="header_mess_left flex justify-between ">
+                <div class="header_mess_left pr-4 flex justify-between ">
                     <div class="flex align-center">
                         <span class="bold whitespace-nowrap fs-20 " style="color:rgb(245,245,245)">ch.oai</span>
                         <svg fill="rgb(245,245,245)" width="20px" height="20px" viewBox="-6.5 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -19,27 +20,223 @@
                     </div>
                     <svg aria-label="Tin nhắn mới" style="color:rgb(245,245,245)" class="" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Tin nhắn mới</title><path d="M12.202 3.203H5.25a3 3 0 0 0-3 3V18.75a3 3 0 0 0 3 3h12.547a3 3 0 0 0 3-3v-6.952" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M10.002 17.226H6.774v-3.228L18.607 2.165a1.417 1.417 0 0 1 2.004 0l1.224 1.225a1.417 1.417 0 0 1 0 2.004Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="16.848" x2="20.076" y1="3.924" y2="7.153"></line></svg>
                 </div>
-                <div class="header_left_body mt-20">
+                <div class="header_left_body mt-20" style="overflow-y: auto; max-height: 70vh;">
                     <image-work class="flex gap-10 " style="overflow-x:auto">
                         <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="56" height="56" class="rounded-50 mb-2" />
+                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
                             <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
                             <span class="absolute online">
 
                             </span>
                         </div>
-                     
-                       
+
+
 
 
 
                     </image-work>
+                    <div class="mess_concept mt-10 flex py-4 pr-4 justify-between align-center">
+                        <span class="bold whitespace-nowrap fs-20 " style="color:rgb(245,245,245)">
+                            Tin nhắn mới
+                        </span>
+                        <div class="font-body whitespace-nowrap fs-15" style="color:rgb(245,245,245)">
+                            Tạo nhóm
+                        </div>
+                    </div>
+                    <div class="inbox pr-4">
+                        <inbox>
+                            <user-chat class="py-4 d-block">
+                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                    <div class="user_image relative" style="width: 56px;">
+                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                        <span class="absolute online"></span>
+                                    </div>
+                                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
+                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">Phạm Lương</span>
+                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                            hiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcb
+                                        </p>
+                                    </div>
+                                </div>
+                            </user-chat>
+                            <user-chat class="py-4 d-block">
+                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                    <div class="user_image relative" style="width: 56px;">
+                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                        <span class="absolute online"></span>
+                                    </div>
+                                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
+                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">Phạm Lương</span>
+                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                            hiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcb
+                                        </p>
+                                    </div>
+                                </div>
+                            </user-chat>
+                            <user-chat class="py-4 d-block">
+                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                    <div class="user_image relative" style="width: 56px;">
+                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                        <span class="absolute online"></span>
+                                    </div>
+                                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
+                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">Phạm Lương</span>
+                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                            hiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcb
+                                        </p>
+                                    </div>
+                                </div>
+                            </user-chat>
+                            <user-chat class="py-4 d-block">
+                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                    <div class="user_image relative" style="width: 56px;">
+                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                        <span class="absolute online"></span>
+                                    </div>
+                                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
+                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">Phạm Lương</span>
+                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                            hiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcb
+                                        </p>
+                                    </div>
+                                </div>
+                            </user-chat>
+                            <user-chat class="py-4 d-block">
+                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                    <div class="user_image relative" style="width: 56px;">
+                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                        <span class="absolute online"></span>
+                                    </div>
+                                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
+                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">Phạm Lương</span>
+                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                            hiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcb
+                                        </p>
+                                    </div>
+                                </div>
+                            </user-chat>
+                            <user-chat class="py-4 d-block">
+                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                    <div class="user_image relative" style="width: 56px;">
+                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                        <span class="absolute online"></span>
+                                    </div>
+                                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
+                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">Phạm Lương</span>
+                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                            hiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcb
+                                        </p>
+                                    </div>
+                                </div>
+                            </user-chat>
+                            <user-chat class="py-4 d-block">
+                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                    <div class="user_image relative" style="width: 56px;">
+                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                        <span class="absolute online"></span>
+                                    </div>
+                                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
+                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">Phạm Lương</span>
+                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                            hiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcb
+                                        </p>
+                                    </div>
+                                </div>
+                            </user-chat>
+                            <user-chat class="py-4 d-block">
+                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                    <div class="user_image relative" style="width: 56px;">
+                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                        <span class="absolute online"></span>
+                                    </div>
+                                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
+                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">Phạm Lương</span>
+                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                            hiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcbhiabcb
+                                        </p>
+                                    </div>
+                                </div>
+                            </user-chat>
+
+                        </inbox>
+                    </div>
+
                 </div>
+
             </div>
 
         </div>
         <div class="col-md-8">
-            b
+            <div class="chat">
+                <chat>
+                    <div class="header_chat pb-2 flex justify-between align-center">
+                        <div class="left_chat_header flex gap-10 align-center">
+                            <div class="user_image relative" style="width:44px;">
+                                <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 44px;" />
+                                <span class="absolute online"></span>
+                            </div>
+                            <div>
+                                <span class="font-body w-full lh-1  d-block fs-15" style="color:rgb(245,245,245);margin-bottom: 5px;">ch.oai</span>
+                                <span class="font-body w-full lh-1 d-block fs-12" style="color:rgb(245,245,245);opacity: 0.5;">Hoạt động 13 giờ trước</span>
+
+                            </div>
+                        </div>
+                        <div class="right_chat_header">
+                            <div class="right">
+                                <span>
+                                    <svg aria-label="Thông tin về cuộc trò chuyện" style="color:rgb(245,245,245)" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Thông tin về cuộc trò chuyện</title><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><circle cx="11.819" cy="7.709" r="1.25"></circle><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line><polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                   
+                    <div class="main-chat" style="overflow-y: auto;height: 65vh ; max-height: 65vh">
+                        <div class="chat_body flex flex-column gap-10 align-center">
+                            <div class="user_image relative" style="width:96px;">
+                                <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 96px;" />
+                                <span class="absolute online"></span>
+                            </div>
+                            <div class="font-body text-center w-full lh-1  d-block fs-15" style="color:rgb(245,245,245);">
+                                ch.oai
+                            </div>
+                            <div class="font-body text-center w-full lh-1  d-block fs-15" style="color:rgb(245,245,245);opacity: 0.5">
+                                <span>manrt.43 · Threads </span>
+                            </div>
+                            <a href="#" class="button_profile fs-15 " style="color:rgb(245,245,245);">Xem trang cá nhân</a>
+                        </div>
+                        <div class="main_mess">
+                        
+                        </div>
+                    </div>
+                    <div class=" write-comment-wrapper w-full mess_input  justify-content-around">
+                        <div class="image py-3 flex flex-wrap gap-10">
+                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
+                        </div>
+                        <div class="write-comment-box-wrapper relative">
+                            <textarea placeholder="Nhắn tin..." type="text"  name="mess" class="mess w-full" ></textarea>
+                            <div class="absolute flex align-center icon_chat" style="right: 20px;">
+                                <div class="create_image relative px-2 thread_main_icon heart">
+                                    <svg width="20" height="20" aria-label="Đính kèm file phương tiện" role="img" viewBox="0 0 24 24" class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn" style="--fill: currentColor; --height: 20px; --width: 20px;"><title>Đính kèm file phương tiện</title><g><path clip-rule="evenodd" d="M2.00207 9.4959C1.65132 7.00019 1.47595 5.75234 1.82768 4.73084C2.13707 3.83231 2.72297 3.05479 3.50142 2.50971C4.38639 1.89005 5.63425 1.71467 8.12996 1.36392L10.7047 1.00207C13.2004 0.651325 14.4482 0.47595 15.4697 0.827679C16.3682 1.13707 17.1458 1.72297 17.6908 2.50142C17.9171 2.82454 18.0841 3.19605 18.2221 3.65901C17.7476 3.64611 17.2197 3.64192 16.6269 3.64055C16.5775 3.5411 16.5231 3.44881 16.4621 3.36178C16.0987 2.84282 15.5804 2.45222 14.9814 2.24596C14.3004 2.01147 13.4685 2.12839 11.8047 2.36222L7.44748 2.97458C5.78367 3.20841 4.95177 3.32533 4.36178 3.73844C3.84282 4.10182 3.45222 4.62017 3.24596 5.21919C3.01147 5.90019 3.12839 6.73209 3.36222 8.3959L3.97458 12.7531C4.15588 14.0431 4.26689 14.833 4.50015 15.3978C4.50083 16.3151 4.50509 17.0849 4.53201 17.7448C4.13891 17.4561 3.79293 17.1036 3.50971 16.6991C2.89005 15.8142 2.71467 14.5663 2.36392 12.0706L2.00207 9.4959Z" fill="currentColor" fill-rule="evenodd"></path><g><g clip-path="url(#:r2:)"><rect fill="none" height="15.5" rx="3.75" stroke="currentColor" stroke-width="1.5" width="15.5" x="6.75" y="5.8894"></rect><path d="M6.6546 17.8894L8.59043 15.9536C9.1583 15.3857 10.0727 15.3658 10.6647 15.9085L12.5062 17.5966C12.9009 17.9584 13.5105 17.9451 13.8891 17.5665L17.8181 13.6376C18.4038 13.0518 19.3536 13.0518 19.9394 13.6375L22.0663 15.7644" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"></path><circle cx="10.75" cy="9.8894" fill="currentColor" r="1.25"></circle></g></g></g><defs><clipPath id=":r2:"><rect fill="white" height="17" rx="4.5" width="17" x="6" y="5.1394"></rect></clipPath></defs></svg>
+                                    <input class="inset-0 write-comment-pics pointer" type="file" accept="image/*,video/*" name="UploadedFiles">
+                                </div>
+                                <emoji-box class="write-comment-btn-emoji px-2">
+                                    <div class="emoji-button">
+                                        <i class="fa-solid fa-face-smile"></i>
+                                    </div>
+                                </emoji-box>
+                                <div class="write-comment-btn-submit px-2">
+                                    <i class="fa-solid fa-paper-plane icon-submit"></i>
+                                </div>
+                            </div>
+                        </div>
+                       
+                      
+                    </div>
+
+                </chat>
+            </div>
+
         </div>
     </div>
 </div>

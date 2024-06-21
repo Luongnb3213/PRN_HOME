@@ -8,3 +8,60 @@
     right: 0px;
     border: 1px solid black; 
 }
+
+.user_image .online {
+    bottom: 5px;
+    right: 0px;
+}
+.header_left_body::-webkit-scrollbar{
+    height: 400px;
+    color: red;
+}
+.button_profile {
+    padding-left: 16px;
+    padding-right: 16px;
+    cursor: pointer;
+    background-color: rgb(54,54,54);
+    border-radius: 8px;
+    text-decoration: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: 600;
+}
+.chat_body{
+     margin-bottom: 40px;
+}
+textarea[name="mess"] {
+    --input-border-color: rgb(54,54,54);
+    color: rgb(245,245,245);
+    opacity: 1;
+    background: black;
+    height: 100%;
+    padding-right: 90px;
+    --input-padding: 1rem 2rem;
+}
+    textarea[name="mess"]:focus {
+        --input-border-color: rgb(54,54,54);
+    }
+    textarea[name="mess"]::placeholder {
+        color: rgb(245,245,245);
+        opacity: 0.7;
+    }
+.icon_chat{
+     top: 50%;
+     transform: translateY(-50%);
+}
+.write-comment-wrapper {
+    width: calc( 100% - 33.33%);
+    background-color: unset;
+    padding: unset;
+    border-left: unset;
+    border-right: unset;
+    position: fixed;
+    bottom: 30px;
+    right: 0;
+    left: unset;
+    transform: unset;
+    display: block;
+    z-index: 3;
+}
