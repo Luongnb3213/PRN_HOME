@@ -12,6 +12,9 @@ namespace PRN221_Assignment.Models
             BLocks = new HashSet<Block>();
             Threads = new HashSet<Thread>();
             Comments = new HashSet<Comment>();
+            GroupUser = new HashSet<GroupUser>();
+            Mess = new HashSet<Mess>();
+            Group =  new HashSet<Group>();
         }
         [Key]
         public int UserID { get; set; }
@@ -34,5 +37,10 @@ namespace PRN221_Assignment.Models
 
         public virtual ICollection<Thread> Threads { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<GroupUser> GroupUser { get; set; }
+        public virtual ICollection<Mess> Mess { get; set; }
+        public virtual ICollection<Group> Group { get; set; }
+
+
     }
 }

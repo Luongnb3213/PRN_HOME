@@ -46,6 +46,12 @@ namespace PRN221_Assignment.Respository
           .HasForeignKey(e => e.UserID)
           .IsRequired();
 
+            modelBuilder.Entity<Account>()
+          .HasMany(e => e.Mess)
+          .WithOne(e => e.Author)
+          .HasForeignKey(e => e.AuthorId)
+          .IsRequired();
+
 
             modelBuilder.Entity<Account>()
           .HasMany(e => e.BLocks)
@@ -85,6 +91,13 @@ namespace PRN221_Assignment.Respository
        .WithMany(e => e.Threads)
        .UsingEntity<ThreadComment>();
 
+
+            modelBuilder.Entity<Account>()
+             .HasMany(e => e.Group)
+             .WithMany(e => e.Accounts)
+             .UsingEntity<GroupUser>();
+
+
             modelBuilder.Entity<ThreadComment>()
       .HasMany(e => e.Conversations)
       .WithOne(e => e.ThreadComment)
@@ -92,6 +105,17 @@ namespace PRN221_Assignment.Respository
       .IsRequired();
 
 
+            modelBuilder.Entity<Mess>()
+                .HasOne(e => e.MessageReceive)
+                .WithOne(e => e.Mess)
+                .HasForeignKey<MessageReceive>(e => e.messID)
+            .IsRequired();
+
+            modelBuilder.Entity<Group>()
+     .HasMany(e => e.MessageReceive)
+     .WithOne(e => e.Group)
+     .HasForeignKey(e => e.GroupID)
+     .IsRequired();
         }
     }
 }
