@@ -8,6 +8,8 @@ namespace PRN221_Assignment.Models
         [Key]
         public int BlockId { get; set; }
         public int UserID { get; set; }
+        public int BlockUserID { get; set; }
+
 
         public virtual Account? Account { get; set; }
     }

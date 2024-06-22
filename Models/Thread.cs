@@ -9,6 +9,7 @@ namespace PRN221_Assignment.Models
             ThreadImages = new HashSet<ThreadImages>();
             Comments = new HashSet<Comment>(); 
             ThreadComments = new HashSet<ThreadComment>();
+            ThreadReacts =  new HashSet<ThreadReact>();
         }
         [Key]
         public int ThreadId { get; set; }
@@ -26,6 +27,8 @@ namespace PRN221_Assignment.Models
 
         public virtual ICollection<ThreadImages> ThreadImages { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<ThreadComment> ThreadComments { get; set; } 
+        public virtual ICollection<ThreadComment> ThreadComments { get; set; }
+        public virtual ICollection<ThreadReact> ThreadReacts { get; set; }
+
     }
 }

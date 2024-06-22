@@ -91,6 +91,12 @@ namespace PRN221_Assignment.Respository
        .WithMany(e => e.Threads)
        .UsingEntity<ThreadComment>();
 
+            modelBuilder.Entity<Thread>()
+    .HasMany(e => e.ThreadReacts)
+    .WithOne(e => e.Thread)
+    .HasForeignKey(e => e.threadId)
+    .IsRequired();
+
 
             modelBuilder.Entity<Account>()
              .HasMany(e => e.Group)
