@@ -105,8 +105,13 @@ namespace PRN221_Assignment.Pages.Profile
             List<dynamic> listReplyall = fullJoin.Cast<dynamic>().ToList();
 
             listReplyDetail = listReplyall.Where(x => x.DetailThreadId == ThreadId).ToList();
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
-            currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
+            
+            if (User != null && User.Claims != null)
+            {
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+                currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
+                ViewData["UserId"] = userId;
+            }
         }
         public async Task<IActionResult> OnPost([FromForm] MyComment comment)
         {

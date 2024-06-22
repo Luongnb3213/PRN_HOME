@@ -77,7 +77,12 @@ namespace PRN221_Assignment.Pages
             {
                 ViewData["msg"] = msg;
             }
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+            if (User != null && User.Claims != null)
+            {
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+                currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
+                ViewData["UserId"] = userId;
+            }
 
             Threads = context.Thread
                .Include(x => x.ThreadImages)
@@ -98,9 +103,6 @@ namespace PRN221_Assignment.Pages
                 dicThreadComment[th.ThreadId.ToString()] = countComment;
             }
 
-            currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
-
-            ViewData["UserId"] = userId;
         }
     }
 }

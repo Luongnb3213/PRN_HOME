@@ -1,6 +1,6 @@
 ﻿
 let msgStatus = document.querySelector('.msg-status');
-if (msgStatus.dataset.msg === "CreatedThread") {
+if (msgStatus?.dataset.msg === "CreatedThread") {
     Swal.fire({
         title: "Posted",
         text: "Your post has just been posted!",

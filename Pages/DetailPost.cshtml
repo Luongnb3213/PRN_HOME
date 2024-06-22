@@ -86,7 +86,7 @@
                             <img src="@Model.SelectedThread.Account.Info.Image" class="avt-author" />
                             <div class="wrapper-author">
                                 <div class="info-author">
-                                    <a href="" class="username-author">@Model.SelectedThread.Account.Info.userName</a>
+                                    <a href="/profile?userId=@Model.SelectedThread.Account.UserID" class="username-author">@Model.SelectedThread.Account.Info.userName</a>
                                     <span data-submit-date="@Model.SelectedThread.SubmitDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffff")" class="time"></span>
                                 </div>
                             </div>
@@ -126,8 +126,8 @@
                                                    data-desktop="1.5"
                                                    data-free-scroll="true"
                                                    data-pagination-progressbar="false"
-                                                   id="1">
-                                        <div class="swiper-wrapper" id="gallery--getting-started-1">
+                                                   id="@Model.SelectedThread.ThreadId">
+                                        <div class="swiper-wrapper" id="gallery--getting-started-@Model.SelectedThread.ThreadId">
                                             @foreach (var i in @Model.SelectedThread.ThreadImages)
                                             {
                                                 <div class="swiper-slide">
@@ -139,7 +139,7 @@
                                                     }
                                                     else
                                                     {
-                                                        <custom-media class="h-full rounded-style ">
+                                                        <custom-media class="h-full rounded-style overflow-hidden">
                                                             <a data-pswp-src="@i.Media">
                                                                 <img src="@i.Media" class="w-full rounded-10" />
                                                             </a>
@@ -261,7 +261,7 @@
                                         <img src="@box.Comment.Account.Info.Image" class="author-comment-avt" />
                                         <div class="author-comment-content">
                                             <div class="author-comment-header">
-                                                <a href="" class="author-name">@box.Comment.Account.Info.userName</a>
+                                                <a href="/profile?userId=@box.Comment.Account.UserID" class="author-name">@box.Comment.Account.Info.userName</a>
                                                 <div data-submit-date="@box.Comment.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss.fffffff")" class="author-comment-time"></div>
                                             </div>
                                             <div class="author-comment-body">
@@ -386,7 +386,7 @@
                                                     <img src="@rep.Image" class="author-comment-avt" />
                                                     <div class="author-comment-content">
                                                         <div class="author-comment-header">
-                                                            <a href="" class="author-name">@rep.userName</a>
+                                                            <a href="/profile?userId=@rep.UserID" class="author-name">@rep.userName</a>
                                                             <div data-submit-date="@rep.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss.fffffff")" class="author-comment-time"></div>
                                                         </div>
                                                         <div class="author-comment-body">

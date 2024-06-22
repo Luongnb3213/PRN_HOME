@@ -140,3 +140,13 @@ custom-media:active img {
     object-fit: cover;
     height: 48px !important;
 }
+
+.show-specific-profile {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.show-specific-profile:hover {
+    text-decoration: underline;
+    color: var(--text-color);
+}

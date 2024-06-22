@@ -232,7 +232,7 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
             <img src="${data.data.Comment.Account.Info.Image}" class="author-comment-avt" />
             <div class="author-comment-content">
                 <div class="author-comment-header">
-                    <a href="" class="author-name">${data.data.Comment.Account.Info.userName}</a>
+                    <a href="/profile?userId=${data.data.Comment.Account.UserID}" class="author-name">${data.data.Comment.Account.Info.userName}</a>
                     <div data-submit-date="${data.data.Comment.CreatedAt}" class="author-comment-time">Just now</div>
                 </div>
                 <div class="author-comment-body">
@@ -415,7 +415,7 @@ function clickReplyBtn(current) {
                                 <img src="${data.data.Account.Info.Image}" class="author-comment-avt" />
                                 <div class="author-comment-content">
                                     <div class="author-comment-header">
-                                        <a href="" class="author-name">${data.data.Account.Info.userName}</a>
+                                        <a href="/profile?userId=${data.data.Account.UserID}" class="author-name">${data.data.Account.Info.userName}</a>
                                         <div data-submit-date="${data.data.CreatedAt}" class="author-comment-time">Just now</div>
                                     </div>
                                     <div class="author-comment-body">

@@ -185,7 +185,7 @@ html {
 .avatar {
     width: 84px;
     height: 84px;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     border-radius: 50%;
     position: absolute;
@@ -343,7 +343,7 @@ html {
 thread-up {
     width: 100%;
     display: block;
-    padding: 20px;
+    padding: 20px 20px 0 20px;
     position: relative;
 }
 
@@ -353,7 +353,7 @@ thread-up {
 }
 
 .wrapper-avt {
-    flex: 1;
+    
 }
 
 .avt-author {
@@ -369,7 +369,7 @@ thread-up {
 
 .wrapper-author {
     margin-left: 12px;
-    flex: 8;
+    width: calc(100% - 48px - 20px - 12px);
 }
 
 .info-author {
@@ -392,6 +392,7 @@ thread-up {
     color: var(--sub-text-color);
     font-size: 1.4rem;
     margin-left: 12px;
+    white-space: nowrap;
 }
 
 .caption {
@@ -528,7 +529,6 @@ thread-up {
 
 .detail-header-author {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -831,6 +831,7 @@ thread-up {
 
 .author-comment-header .author-comment-time {
     color: var(--sub-text-color);
+    white-space: nowrap;
 }
 
 .author-comment-content {
@@ -1080,4 +1081,8 @@ custom-media img {
 
 .reply-box {
     padding-bottom: 24px;
+}
+
+.w-full.rounded-10 {
+    user-select: none;
 }

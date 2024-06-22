@@ -110,7 +110,10 @@
                     </div>
                     <div class="thread_main col-w-custom" style="--col-width: calc(100% - 48px - 30px)">
                         <div class="flex align-center justify-between">
-                            <h3 class="author flex align-center fs-16" data-submit-date="@thread.SubmitDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffff")"> @thread.Account.Info.userName <span class="time-elapsed"></span> </h3>
+                            <h3 class="author flex align-center fs-16" data-submit-date="@thread.SubmitDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffff")">
+                                <a class="show-specific-profile" href="/profile?userId=@thread.Account.UserID">@thread.Account.Info.userName </a>
+                                <span class="time-elapsed"></span> 
+                            </h3>
                             <div class="relative ">
                                 <icon class="pointer more_options flex align-center justify-content-center rounded-50">
                                     <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24" class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn" style="fill: #777777; --height: 20px; --width: 20px;"><title>Xem thêm</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
