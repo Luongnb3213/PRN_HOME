@@ -1086,3 +1086,9 @@ custom-media img {
 .w-full.rounded-10 {
     user-select: none;
 }
+
+.heart.reacted svg {
+    fill: #FF0034;
+    color: rgb(243, 245, 247);
+    stroke: none;
+}

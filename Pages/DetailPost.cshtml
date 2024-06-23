@@ -39,45 +39,22 @@
                                 <div class="detail-like--line"></div>
                             </div>
                             <div class="detail-like-content">
-                                <div class="detail-like-person">
-                                    <div class="person-info">
-                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="person-avt" />
-                                        <div class="person-name">
-                                            <div class="person-username"></div>
-                                            <div class="person-fullname">Sát thủ đa tình</div>
+                                @foreach (var detail in Model.listDetailReact)
+                                {
+                                    <div class="detail-like-person">
+                                        <div class="person-info">
+                                            <img src="@detail.Thread.Account.Info.Image" class="person-avt" />
+                                            <div class="person-name">
+                                                <div class="person-username">@detail.Thread.Account.Info.userName</div>
+                                                <div class="person-fullname">@detail.Thread.Account.Info.Name</div>
+                                            </div>
+                                        </div>
+                                        <div class="person-follow-status">
+                                            <div class="btn-follow hide">Follow</div>
+                                            <div class="btn-unfollow ">Unfollow</div>
                                         </div>
                                     </div>
-                                    <div class="person-follow-status">
-                                        <div class="btn-follow hide">Follow</div>
-                                        <div class="btn-unfollow ">Unfollow</div>
-                                    </div>
-                                </div>
-                                <div class="detail-like-person">
-                                    <div class="person-info">
-                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="person-avt" />
-                                        <div class="person-name">
-                                            <div class="person-username">giu_giot_le_sau</div>
-                                            <div class="person-fullname">Tối thứ 7</div>
-                                        </div>
-                                    </div>
-                                    <div class="person-follow-status">
-                                        <div class="btn-follow hide">Follow</div>
-                                        <div class="btn-unfollow">Unfollow</div>
-                                    </div>
-                                </div>
-                                <div class="detail-like-person">
-                                    <div class="person-info">
-                                        <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="person-avt" />
-                                        <div class="person-name">
-                                            <div class="person-username">giu_giot_le_sau</div>
-                                            <div class="person-fullname">Tối chủ nhật</div>
-                                        </div>
-                                    </div>
-                                    <div class="person-follow-status">
-                                        <div class="btn-follow">Follow</div>
-                                        <div class="btn-unfollow hide">Unfollow</div>
-                                    </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </thread-detail-like>
@@ -158,7 +135,7 @@
                     <div class="detail-react">
                         <div class="react-wrapper">
                             <div class="wrapper-react-num">
-                                <div class="heart flex">
+                                <div class="heart flex @(Model.SelectedThread.ThreadReacts.Count != 0 ? "reacted" : "")"> @*Cái này mai sửa*@
                                     <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
                                          style="--fill: transparent; --height: 19px; --width: 20px;">
                                         <title>Thích</title>
@@ -274,7 +251,7 @@
                                             <div class="author-comment-footer">
                                                 <div class="react-wrapper author-comment-react @(box.Conversations.Count != 0 ? "more-reply" : "")">
                                                     <div class="wrapper-react-num">
-                                                        <div class="heart flex">
+                                                        <div class="heart flex ">
                                                             <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
                                                                  style="--fill: transparent; --height: 19px; --width: 20px;">
                                                                 <title>Thích</title>

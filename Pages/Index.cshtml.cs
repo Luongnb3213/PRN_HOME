@@ -11,6 +11,8 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading;
 using Thread = PRN221_Assignment.Models.Thread;
+using PRN221_Assignment.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace PRN221_Assignment.Pages
 {
@@ -18,12 +20,14 @@ namespace PRN221_Assignment.Pages
     public class IndexModel : PageModel
     {
         private readonly PRN221_Assignment.Respository.DataContext context;
+        private readonly IHubContext<chatHub> hubContext;
 
-        public IndexModel(PRN221_Assignment.Respository.DataContext _context)
+        public IndexModel(PRN221_Assignment.Respository.DataContext _context, IHubContext<chatHub> _hubContext)
         {
             context = _context;
+            hubContext = _hubContext;
             dicThreadComment = new Dictionary<string, int>();
-            //Thread = new Models.Thread();
+            dicReact = new Dictionary<string, bool>();
         }
         [BindProperty]
         public Models.Thread Thread { get; set; }
@@ -31,6 +35,7 @@ namespace PRN221_Assignment.Pages
         public List<IFormFile> UploadedFiles { get; set; }
         public List<Thread> Threads { get; set; }
         public Dictionary<string, int> dicThreadComment { get; set; }
+        public Dictionary<string, bool> dicReact { get; set; }
         public Account currentAccount { get; set; }
         [BindProperty(SupportsGet = true)]
         public string typeReact { get; set; }
@@ -78,7 +83,7 @@ namespace PRN221_Assignment.Pages
             return RedirectToPage("", new { msg = TempData["msg"] });
 
         }
-        public IActionResult OnPostReacted()
+        public async Task<IActionResult> OnPostReacted()
         {
             var userId = string.Empty;
             if (User != null && User.Claims != null)
@@ -105,11 +110,14 @@ namespace PRN221_Assignment.Pages
                 reactedThread.React = --currentReact;
                 context.SaveChanges();
 
-                ThreadReact previousReact = context.ThreadReact.FirstOrDefault(x => x.threadId == threadId);
+                ThreadReact previousReact = context.ThreadReact.FirstOrDefault(x => x.threadId == threadId && x.UserID == Int32.Parse(userId));
                 context.ThreadReact.Remove(previousReact);
                 context.SaveChanges();
 
             }
+            var currentThreadReact = context.Thread.FirstOrDefault(x => x.ThreadId == threadId);
+            int currentReactAfter = currentThreadReact.React;
+            await hubContext.Clients.All.SendAsync("ReceiveMessage", threadId, currentReactAfter);
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve
@@ -118,13 +126,14 @@ namespace PRN221_Assignment.Pages
         }
         public void OnGet(string msg)
         {
+            var userId = string.Empty;
             if (!string.IsNullOrEmpty(msg))
             {
                 ViewData["msg"] = msg;
             }
             if (User != null && User.Claims != null)
             {
-                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+                userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
                 currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
                 ViewData["UserId"] = userId;
             }
@@ -147,6 +156,17 @@ namespace PRN221_Assignment.Pages
 
                 int countComment = totalOriginal + totalReply;
                 dicThreadComment[th.ThreadId.ToString()] = countComment;
+            }
+
+            foreach(var react in Threads)
+            {
+                if (react.ThreadReacts.Where(x => x.UserID == Int32.Parse(userId)).Count() != 0)
+                {
+                    dicReact[react.ThreadId.ToString()] = true;
+                } else
+                {
+                    dicReact[react.ThreadId.ToString()] = false;
+                }
             }
 
         }

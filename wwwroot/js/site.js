@@ -3,6 +3,16 @@
 
 // Write your JavaScript code.
 
+var con = new signalR.HubConnectionBuilder().withUrl("/hub").build();
+con.start().then().catch(function (arr) {
+    return console.log(err.toString())
+})
+con.on("ReceiveMessage", function (threadId, currentReactAfter) {
+    let threadMainNow = document.querySelector(`.thread-no-${threadId}`);
+    threadMainNow.querySelector('.main_number').innerHTML = currentReactAfter;
+    console.log("hello")
+    console.log(currentReactAfter)
+})
 class threadMain extends HTMLElement {
     constructor() {
         super();

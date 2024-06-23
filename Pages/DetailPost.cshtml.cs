@@ -24,10 +24,11 @@ namespace PRN221_Assignment.Pages.Profile
         public List<ThreadComment> listOriginalComment { get; set; }
         public List<dynamic> listReplyDetail { get; set; }
         public Account currentAccount { get; set; }
-
+        public List<ThreadReact> listDetailReact { get; set; }
         public async Task OnGet()
         {
             SelectedThread = context.Thread
+                .Include(x => x.ThreadReacts)
                 .Include(x => x.Account)
                 .ThenInclude(x => x.Info)
                 .Include(x => x.ThreadImages)
@@ -75,43 +76,48 @@ namespace PRN221_Assignment.Pages.Profile
             //                                  f.Media
             //                              }).ToList().Cast<dynamic>().ToList();
             var fullJoin = await (from a in context.Comment
-                            join b in context.Conversation on a.CommentId equals b.CommentId into gjb
-                            from subb in gjb.DefaultIfEmpty()
-                            join c in context.ThreadComment on subb.ThreadCommentId equals c.ThreadCommentId into gjc
-                            from subc in gjc.DefaultIfEmpty()
-                            join d in context.Accounts on a.AuthorId equals d.UserID into gjd
-                            from subd in gjd.DefaultIfEmpty()
-                            join e in context.Info on subd.UserID equals e.UserID into gje
-                            from sube in gje.DefaultIfEmpty()
-                            join f in context.CommentImages on a.CommentId equals f.CommentId into gjf
-                            from subf in gjf.DefaultIfEmpty()
-                            select new
-                            {
-                                ReplyId = a.CommentId,
-                                Content = a.Content,
-                                React = a.React,
-                                AuthorId = a.AuthorId,
-                                CreatedAt = a.CreatedAt,
-                                ConversationId = subb != null ? subb.ConversationId : (int?)null,
-                                ThreadCommentId = subb != null ? subb.ThreadCommentId : (int?)null,
-                                OriginalId = subc != null ? subc.CommentId : (int?)null,
-                                DetailThreadId = subc != null ? subc.ThreadId : (int?)null,
-                                UserID = subd != null ? subd.UserID : (int?)null,
-                                userName = sube != null ? sube.userName : null,
-                                Image = sube != null ? sube.Image : null,
-                                Media = subf != null ? subf.Media : null
-                            }).ToListAsync();
+                                  join b in context.Conversation on a.CommentId equals b.CommentId into gjb
+                                  from subb in gjb.DefaultIfEmpty()
+                                  join c in context.ThreadComment on subb.ThreadCommentId equals c.ThreadCommentId into gjc
+                                  from subc in gjc.DefaultIfEmpty()
+                                  join d in context.Accounts on a.AuthorId equals d.UserID into gjd
+                                  from subd in gjd.DefaultIfEmpty()
+                                  join e in context.Info on subd.UserID equals e.UserID into gje
+                                  from sube in gje.DefaultIfEmpty()
+                                  join f in context.CommentImages on a.CommentId equals f.CommentId into gjf
+                                  from subf in gjf.DefaultIfEmpty()
+                                  select new
+                                  {
+                                      ReplyId = a.CommentId,
+                                      Content = a.Content,
+                                      React = a.React,
+                                      AuthorId = a.AuthorId,
+                                      CreatedAt = a.CreatedAt,
+                                      ConversationId = subb != null ? subb.ConversationId : (int?)null,
+                                      ThreadCommentId = subb != null ? subb.ThreadCommentId : (int?)null,
+                                      OriginalId = subc != null ? subc.CommentId : (int?)null,
+                                      DetailThreadId = subc != null ? subc.ThreadId : (int?)null,
+                                      UserID = subd != null ? subd.UserID : (int?)null,
+                                      userName = sube != null ? sube.userName : null,
+                                      Image = sube != null ? sube.Image : null,
+                                      Media = subf != null ? subf.Media : null
+                                  }).ToListAsync();
 
             List<dynamic> listReplyall = fullJoin.Cast<dynamic>().ToList();
 
             listReplyDetail = listReplyall.Where(x => x.DetailThreadId == ThreadId).ToList();
-            
+
+            var userId = string.Empty;
             if (User != null && User.Claims != null)
             {
-                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+                userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
                 currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
                 ViewData["UserId"] = userId;
             }
+            listDetailReact = context.ThreadReact
+                .Include(x => x.Thread)
+                .Include(x => x.Thread.Account)
+                .Include(x => x.Thread.Account.Info).Where(x => x.threadId == ThreadId).ToList();
         }
         public async Task<IActionResult> OnPost([FromForm] MyComment comment)
         {
@@ -186,7 +192,6 @@ namespace PRN221_Assignment.Pages.Profile
                     .FirstOrDefault(x => x.CommentId == currentReply.CommentId);
                 return new JsonResult(new { data = newReplyComment }, options);
             }
-
         }
         public class MyComment()
         {
