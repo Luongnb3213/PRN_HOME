@@ -10,8 +10,8 @@ class threadMain extends HTMLElement {
         this.number = this.querySelector(".number")
         this.init();
         this.saveScroll();
-        this.number.appendChild(this.createMainNumber(767, "new"));
-     
+        this.number.appendChild(this.createMainNumber(1000, "new"));
+        this.doReact();
     }
     init() {
         var _this = this
@@ -21,9 +21,9 @@ class threadMain extends HTMLElement {
         var _this = this
         var heart_realtime = this.createMainNumber(989, "heart-reatltime")
         this.number.appendChild(heart_realtime);
-       
+
         if (_this.number.querySelector(".main_number.new")) {
-            _this.number.querySelector(".main_number.new").remove(); 
+            _this.number.querySelector(".main_number.new").remove();
         }
         heart_realtime.classList.add("slide-upp")
         _this.number.querySelector(".main_number:not(.slide-upp)").classList.add("opacity-0")
@@ -31,7 +31,7 @@ class threadMain extends HTMLElement {
             _this.number.querySelector(".main_number:not(.slide-upp)").remove();
             e.target.classList.remove("slide-upp");
         })
-        
+        console.log('tym phát')
     }
     likeSlideUp() {
         var _this = this
@@ -53,14 +53,44 @@ class threadMain extends HTMLElement {
     }
     createMainNumber(number, classes) {
         var mainNumber = document.createElement("div")
-        mainNumber.classList.add("transition", "fs-15", "main_number", classes )
+        mainNumber.classList.add("transition", "fs-15", "main_number", classes)
         mainNumber.innerHTML = number;
         return mainNumber
+    }
+    doReact() {
+        var _this = this;
+        let tym = _this.querySelector('.heart')
+        tym.addEventListener('click', () => {
+            if (!tym.classList.contains('reacted')) {
+                tym.classList.add('reacted')
+
+                $.ajax({
+                    headers: {
+                        "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    url: `?handler=Reacted&typeReact=up`,
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: JSON.stringify({ threadId: _this.querySelector('.thread-id').innerHTML }),
+                    success: function (data) {
+                        console.log('Success');
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            } else {
+                tym.classList.remove('reacted')
+            }
+        })
+
+
     }
     saveScroll() {
         var _this = this;
         let aLink = _this.querySelector('.link-detail');
-        
+
         aLink.addEventListener('click', function () {
             let scrollX = window.pageXOffset;
             let scrollY = window.pageYOffset;
@@ -76,7 +106,7 @@ class threadMain extends HTMLElement {
             sessionStorage.setItem('previous', '/');
         })
     }
-}  
+}
 customElements.define("thread-main", threadMain)
 
 
@@ -134,11 +164,11 @@ var blsInputAppendImage = (function () {
         init: function () {
             var inputImages = document.querySelector('.tingle-modal-box input[name="UploadedFiles"]');
             var slideSection = document.querySelector('.tingle-modal-box slide-section .swiper-wrapper');
-            
+
             if (inputImages) {
                 inputImages.addEventListener('change', (e) => {
                     slideSection.innerHTML = '';
-                    if (e.target.files) { 
+                    if (e.target.files) {
                         Array.from(e.target.files).forEach((item) => {
                             var fileURL = URL.createObjectURL(item);
                             var swiperSlide = document.createElement("div")
@@ -159,13 +189,13 @@ var blsInputAppendImage = (function () {
 
                         });
                     }
-                  
+
                 });
             }
         },
         deleteSlide: function () {
             var slideSection = document.querySelector('.tingle-modal-box slide-section .swiper-wrapper');
-            slideSection.innerHTML= ''
+            slideSection.innerHTML = ''
         }
     }
 
@@ -228,10 +258,10 @@ class commentReply extends HTMLElement {
     constructor() {
         super()
         this.inputImage = this.querySelector('input[name="UploadedFiles"]')
-        
+
         this.init()
     }
-    init() { 
+    init() {
         var _this = this
         if (_this.inputImage) {
             _this.inputImage.addEventListener("change", (e) => {
@@ -239,7 +269,7 @@ class commentReply extends HTMLElement {
                 if (custom_media) {
                     custom_media.remove();
                 }
-                if (e.target.files[0]) { 
+                if (e.target.files[0]) {
                     var fileURL = URL.createObjectURL(e.target.files[0]);
                     var custom_media_1 = document.createElement("div")
                     custom_media_1.classList.add("mt-10", "w-50", "mb-10", "relative", 'custom_media')
@@ -255,7 +285,7 @@ class commentReply extends HTMLElement {
                                            `
                     _this.appendChild(custom_media_1)
                 }
-                
+
             })
         }
     }

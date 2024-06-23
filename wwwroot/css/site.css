@@ -150,3 +150,9 @@ custom-media:active img {
     text-decoration: underline;
     color: var(--text-color);
 }
+
+.heart.reacted svg {
+    fill: #FF0034;
+    color: rgb(243, 245, 247);
+    stroke: none;
+}

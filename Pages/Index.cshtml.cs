@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PRN221_Assignment.Authorization;
 using PRN221_Assignment.Models;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using System.Threading;
 using Thread = PRN221_Assignment.Models.Thread;
 
@@ -29,6 +32,8 @@ namespace PRN221_Assignment.Pages
         public List<Thread> Threads { get; set; }
         public Dictionary<string, int> dicThreadComment { get; set; }
         public Account currentAccount { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string typeReact { get; set; }
         public async Task<IActionResult> OnPost()
         {
             foreach (var media in UploadedFiles)
@@ -70,6 +75,21 @@ namespace PRN221_Assignment.Pages
             TempData["msg"] = "CreatedThread";
             return RedirectToPage("", new { msg = TempData["msg"] });
 
+        }
+        public IActionResult OnPostReacted(string threadId)
+        {
+            if (typeReact.Equals("up"))
+            {
+
+            } else
+            {
+
+            }
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+            return new JsonResult(new { typeReact }, options);
         }
         public void OnGet(string msg)
         {
