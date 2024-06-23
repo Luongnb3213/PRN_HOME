@@ -34,6 +34,8 @@ namespace PRN221_Assignment.Pages
         public Account currentAccount { get; set; }
         [BindProperty(SupportsGet = true)]
         public string typeReact { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int threadId { get; set; }
         public async Task<IActionResult> OnPost()
         {
             foreach (var media in UploadedFiles)
@@ -76,13 +78,36 @@ namespace PRN221_Assignment.Pages
             return RedirectToPage("", new { msg = TempData["msg"] });
 
         }
-        public IActionResult OnPostReacted(string threadId)
+        public IActionResult OnPostReacted()
         {
+            var userId = string.Empty;
+            if (User != null && User.Claims != null)
+            {
+                userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+            }
             if (typeReact.Equals("up"))
             {
+                int currentReact = context.Thread.Where(x => x.ThreadId == threadId).Select(x => x.React).FirstOrDefault();
+                Thread reactedThread = context.Thread.FirstOrDefault(x => x.ThreadId == threadId);
+                reactedThread.React = ++currentReact;
+                context.SaveChanges();
+
+                ThreadReact newThreadReact = new ThreadReact();
+                newThreadReact.UserID = Int32.Parse(userId);
+                newThreadReact.threadId = threadId;
+                context.ThreadReact.Add(newThreadReact);
+                context.SaveChanges();
 
             } else
             {
+                int currentReact = context.Thread.Where(x => x.ThreadId == threadId).Select(x => x.React).FirstOrDefault();
+                Thread reactedThread = context.Thread.FirstOrDefault(x => x.ThreadId == threadId);
+                reactedThread.React = --currentReact;
+                context.SaveChanges();
+
+                ThreadReact previousReact = context.ThreadReact.FirstOrDefault(x => x.threadId == threadId);
+                context.ThreadReact.Remove(previousReact);
+                context.SaveChanges();
 
             }
             var options = new JsonSerializerOptions
@@ -105,6 +130,7 @@ namespace PRN221_Assignment.Pages
             }
 
             Threads = context.Thread
+                .Include(x => x.ThreadReacts)
                .Include(x => x.ThreadImages)
                 .Include(x => x.ThreadComments)
                 .Include(x => x.Account)

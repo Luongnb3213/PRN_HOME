@@ -68,11 +68,10 @@ class threadMain extends HTMLElement {
                     headers: {
                         "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
                     },
-                    url: `?handler=Reacted&typeReact=up`,
+                    url: `?handler=Reacted&typeReact=up&threadId=${_this.querySelector('.thread-id').innerHTML}`,
                     method: 'POST',
                     processData: false,
                     contentType: false,
-                    data: JSON.stringify({ threadId: _this.querySelector('.thread-id').innerHTML }),
                     success: function (data) {
                         console.log('Success');
                     },
@@ -82,6 +81,22 @@ class threadMain extends HTMLElement {
                 });
             } else {
                 tym.classList.remove('reacted')
+
+                $.ajax({
+                    headers: {
+                        "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    url: `?handler=Reacted&typeReact=down&threadId=${_this.querySelector('.thread-id').innerHTML}`,
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log('Success');
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
             }
         })
 
