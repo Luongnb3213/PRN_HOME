@@ -21,6 +21,9 @@ namespace PRN221_Assignment.Pages.Profile
         [BindProperty(SupportsGet = true)]
         public int userId { get; set; }
         public List<Models.Thread> myThreads { get; set; }
+
+        [BindProperty]
+        public Info info { get; set; }
         public void OnGet()
         {
             selectedAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == userId);
@@ -40,5 +43,15 @@ namespace PRN221_Assignment.Pages.Profile
             }
 
         }
+
+        public IActionResult OnPost()
+        {
+            selectedAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == userId);
+            selectedAccount.Info.Name = info.Name;
+            selectedAccount.Info.userName = info.userName;
+            selectedAccount.Info.Story = info.Story;         
+            context.SaveChanges();
+            return RedirectToPage("profile", new { userId = selectedAccount.UserID });
+        }  
     }
 }

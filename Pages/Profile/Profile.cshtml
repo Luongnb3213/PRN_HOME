@@ -25,20 +25,20 @@
         <edit-info-box data-custom-class="custom-edit-info-box" class="btn-edit">
             Edit profile
             <div class="edit-info-box hide">
-                <form action="">
+                <form method="post">
                     <div class="row">
-                        <div class="label">Fullname</div>
-                        <input class="info fullname" value="@Model.selectedAccount.Info.Name" />
+                        <div class="label" >Fullname</div>
+                        <input class="info fullname" value="@Model.selectedAccount.Info.Name" asp-for="info.Name"/>
                     </div>
                     <div class="seperate-line"></div>
                     <div class="row">
                         <div class="label">Username</div>
-                        <input class="info username" value="@Model.selectedAccount.Info.userName" />
+                        <input class="info username" value="@Model.selectedAccount.Info.userName" asp-for="info.userName" required/>
                     </div>
                     <div class="seperate-line"></div>
                     <div class="row">
                         <div class="label">Biography</div>
-                        <input class="info story" value="@Model.selectedAccount.Info.Story" />
+                        <input class="info story" value="@Model.selectedAccount.Info.Story" asp-for="info.Story"/>
                     </div>
                     <div class="seperate-line"></div>
                     <div class="row-private">
@@ -47,7 +47,7 @@
                             <div class="btn-ball"></div>
                         </btn-private>
                     </div>
-                    <div class="btn-edit-info">Xong</div>
+                    <button class="btn-edit-info d-block" type="submit">Xong</button>
                 </form>
             </div>
         </edit-info-box>
