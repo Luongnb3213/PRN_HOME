@@ -26,6 +26,7 @@ class threadUp extends PopupBase {
     constructor() {
         super();
         this.saveScroll();
+        this.doReact();
     }
 
     saveScroll() {
@@ -48,6 +49,52 @@ class threadUp extends PopupBase {
             sessionStorage.setItem('previous', `/profile?userId=${userId}`);
         })
     }
+
+    doReact() {
+        var _this = this;
+        let tym = _this.querySelector('.heart')
+
+        tym.addEventListener('click', () => {
+            if (!tym.classList.contains('reacted')) {
+                tym.classList.add('reacted')
+                $.ajax({
+                    headers: {
+                        "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    url: `/?handler=Reacted&typeReact=up&threadId=${_this.querySelector('.thread-id').innerHTML}`,
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log('Success');
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            } else {
+                tym.classList.remove('reacted')
+                $.ajax({
+                    headers: {
+                        "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    url: `/?handler=Reacted&typeReact=down&threadId=${_this.querySelector('.thread-id').innerHTML}`,
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log('Success');
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+        })
+
+
+    }
+
 }
 customElements.define('thread-up', threadUp);
 

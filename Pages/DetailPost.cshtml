@@ -39,14 +39,14 @@
                                 <div class="detail-like--line"></div>
                             </div>
                             <div class="detail-like-content">
-                                @foreach (var detail in Model.listDetailReact)
+                                @foreach (var detail in Model.listPersonReact)
                                 {
                                     <div class="detail-like-person">
                                         <div class="person-info">
-                                            <img src="@detail.Thread.Account.Info.Image" class="person-avt" />
+                                            <img src="@detail.Info.Image" class="person-avt" />
                                             <div class="person-name">
-                                                <div class="person-username">@detail.Thread.Account.Info.userName</div>
-                                                <div class="person-fullname">@detail.Thread.Account.Info.Name</div>
+                                                <div class="person-username">@detail.Info.userName</div>
+                                                <div class="person-fullname">@detail.Info.Name</div>
                                             </div>
                                         </div>
                                         <div class="person-follow-status">
@@ -251,6 +251,7 @@
                                             </div>
                                             <div class="author-comment-footer">
                                                 <div class="react-wrapper author-comment-react @(box.Conversations.Count != 0 ? "more-reply" : "")">
+                                                    @*
                                                     <div class="wrapper-react-num">
                                                         <div class="heart flex ">
                                                             <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
@@ -269,6 +270,7 @@
                                                         </div>
 
                                                     </div>
+                                                    *@
                                                     <div class="wrapper-react-num" onclick="clickReply(event)">
                                                         <div class="comment">
                                                             <svg width="20" height="19" aria-label="Trả lời" role="img" viewBox="0 0 24 24"
@@ -376,6 +378,7 @@
                                                         </div>
                                                         <div class="author-comment-footer">
                                                             <div class="react-wrapper author-comment-react">
+                                                                @*
                                                                 <div class="wrapper-react-num">
                                                                     <div class="heart flex">
                                                                         <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
@@ -390,6 +393,7 @@
                                                                     </div>
 
                                                                 </div>
+                                                                *@
                                                             </div>
                                                         </div>
                                                     </div>

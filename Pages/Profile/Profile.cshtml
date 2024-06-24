@@ -116,7 +116,7 @@
                         </div>
                         <div class="react-wrapper">
                             <div class="wrapper-react-num">
-                                <div class="heart">
+                                <div class="heart @(Model.dicReact[th.ThreadId.ToString()] == true ? "reacted" : "")">
                                     <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
                                          style="--fill: transparent; --height: 19px; --width: 20px;">
                                         <title>Thích</title>
@@ -124,6 +124,7 @@
                                         </path>
                                     </svg>
                                 </div>
+                                <div class="hidden thread-id">@th.ThreadId</div>
                                 <div class="num-like detail-like">@th.React</div>
                             </div>
                             <div class="wrapper-react-num">

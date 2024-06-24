@@ -26,6 +26,7 @@ namespace PRN221_Assignment.Pages.Profile
         public Account currentAccount { get; set; }
         public List<ThreadReact> listDetailReact { get; set; }
         public bool reactedYet { get; set; }
+        public List<Account> listPersonReact { get; set; }
         public async Task OnGet()
         {
             SelectedThread = context.Thread
@@ -119,6 +120,9 @@ namespace PRN221_Assignment.Pages.Profile
                 .Include(x => x.Thread)
                 .Include(x => x.Thread.Account)
                 .Include(x => x.Thread.Account.Info).Where(x => x.threadId == ThreadId).ToList();
+
+            var listUserIdReact = listDetailReact.Select(x => x.UserID);
+            listPersonReact = context.Accounts.Include(x => x.Info).Where(x => listUserIdReact.Contains(x.UserID)).ToList();
 
             var checkReactedObject = context.ThreadReact.FirstOrDefault(x => x.UserID == Int32.Parse(userId) && x.threadId == ThreadId);
             if (checkReactedObject != null)

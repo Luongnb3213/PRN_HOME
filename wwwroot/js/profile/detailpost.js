@@ -9,7 +9,7 @@ class commentAuthor extends PopupBase {
         this.number = this.querySelector(".number")
         this.heartSvg = this.querySelector(".heart svg");
         this.number?.appendChild(this.createMainNumber(767, "new"));
-        this.init();
+        //this.init();
     }
     likeSlideUp() {
         var _this = this
@@ -36,14 +36,14 @@ class commentAuthor extends PopupBase {
         return mainNumber
     }
 
-    init() {
-        var _this = this;
-        var link = _this.querySelector('.comment-detail-like-link');
-        link.addEventListener('click', function () {
-            _this.initPopup(_this.querySelector('comment-detail-like').innerHTML);
-        })
-        this.heartSvg.addEventListener("click", _this.likeSlideUp.bind(_this))
-    }
+    //init() {
+    //    var _this = this;
+    //    var link = _this.querySelector('.comment-detail-like-link');
+    //    link.addEventListener('click', function () {
+    //        _this.initPopup(_this.querySelector('comment-detail-like').innerHTML);
+    //    })
+    //    this.heartSvg.addEventListener("click", _this.likeSlideUp.bind(_this))
+    //}
 }
 customElements.define('comment-author', commentAuthor)
 
@@ -109,21 +109,22 @@ class threadDetail extends PopupBase {
         this.heartSvg.addEventListener("click", _this.likeSlideUp.bind(_this))
         var numLike = _this.querySelector('.num-like.detail-like.detail');
         numLike.addEventListener('click', function () {
+            event.stopPropagation();
             _this.initPopup(_this.querySelector('thread-detail-like .detail-like-box').innerHTML);
         })
     }
     doReact() {
         var _this = this;
         let tym = _this.querySelector('.heart')
+
         tym.addEventListener('click', () => {
             if (!tym.classList.contains('reacted')) {
                 tym.classList.add('reacted')
-
                 $.ajax({
                     headers: {
                         "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
                     },
-                    url: `?handler=Reacted&typeReact=up&threadId=${_this.querySelector('.thread-id').innerHTML}`,
+                    url: `/?handler=Reacted&typeReact=up&threadId=${_this.querySelector('.thread-id').innerHTML}`,
                     method: 'POST',
                     processData: false,
                     contentType: false,
@@ -136,12 +137,11 @@ class threadDetail extends PopupBase {
                 });
             } else {
                 tym.classList.remove('reacted')
-
                 $.ajax({
                     headers: {
                         "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
                     },
-                    url: `?handler=Reacted&typeReact=down&threadId=${_this.querySelector('.thread-id').innerHTML}`,
+                    url: `/?handler=Reacted&typeReact=down&threadId=${_this.querySelector('.thread-id').innerHTML}`,
                     method: 'POST',
                     processData: false,
                     contentType: false,
@@ -287,20 +287,6 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
                 </div>
                 <div class="author-comment-footer">
                     <div class="react-wrapper author-comment-react">
-                        <div class="wrapper-react-num">
-                            <div class="heart flex">
-                                <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
-                                     style="--fill: transparent; --height: 19px; --width: 20px;">
-                                    <title>Thích</title>
-                                    <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
-                                    </path>
-                                </svg>
-                                 <div class="num-like number transition detail-like detail comment-detail-like-link overflow-hidden  flex-column">  <div class="main_number transition fs-12">
-                                            ${data.data.Comment.React}
-                                        </div></div>
-                            </div>
-                           
-                        </div>
                         <div class="wrapper-react-num" onclick="clickReply(event)">
                             <div class="comment">
                                 <svg width="20" height="19" aria-label="Trả lời" role="img" viewBox="0 0 24 24"
@@ -470,23 +456,6 @@ function clickReplyBtn(current) {
                                     </div>
                                     <div class="author-comment-footer">
                                         <div class="react-wrapper author-comment-react">
-                                            <div class="wrapper-react-num">
-                                                <div class="heart flex">
-                                                    <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
-                                                         style="--fill: transparent; --height: 19px; --width: 20px;">
-                                                        <title>Thích</title>
-                                                        <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
-                                                        </path>
-                                                    </svg>
-                                                    <div class="num-like number transition detail-like detail comment-detail-like-link overflow-hidden  flex-column">
-                                        <div class="main_number transition fs-12">
-                                          ${data.data.React}
-                                        </div>
-    
-                                      </div>
-                                                </div>
-                          
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

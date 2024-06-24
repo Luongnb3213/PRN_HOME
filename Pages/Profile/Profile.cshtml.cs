@@ -15,6 +15,7 @@ namespace PRN221_Assignment.Pages.Profile
         {
             context = _context;
             dicThreadComment = new Dictionary<string, int>();
+            dicReact = new Dictionary<string, bool>();
         }
         public Dictionary<string, int> dicThreadComment { get; set; }
         public Account selectedAccount { get; set; }
@@ -24,11 +25,16 @@ namespace PRN221_Assignment.Pages.Profile
 
         [BindProperty]
         public Info info { get; set; }
+        public Dictionary<string, bool> dicReact { get; set; }
+
         public void OnGet()
         {
             selectedAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == userId);
 
-            myThreads = context.Thread.Include(x => x.ThreadImages).Where(x => x.AuthorId == userId).OrderByDescending(x => x.SubmitDate).ToList();
+            myThreads = context.Thread
+                .Include(x => x.ThreadReacts)
+                .Include(x => x.ThreadImages)
+                .Where(x => x.AuthorId == userId).OrderByDescending(x => x.SubmitDate).ToList();
 
 
             foreach (var th in myThreads)
@@ -40,6 +46,18 @@ namespace PRN221_Assignment.Pages.Profile
 
                 int countComment = totalOriginal + totalReply;
                 dicThreadComment[th.ThreadId.ToString()] = countComment;
+            }
+
+            foreach (var react in myThreads)
+            {
+                if (react.ThreadReacts.Where(x => x.UserID == userId).Count() != 0)
+                {
+                    dicReact[react.ThreadId.ToString()] = true;
+                }
+                else
+                {
+                    dicReact[react.ThreadId.ToString()] = false;
+                }
             }
 
         }
