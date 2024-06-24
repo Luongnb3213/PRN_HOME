@@ -97,7 +97,7 @@
 
         @foreach (var thread in Model.Threads)
         {
-            <thread-main class="flex flex-column py-15 px-25 thread-no-@thread.ThreadId">
+            <thread-main data-id="@thread.ThreadId" data-react="@(Model.dicReact[thread.ThreadId.ToString()] == true ? @thread.React - 1 : @thread.React + 1)" class="flex flex-column py-15 px-25 thread-no-@thread.ThreadId">
                 <div class="flex flex-cols gap-20 flex-wrap">
                     <div class="thread_info col-w-custom" style="width: 48px">
                         <div class="flex h-full flex-column">

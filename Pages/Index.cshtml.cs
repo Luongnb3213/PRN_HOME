@@ -117,12 +117,12 @@ namespace PRN221_Assignment.Pages
             }
             var currentThreadReact = context.Thread.FirstOrDefault(x => x.ThreadId == threadId);
             int currentReactAfter = currentThreadReact.React;
-            await hubContext.Clients.All.SendAsync("ReceiveMessage", threadId, currentReactAfter);
+            //await hubContext.Clients.All.SendAsync("ReceiveMessage", threadId, currentReactAfter);
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve
             };
-            return new JsonResult(new { typeReact }, options);
+            return new JsonResult(new { typeReact, currentReactAfter }, options);
         }
         public void OnGet(string msg)
         {

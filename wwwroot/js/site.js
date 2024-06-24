@@ -7,31 +7,35 @@ var con = new signalR.HubConnectionBuilder().withUrl("/hub").build();
 con.start().then().catch(function (arr) {
     return console.log(err.toString())
 })
-con.on("ReceiveMessage", function (threadId, currentReactAfter) {
-    let threadMainNow = document.querySelector(`.thread-no-${threadId}`);
-    threadMainNow.querySelector('.main_number').innerHTML = currentReactAfter;
-    console.log("hello")
-    console.log(currentReactAfter)
-})
+
 class threadMain extends HTMLElement {
     constructor() {
         super();
+        this.id = this.dataset?.id
         this.heart = this.querySelector(".heart");
         this.number = this.querySelector(".number")
+        this.react = parseInt(this.dataset.react);
         this.init();
         this.saveScroll();
-        this.number.appendChild(this.createMainNumber(1000, "new"));
+        this.number.appendChild(this.createMainNumber(this.react, "new"));
         this.doReact();
     }
     init() {
         var _this = this
         this.heart.addEventListener("click", _this.likeSlideUp.bind(_this))
-    }
-    realTimeHeart() {
-        var _this = this
-        var heart_realtime = this.createMainNumber(989, "heart-reatltime")
-        this.number.appendChild(heart_realtime);
+        con?.on("ReceiveMessage", function (currentReactAfter, threadID) {
+            if (this.id == threadID) {
+                _this.realTimeHeart(currentReactAfter)
+            }
 
+        })
+    }
+    realTimeHeart(currentReactAfter) {
+        var _this = this
+        var heart_realtime = this.createMainNumber(currentReactAfter, "heart-reatltime")
+        this.number.appendChild(heart_realtime);
+        this.setAttribute("data-react", currentReactAfter)
+        this.number.classList.remove("active")
         if (_this.number.querySelector(".main_number.new")) {
             _this.number.querySelector(".main_number.new").remove();
         }
@@ -41,20 +45,27 @@ class threadMain extends HTMLElement {
             _this.number.querySelector(".main_number:not(.slide-upp)").remove();
             e.target.classList.remove("slide-upp");
         })
-        console.log('tym phát')
     }
     likeSlideUp() {
         var _this = this
         if (!_this.number.querySelector(".new")) {
-            this.number.appendChild(this.createMainNumber(767, "new"));
+            if (this.heart.classList.contains('reacted')) {
+                this.number.appendChild(this.createMainNumber(parseInt(this.dataset.react) - 1, "new"));
+            } else {
+                this.number.appendChild(this.createMainNumber(parseInt(this.dataset.react) + 1, "new"));
+            }
+           
         }
         if (_this.number.classList.contains("active")) {
             _this.number.querySelectorAll(".main_number").forEach((item) => {
                 item.classList.remove("translate-y--50")
             })
+         
+
             _this.number.classList.remove("active");
         } else {
             _this.number.classList.add("active");
+
             _this.number.querySelectorAll(".main_number").forEach((item) => {
                 item.classList.add("translate-y--50")
             })
@@ -82,8 +93,13 @@ class threadMain extends HTMLElement {
                     method: 'POST',
                     processData: false,
                     contentType: false,
-                    success: function (data) {
-                        console.log('Success');
+                    success: async function (data) {
+                        _this.setAttribute("data-react", data.currentReactAfter)
+                        try {
+                            await con?.invoke("SendMessage", data.currentReactAfter);
+                        } catch (err) {
+                            console.error(err);
+                        }
                     },
                     error: function (error) {
                         console.log('Error:', error);
@@ -100,8 +116,14 @@ class threadMain extends HTMLElement {
                     method: 'POST',
                     processData: false,
                     contentType: false,
-                    success: function (data) {
-                        console.log('Success');
+                    success: async function (data) {
+                        _this.setAttribute("data-react", data.currentReactAfter ,data.$id)
+
+                        try {
+                            await con?.invoke("SendMessage", data.currentReactAfter, data.$id);
+                        } catch (err) {
+                            console.error(err);
+                        }
                     },
                     error: function (error) {
                         console.log('Error:', error);

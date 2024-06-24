@@ -44,9 +44,12 @@ class customImage extends HTMLElement {
         var shutdonw_icon = this.querySelector(".shutdonw_icon")
         if (shutdonw_icon) {
             shutdonw_icon.addEventListener("click", (e) => {
-                _this.remove()
+                _this.closest(".custom_media").remove()
             })
         }
+    }
+    deleteByCommentSend() {
+        this.closest(".custom_media").remove()
     }
     deleteSefl() {
              this.remove()    

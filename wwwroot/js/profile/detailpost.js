@@ -52,22 +52,21 @@ customElements.define('comment-author', commentAuthor)
 class threadDetail extends PopupBase {
     constructor() {
         super();
+        this.id = this.dataset?.id
         this.heart = this.querySelector(".heart");
+        this.react = parseInt(this.dataset.react);
         this.number = this.querySelector(".number")
         this.heartSvg = this.querySelector(".heart svg");
-        this.number.appendChild(this.createMainNumber(767, "new"));
-        setTimeout(() => {
-            this.realTimeHeart()
-        }, 3000)
-
+        this.number.appendChild(this.createMainNumber(this.react, "new"));
         this.init();
         this.doReact();
     }
-    realTimeHeart() {
+    realTimeHeart(currentReactAfter) {
         var _this = this
-        var heart_realtime = this.createMainNumber(989, "heart-reatltime")
+        var heart_realtime = this.createMainNumber(currentReactAfter, "heart-reatltime")
         this.number.appendChild(heart_realtime);
-
+        this.setAttribute("data-react", currentReactAfter)
+        this.number.classList.remove("active")
         if (_this.number.querySelector(".main_number.new")) {
             _this.number.querySelector(".main_number.new").remove();
         }
@@ -77,12 +76,16 @@ class threadDetail extends PopupBase {
             _this.number.querySelector(".main_number:not(.slide-upp)").remove();
             e.target.classList.remove("slide-upp");
         })
-
     }
     likeSlideUp() {
         var _this = this
         if (!_this.number.querySelector(".new")) {
-            this.number.appendChild(this.createMainNumber(767, "new"));
+            if (this.heart.classList.contains('reacted')) {
+                this.number.appendChild(this.createMainNumber(parseInt(this.dataset.react) - 1, "new"));
+            } else {
+                this.number.appendChild(this.createMainNumber(parseInt(this.dataset.react) + 1, "new"));
+            }
+
         }
         if (_this.number.classList.contains("active")) {
             _this.number.querySelectorAll(".main_number").forEach((item) => {
@@ -107,11 +110,18 @@ class threadDetail extends PopupBase {
     init() {
         var _this = this;
         this.heartSvg.addEventListener("click", _this.likeSlideUp.bind(_this))
+        con?.on("ReceiveMessage", function (currentReactAfter, threadID) {
+            if (this.id == threadID) {
+                _this.realTimeHeart(currentReactAfter)
+            }
+          
+        })
         var numLike = _this.querySelector('.num-like.detail-like.detail');
-        numLike.addEventListener('click', function () {
+        numLike.addEventListener('click', function (event) {
             event.stopPropagation();
             _this.initPopup(_this.querySelector('thread-detail-like .detail-like-box').innerHTML);
         })
+
     }
     doReact() {
         var _this = this;
@@ -128,8 +138,13 @@ class threadDetail extends PopupBase {
                     method: 'POST',
                     processData: false,
                     contentType: false,
-                    success: function (data) {
-                        console.log('Success');
+                    success: async function (data) {
+                        _this.setAttribute("data-react", data.currentReactAfter, data.$id)
+                        try {
+                            await con?.invoke("SendMessage", data.currentReactAfter, data.$id);
+                        } catch (err) {
+                            console.error(err);
+                        }
                     },
                     error: function (error) {
                         console.log('Error:', error);
@@ -145,8 +160,14 @@ class threadDetail extends PopupBase {
                     method: 'POST',
                     processData: false,
                     contentType: false,
-                    success: function (data) {
-                        console.log('Success');
+                    success: async function (data) {
+                        _this.setAttribute("data-react", data.currentReactAfter)
+
+                        try {
+                            await con?.invoke("SendMessage", data.currentReactAfter);
+                        } catch (err) {
+                            console.error(err);
+                        }
                     },
                     error: function (error) {
                         console.log('Error:', error);
@@ -319,27 +340,33 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
     <div class="reply-area hidden"></div>
     <div class="reply-box hidden">
                                 <form class="replyForm" method="post">
-                                    <div class="write-reply-wrapper align-center">
-                                        <div class="write-reply-account">
-                                            <img src="${data.data.Comment.Account.Info.Image}" class="write-reply-account-avt" />
-                                        </div>
-                                        <div class="write-reply-box-wrapper">
-                                            <div class="currentThreadId-reply" data-threadId="${data.data.ThreadId}" hidden></div>
-                                            <div class="type-comment-reply" data-type="reply" hidden></div>
-                                            <div class="threadCommentIdInsert" data-threadCommentId="${data.data.ThreadCommentId}" hidden></div>
-                                            <input placeholder="Reply to ${data.data.Comment.Account.Info.userName}" name="comment" type="text" class="write-reply-box-content" />
-                                        </div>
-                                        <div class="create_image relative thread_main_icon px-2 heart">
-                                            <svg width="20" height="20" aria-label="Đính kèm file phương tiện" role="img" viewBox="0 0 24 24" class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn" style="--fill: currentColor; --height: 20px; --width: 20px;"><title>Đính kèm file phương tiện</title><g><path clip-rule="evenodd" d="M2.00207 9.4959C1.65132 7.00019 1.47595 5.75234 1.82768 4.73084C2.13707 3.83231 2.72297 3.05479 3.50142 2.50971C4.38639 1.89005 5.63425 1.71467 8.12996 1.36392L10.7047 1.00207C13.2004 0.651325 14.4482 0.47595 15.4697 0.827679C16.3682 1.13707 17.1458 1.72297 17.6908 2.50142C17.9171 2.82454 18.0841 3.19605 18.2221 3.65901C17.7476 3.64611 17.2197 3.64192 16.6269 3.64055C16.5775 3.5411 16.5231 3.44881 16.4621 3.36178C16.0987 2.84282 15.5804 2.45222 14.9814 2.24596C14.3004 2.01147 13.4685 2.12839 11.8047 2.36222L7.44748 2.97458C5.78367 3.20841 4.95177 3.32533 4.36178 3.73844C3.84282 4.10182 3.45222 4.62017 3.24596 5.21919C3.01147 5.90019 3.12839 6.73209 3.36222 8.3959L3.97458 12.7531C4.15588 14.0431 4.26689 14.833 4.50015 15.3978C4.50083 16.3151 4.50509 17.0849 4.53201 17.7448C4.13891 17.4561 3.79293 17.1036 3.50971 16.6991C2.89005 15.8142 2.71467 14.5663 2.36392 12.0706L2.00207 9.4959Z" fill="currentColor" fill-rule="evenodd"></path><g><g clip-path="url(#:r2:)"><rect fill="none" height="15.5" rx="3.75" stroke="currentColor" stroke-width="1.5" width="15.5" x="6.75" y="5.8894"></rect><path d="M6.6546 17.8894L8.59043 15.9536C9.1583 15.3857 10.0727 15.3658 10.6647 15.9085L12.5062 17.5966C12.9009 17.9584 13.5105 17.9451 13.8891 17.5665L17.8181 13.6376C18.4038 13.0518 19.3536 13.0518 19.9394 13.6375L22.0663 15.7644" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"></path><circle cx="10.75" cy="9.8894" fill="currentColor" r="1.25"></circle></g></g></g><defs><clipPath id=":r2:"><rect fill="white" height="17" rx="4.5" width="17" x="6" y="5.1394"></rect></clipPath></defs></svg>
-                                            <input class="inset-0 write-reply-pics" type="file" accept="image/*,video/*" name="UploadedFiles">
-                                        </div>
-                                        <div class="write-reply-btn-emoji px-2">
-                                            <i class="fa-solid fa-face-smile"></i>
-                                        </div>
-                                        <div class="write-reply-btn-submit px-2" onclick="clickReplyBtn(this)">
-                                            <i class="fa-solid fa-paper-plane icon-submit"></i>
-                                        </div>
-                                    </div>
+      
+                                     <comment-reply class="write-reply-wrapper flex flex-column ">
+                                            <div class="flex align-center w-full justify-content-around">
+                                                <div class="write-reply-account">
+                                                    <img src="${data.data.Comment.Account.Info.Image}" class="write-reply-account-avt" />
+                                                </div>
+                                                <div class="write-reply-box-wrapper ">
+                                                    <div class="currentThreadId-reply" data-threadId="${data.data.ThreadId}" hidden></div>
+                                                    <div class="type-comment-reply" data-type="reply" hidden></div>
+                                                    <div class="threadCommentIdInsert" data-threadCommentId="${data.data.ThreadCommentId}" hidden></div>
+                                                    <input placeholder="Reply to ${data.data.Comment.Account.Info.userName}" name='comment' type="text" class="write-reply-box-content" />
+                                                </div>
+                                                <div class="create_image relative px-2 thread_main_icon heart">
+                                                    <svg width="20" height="20" aria-label="Đính kèm file phương tiện" role="img" viewBox="0 0 24 24" class="x1lliihq pointer xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn" style="--fill: currentColor; --height: 20px; --width: 20px;"><title>Đính kèm file phương tiện</title><g><path clip-rule="evenodd" d="M2.00207 9.4959C1.65132 7.00019 1.47595 5.75234 1.82768 4.73084C2.13707 3.83231 2.72297 3.05479 3.50142 2.50971C4.38639 1.89005 5.63425 1.71467 8.12996 1.36392L10.7047 1.00207C13.2004 0.651325 14.4482 0.47595 15.4697 0.827679C16.3682 1.13707 17.1458 1.72297 17.6908 2.50142C17.9171 2.82454 18.0841 3.19605 18.2221 3.65901C17.7476 3.64611 17.2197 3.64192 16.6269 3.64055C16.5775 3.5411 16.5231 3.44881 16.4621 3.36178C16.0987 2.84282 15.5804 2.45222 14.9814 2.24596C14.3004 2.01147 13.4685 2.12839 11.8047 2.36222L7.44748 2.97458C5.78367 3.20841 4.95177 3.32533 4.36178 3.73844C3.84282 4.10182 3.45222 4.62017 3.24596 5.21919C3.01147 5.90019 3.12839 6.73209 3.36222 8.3959L3.97458 12.7531C4.15588 14.0431 4.26689 14.833 4.50015 15.3978C4.50083 16.3151 4.50509 17.0849 4.53201 17.7448C4.13891 17.4561 3.79293 17.1036 3.50971 16.6991C2.89005 15.8142 2.71467 14.5663 2.36392 12.0706L2.00207 9.4959Z" fill="currentColor" fill-rule="evenodd"></path><g><g clip-path="url(#:r2:)"><rect fill="none" height="15.5" rx="3.75" stroke="currentColor" stroke-width="1.5" width="15.5" x="6.75" y="5.8894"></rect><path d="M6.6546 17.8894L8.59043 15.9536C9.1583 15.3857 10.0727 15.3658 10.6647 15.9085L12.5062 17.5966C12.9009 17.9584 13.5105 17.9451 13.8891 17.5665L17.8181 13.6376C18.4038 13.0518 19.3536 13.0518 19.9394 13.6375L22.0663 15.7644" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"></path><circle cx="10.75" cy="9.8894" fill="currentColor" r="1.25"></circle></g></g></g><defs><clipPath id=":r2:"><rect fill="white" height="17" rx="4.5" width="17" x="6" y="5.1394"></rect></clipPath></defs></svg>
+                                                    <input class="inset-0 pointer write-reply-pics" type="file" accept="image/*,video/*" name="UploadedFiles">
+                                                </div>
+                                                <emoji-box class="write-comment-btn-emoji px-2">
+                                                    <div class="emoji-button">
+                                                        <i class="fa-solid fa-face-smile"></i>
+                                                    </div>
+
+                                                </emoji-box>
+                                                <div class="write-reply-btn-submit px-2" onclick="clickReplyBtn(this)">
+                                                    <i class="fa-solid fa-paper-plane icon-submit"></i>
+                                                </div>
+                                            </div>
+                                        </comment-reply>
                                 </form>
                             </div>
     <div class="detail-separate-line"></div>
@@ -349,7 +376,6 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
             document.querySelector('.write-comment-box-content').value = '';
             document.querySelector('#commentForm').reset();
             document.querySelector('.num-comment.detail-comment').innerHTML = document.querySelector('.num-comment.detail-comment').innerHTML * 1 + 1;
-            console.log(document.querySelector('.no-comment-wrapper'))
             if (!document.querySelector('.no-comment-wrapper').classList.contains('hidden')) {
                 document.querySelector('.no-comment-wrapper').classList.add('hidden');
             }
@@ -360,6 +386,10 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
 //AJAX reply comment
 //document.querySelector('.write-reply-btn-submit').addEventListener('click',
 function clickReplyBtn(current) {
+    let custom_media = current.closest("comment-reply").querySelector("custom-media");
+    if (custom_media) {
+        custom_media.deleteByCommentSend()
+    }
     let element = current.closest('.comment-wrapper');
     let currentThreadId = element.querySelector('.currentThreadId-reply');
     let typeComment = element.querySelector('.type-comment-reply');

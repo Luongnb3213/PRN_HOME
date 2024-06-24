@@ -30,7 +30,7 @@
                     <i class="fa-solid fa-arrow-left icon-back"></i>
                 </a>
             </div>
-            <thread-detail data-custom-class="custom-thread-detail-like">
+            <thread-detail data-id="@Model.SelectedThread.ThreadId" data-react=" @(Model.reactedYet == true ? @Model.SelectedThread.React - 1 : @Model.SelectedThread.React + 1)" data-custom-class="custom-thread-detail-like">
                 <div class="detail-post-wrapper">
                     <thread-detail-like class="wrapper-detail-like-box hidden">
                         <div class="detail-like-box ">
