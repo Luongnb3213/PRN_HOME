@@ -61,6 +61,7 @@ class threadDetail extends PopupBase {
         }, 3000)
 
         this.init();
+        this.doReact();
     }
     realTimeHeart() {
         var _this = this
@@ -110,6 +111,51 @@ class threadDetail extends PopupBase {
         numLike.addEventListener('click', function () {
             _this.initPopup(_this.querySelector('thread-detail-like .detail-like-box').innerHTML);
         })
+    }
+    doReact() {
+        var _this = this;
+        let tym = _this.querySelector('.heart')
+        tym.addEventListener('click', () => {
+            if (!tym.classList.contains('reacted')) {
+                tym.classList.add('reacted')
+
+                $.ajax({
+                    headers: {
+                        "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    url: `?handler=Reacted&typeReact=up&threadId=${_this.querySelector('.thread-id').innerHTML}`,
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log('Success');
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            } else {
+                tym.classList.remove('reacted')
+
+                $.ajax({
+                    headers: {
+                        "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    url: `?handler=Reacted&typeReact=down&threadId=${_this.querySelector('.thread-id').innerHTML}`,
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log('Success');
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+        })
+
+
     }
 }
 customElements.define('thread-detail', threadDetail);

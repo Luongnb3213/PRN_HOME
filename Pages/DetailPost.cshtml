@@ -135,7 +135,7 @@
                     <div class="detail-react">
                         <div class="react-wrapper">
                             <div class="wrapper-react-num">
-                                <div class="heart flex @(Model.SelectedThread.ThreadReacts.Count != 0 ? "reacted" : "")"> @*Cái này mai sửa*@
+                                <div class="heart flex @(Model.reactedYet == true ? "reacted" : "")"> @*Cái này mai sửa*@
                                     <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
                                          style="--fill: transparent; --height: 19px; --width: 20px;">
                                         <title>Thích</title>
@@ -148,6 +148,7 @@
                                         </div>
 
                                     </div>
+                                    <div class="hidden thread-id">@Model.SelectedThread.ThreadId</div>
                                 </div>
 
                             </div>

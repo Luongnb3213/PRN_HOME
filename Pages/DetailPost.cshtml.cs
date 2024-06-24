@@ -25,6 +25,7 @@ namespace PRN221_Assignment.Pages.Profile
         public List<dynamic> listReplyDetail { get; set; }
         public Account currentAccount { get; set; }
         public List<ThreadReact> listDetailReact { get; set; }
+        public bool reactedYet { get; set; }
         public async Task OnGet()
         {
             SelectedThread = context.Thread
@@ -118,6 +119,16 @@ namespace PRN221_Assignment.Pages.Profile
                 .Include(x => x.Thread)
                 .Include(x => x.Thread.Account)
                 .Include(x => x.Thread.Account.Info).Where(x => x.threadId == ThreadId).ToList();
+
+            var checkReactedObject = context.ThreadReact.FirstOrDefault(x => x.UserID == Int32.Parse(userId) && x.threadId == ThreadId);
+            if (checkReactedObject != null)
+            {
+                reactedYet = true;
+            }
+            else
+            {
+                reactedYet = false;
+            }
         }
         public async Task<IActionResult> OnPost([FromForm] MyComment comment)
         {
