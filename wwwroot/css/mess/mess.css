@@ -65,3 +65,37 @@ textarea[name="mess"] {
     display: block;
     z-index: 3;
 }
+
+.message-box {
+    max-width: 350px;
+    min-height: 22px;
+    padding: 10px 10px 10px 14px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.other .message-box {
+    background-color: #262626;
+    color: var(--text-color);
+}
+
+.me .message-box {
+    background-color: var(--text-color);
+    color: #262626;
+}
+
+.wrapper-message.other {
+    
+}
+
+.wrapper-message.me {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    flex-direction: row-reverse;
+}
+
+.main-chat {
+    padding-left: 10px;
+    padding-right: 10px;
+}
