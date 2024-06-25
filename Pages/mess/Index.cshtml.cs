@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Assignment.Models;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace PRN221_Assignment.Pages.mess
 {
@@ -16,7 +18,12 @@ namespace PRN221_Assignment.Pages.mess
         }
         public Dictionary<int, Account> dicFollower { get; set; }
         public List<Account> listFollower { get; set; }
-        public void OnGet()
+        public List<dynamic> ChatBox { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int PartnerId { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public bool selected { get; set; }
+        public IActionResult OnGet()
         {
             var userId = string.Empty;
             if (User != null && User.Claims != null)
@@ -36,6 +43,35 @@ namespace PRN221_Assignment.Pages.mess
             {
                 dicFollower[account.UserID] = account;
             }
+
+            if (selected)
+            {
+                List<int> peopleInChat = new List<int>();
+                peopleInChat.Add(PartnerId);
+                peopleInChat.Add(Int32.Parse(userId));
+                ChatBox = (from a in context.Mess
+                           join b in context.MessageReceive on a.messId equals b.messID
+                           select new
+                           {
+                               a.messId,
+                               a.Content,
+                               a.AuthorId,
+                               a.createdBy,
+                               TypeNoti = a.type,
+                               b.MessageReceiveId,
+                               b.GroupID,
+                               ReceivePerson = b.UserId,
+                               b.seen,
+                               TypeMess = b.type,
+                               whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other")
+                           }).Where(x => peopleInChat.Contains(x.AuthorId) && peopleInChat.Contains(x.ReceivePerson)).Cast<dynamic>().ToList();
+                var options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve
+                };
+                return new JsonResult(new { data = ChatBox }, options);
+            }
+            return Page();
         }
     }
 }

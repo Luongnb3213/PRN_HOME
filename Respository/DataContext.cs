@@ -27,7 +27,9 @@ namespace PRN221_Assignment.Respository
 
         public DbSet<ThreadComment> ThreadComment { get; set; }
         public DbSet<ThreadImages> ThreadImages { get; set; }
-        public DbSet<ThreadReact> ThreadReact { get; internal set; }
+        public DbSet<ThreadReact> ThreadReact { get; set; }
+        public DbSet<Mess> Mess { get; set; }
+        public DbSet<MessageReceive> MessageReceive { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
