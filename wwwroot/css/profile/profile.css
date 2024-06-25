@@ -1092,3 +1092,12 @@ custom-media img {
     color: rgb(243, 245, 247);
     stroke: none;
 }
+
+.no-post {
+    width: 100%;
+    font-size: 1.8rem;
+    color: var(--sub-text-color);
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}

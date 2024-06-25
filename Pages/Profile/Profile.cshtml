@@ -27,18 +27,18 @@
             <div class="edit-info-box hide">
                 <form method="post">
                     <div class="row">
-                        <div class="label" >Fullname</div>
-                        <input class="info fullname" value="@Model.selectedAccount.Info.Name" asp-for="info.Name"/>
+                        <div class="label">Fullname</div>
+                        <input class="info fullname" value="@Model.selectedAccount.Info.Name" asp-for="info.Name" />
                     </div>
                     <div class="seperate-line"></div>
                     <div class="row">
                         <div class="label">Username</div>
-                        <input class="info username" value="@Model.selectedAccount.Info.userName" asp-for="info.userName" required/>
+                        <input class="info username" value="@Model.selectedAccount.Info.userName" asp-for="info.userName" required />
                     </div>
                     <div class="seperate-line"></div>
                     <div class="row">
                         <div class="label">Biography</div>
-                        <input class="info story" value="@Model.selectedAccount.Info.Story" asp-for="info.Story"/>
+                        <input class="info story" value="@Model.selectedAccount.Info.Story" asp-for="info.Story" />
                     </div>
                     <div class="seperate-line"></div>
                     <div class="row-private">
@@ -52,95 +52,101 @@
             </div>
         </edit-info-box>
 
-        <!-- Created Threads -->
-        @foreach (var th in Model.myThreads)
+        @if (Model.myThreads.Count == 0)
         {
-            <thread-up data-custom-class="custom-thread-detail">
-                <!--thread uploaded-->
-                <div class="post-wrapper">
-                    <div class="wrapper-avt">
-                        <img src="@th.Account.Info.Image" class="avt-author" />
-                    </div>
-                    <div class="wrapper-author">
-                        <div class="info-author">
-                            <h3 class="author flex align-center fs-16" data-submit-date="@th.SubmitDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffff")"> @th.Account.Info.userName <span class="time-elapsed"></span> </h3>
+            <div class="no-post">You haven't posted anything yet</div>
+        }
+        else
+        {
+            <!-- Created Threads -->
+            @foreach (var th in Model.myThreads)
+            {
+                <thread-up data-custom-class="custom-thread-detail">
+                    <!--thread uploaded-->
+                    <div class="post-wrapper">
+                        <div class="wrapper-avt">
+                            <img src="@th.Account.Info.Image" class="avt-author" />
                         </div>
-                        <div class="view-detail-post">
-                            <div class="link-detail">
-                                <a href="/detailpost?threadId=@th.ThreadId" class="content w-full content-text text-decoration-none">
-                                    @th.Content
-                                </a>
+                        <div class="wrapper-author">
+                            <div class="info-author">
+                                <h3 class="author flex align-center fs-16" data-submit-date="@th.SubmitDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffff")"> @th.Account.Info.userName <span class="time-elapsed"></span> </h3>
                             </div>
-                            @if (th.ThreadImages.Count != 0)
-                            {
-                                <div class="slide-image w-full">
-                                    <slide-section class="swiper w-full free-scroll"
-                                                   data-section-id="template--16740126261401__collection_list_VmEYkJ"
-                                                   data-autoplay="false"
-                                                   data-effect="slide"
-                                                   data-loop="false"
-                                                   data-speed="800"
-                                                   data-autoplay-speed="5"
-                                                   data-spacing="10"
-                                                   data-mobile="1"
-                                                   data-tablet="2"
-                                                   data-desktop="1.5"
-                                                   data-free-scroll="true"
-                                                   data-pagination-progressbar="false"
-                                                   id="@th.ThreadId">
-                                        <div class="swiper-wrapper" id="gallery--getting-started-@th.ThreadId">
-                                            @foreach (var i in th.ThreadImages)
-                                            {
-                                                <div class="swiper-slide">
-                                                    @if (i.Media.EndsWith("mp4"))
-                                                    {
-                                                        <custom-media class="h-full pointer d-block">
-                                                            <video src="@i.Media" controls></video>
-                                                        </custom-media>
-                                                    }
-                                                    else
-                                                    {
-                                                        <custom-media class="h-full rounded-style  overflow-hidden">
-                                                            <a data-pswp-src="@i.Media">
-                                                                <img src="@i.Media" class="w-full rounded-10" />
-                                                            </a>
-                                                        </custom-media>
-                                                    }
-                                                </div>
-                                            }
+                            <div class="view-detail-post">
+                                <div class="link-detail">
+                                    <a href="/detailpost?threadId=@th.ThreadId" class="content w-full content-text text-decoration-none">
+                                        @th.Content
+                                    </a>
+                                </div>
+                                @if (th.ThreadImages.Count != 0)
+                                {
+                                    <div class="slide-image w-full">
+                                        <slide-section class="swiper w-full free-scroll"
+                                                       data-section-id="template--16740126261401__collection_list_VmEYkJ"
+                                                       data-autoplay="false"
+                                                       data-effect="slide"
+                                                       data-loop="false"
+                                                       data-speed="800"
+                                                       data-autoplay-speed="5"
+                                                       data-spacing="10"
+                                                       data-mobile="1"
+                                                       data-tablet="2"
+                                                       data-desktop="1.5"
+                                                       data-free-scroll="true"
+                                                       data-pagination-progressbar="false"
+                                                       id="@th.ThreadId">
+                                            <div class="swiper-wrapper" id="gallery--getting-started-@th.ThreadId">
+                                                @foreach (var i in th.ThreadImages)
+                                                {
+                                                    <div class="swiper-slide">
+                                                        @if (i.Media.EndsWith("mp4"))
+                                                        {
+                                                            <custom-media class="h-full pointer d-block">
+                                                                <video src="@i.Media" controls></video>
+                                                            </custom-media>
+                                                        }
+                                                        else
+                                                        {
+                                                            <custom-media class="h-full rounded-style  overflow-hidden">
+                                                                <a data-pswp-src="@i.Media">
+                                                                    <img src="@i.Media" class="w-full rounded-10" />
+                                                                </a>
+                                                            </custom-media>
+                                                        }
+                                                    </div>
+                                                }
 
-                                        </div>
-                                    </slide-section>
-                                </div>
-                            }
-                        </div>
-                        <div class="react-wrapper">
-                            <div class="wrapper-react-num">
-                                <div class="heart @(Model.dicReact[th.ThreadId.ToString()] == true ? "reacted" : "")">
-                                    <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
-                                         style="--fill: transparent; --height: 19px; --width: 20px;">
-                                        <title>Thích</title>
-                                        <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
-                                        </path>
-                                    </svg>
-                                </div>
-                                <div class="hidden thread-id">@th.ThreadId</div>
-                                <div class="num-like detail-like">@th.React</div>
+                                            </div>
+                                        </slide-section>
+                                    </div>
+                                }
                             </div>
-                            <div class="wrapper-react-num">
+                            <div class="react-wrapper">
+                                <div class="wrapper-react-num">
+                                    <div class="heart @(Model.dicReact[th.ThreadId.ToString()] == true ? "reacted" : "")">
+                                        <svg width="20" height="19" aria-label="Thích" role="img" viewBox="0 0 24 22"
+                                             style="--fill: transparent; --height: 19px; --width: 20px;">
+                                            <title>Thích</title>
+                                            <path d="M1 7.66c0 4.575 3.899 9.086 9.987 12.934.338.203.74.406 1.013.406.283 0 .686-.203 1.013-.406C19.1 16.746 23 12.234 23 7.66 23 3.736 20.245 1 16.672 1 14.603 1 12.98 1.94 12 3.352 11.042 1.952 9.408 1 7.328 1 3.766 1 1 3.736 1 7.66Z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div class="hidden thread-id">@th.ThreadId</div>
+                                    <div class="num-like detail-like">@th.React</div>
+                                </div>
+                                <div class="wrapper-react-num">
 
-                                <div class="comment">
-                                    <svg width="20" height="19" aria-label="Trả lời" role="img" viewBox="0 0 24 24"
-                                         style="--fill: currentColor; --height: 20px; --width: 20px;">
-                                        <title>Trả lời</title>
-                                        <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"></path>
-                                    </svg>
+                                    <div class="comment">
+                                        <svg width="20" height="19" aria-label="Trả lời" role="img" viewBox="0 0 24 24"
+                                             style="--fill: currentColor; --height: 20px; --width: 20px;">
+                                            <title>Trả lời</title>
+                                            <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="num-comment detail-comment">
+                                        <span>@Model.dicThreadComment[th.ThreadId.ToString()]</span>
+                                    </div>
                                 </div>
-                                <div class="num-comment detail-comment">
-                                    <span>@Model.dicThreadComment[th.ThreadId.ToString()]</span>
-                                </div>
-                            </div>
-                            @*
+                                @*
                         <div class="wrapper-react-num">
                         <div class="re-post">
                         <svg width="20" height="19" aria-label="Đăng lại" role="img" viewBox="0 0 24 24"
@@ -153,25 +159,26 @@
                         <div class="num-share detail-share">555</div>
                         </div>
                         *@
+                            </div>
+                        </div>
+                        <div class="option-icon">
+                            <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
+                                <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
+                                     class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
+                                     style="fill: #777777; --height: 20px; --width: 20px;">
+                                    <title>Xem thêm</title>
+                                    <circle cx="12" cy="12" r="1.5"></circle>
+                                    <circle cx="6" cy="12" r="1.5"></circle>
+                                    <circle cx="18" cy="12" r="1.5"></circle>
+                                </svg>
+                            </icon>
                         </div>
                     </div>
-                    <div class="option-icon">
-                        <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
-                            <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
-                                 class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
-                                 style="fill: #777777; --height: 20px; --width: 20px;">
-                                <title>Xem thêm</title>
-                                <circle cx="12" cy="12" r="1.5"></circle>
-                                <circle cx="6" cy="12" r="1.5"></circle>
-                                <circle cx="18" cy="12" r="1.5"></circle>
-                            </svg>
-                        </icon>
+                    <div class="separate-post">
                     </div>
-                </div>
-                <div class="separate-post">
-                </div>
-                <!--thread upload-->
-            </thread-up>
+                    <!--thread upload-->
+                </thread-up>
+            }
         }
     </div>
 

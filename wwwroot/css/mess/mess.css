@@ -104,3 +104,19 @@ textarea[name="mess"] {
 .write-comment-box-wrapper {
     width: 95%;
 }
+
+.avt-follower-up {
+    object-fit: cover;
+    height: 65px;
+}
+
+.wrapper-avt-follower-up {
+    margin: 0 8px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.wrapper-avt-follower-up:hover {
+    background-color: #262626;
+}

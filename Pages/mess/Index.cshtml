@@ -24,80 +24,18 @@
                 </div>
                 <div class="header_left_body mt-20" style="overflow-y: auto; max-height: 70vh;">
                     <image-work class="flex gap-10 " style="overflow-x:auto">
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
+                        @foreach (var follower in Model.listFollower)
+                        {
+                            <div class="flex flex-column relative align-center wrapper-avt-follower-up" style="flex-shrink: 0" onclick="showBoxChatSingle(this)">
+                                <div class="follower-id hidden" data-followerid="@follower.UserID"></div>
+                                <img src="@follower.Info.Image" width="65" height="65" class="rounded-50 mb-2 avt-follower-up" />
+                                <span class="username-follower-up body-weight fs-12" style="color: rgb(245,245,245)">@follower.Info.userName</span>
+                                <span class="fullname-follower-up body-weight fs-12 hidden" style="color: rgb(245,245,245)">@follower.Info.Name</span>
+                                <span class="absolute online">
 
-                            </span>
-                        </div>
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
-
-                            </span>
-                        </div>
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
-
-                            </span>
-                        </div>
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
-
-                            </span>
-                        </div>
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
-
-                            </span>
-                        </div>
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
-
-                            </span>
-                        </div>
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
-
-                            </span>
-                        </div>
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
-
-                            </span>
-                        </div>
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
-
-                            </span>
-                        </div>
-                        <div class="flex flex-column relative align-center" style="flex-shrink: 0">
-                            <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" width="65" height="65" class="rounded-50 mb-2" />
-                            <span class="body-weight fs-12" style="color: rgb(245,245,245)">cho.ai</span>
-                            <span class="absolute online">
-
-                            </span>
-                        </div>
-
-
-
-
+                                </span>
+                            </div>
+                        }
                     </image-work>
                     <div class="mess_concept mt-10 flex py-4 pr-4 justify-between align-center">
                         <span class="bold whitespace-nowrap fs-20 " style="color:rgb(245,245,245)">
@@ -229,17 +167,17 @@
             </div>
 
         </div>
-        <div class="col-md-8">
+        <div class="right-panel col-md-8 hidden">
             <div class="chat">
                 <chat>
                     <div class="header_chat pb-2 flex justify-between align-center">
                         <div class="left_chat_header flex gap-10 align-center">
-                            <div class="user_image relative" style="width:44px;">
-                                <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 44px;" />
+                            <div class="user_image relative avt-partner" style="width:44px;">
+                                <img src="" class="rounded-50 w-full" style="object-fit: cover; height: 44px;" />
                                 <span class="absolute online"></span>
                             </div>
                             <div>
-                                <span class="font-body w-full lh-1  d-block fs-15" style="color:rgb(245,245,245);margin-bottom: 5px;">ch.oai</span>
+                                <span class="username-partner font-body w-full lh-1  d-block fs-15" style="color:rgb(245,245,245);margin-bottom: 5px;">ch.oai</span>
                                 <span class="font-body w-full lh-1 d-block fs-12" style="color:rgb(245,245,245);opacity: 0.5;">Hoạt động 13 giờ trước</span>
 
                             </div>
@@ -256,15 +194,15 @@
 
                     <div class="main-chat" style="overflow-y: auto;height: 65vh ; max-height: 65vh">
                         <div class="chat_body flex flex-column gap-10 align-center">
-                            <div class="user_image relative" style="width:96px;">
-                                <img src="../pics/profile/9edcbf73-6987-4b40-b0d5-1354d43e6bd5.jfif" class="rounded-50 w-full" style="object-fit: cover; height: 96px;" />
+                            <div class="user_image relative avt-partner" style="width:96px;">
+                                <img src="" class="rounded-50 w-full" style="object-fit: cover; height: 96px;" />
                                 <span class="absolute online"></span>
                             </div>
-                            <div class="font-body text-center w-full lh-1  d-block fs-15" style="color:rgb(245,245,245);">
-                                ch.oai
+                            <div class="font-body text-center w-full lh-1  d-block fs-15 fullname-partner" style="color:rgb(245,245,245);">
+                                
                             </div>
-                            <div class="font-body text-center w-full lh-1  d-block fs-15" style="color:rgb(245,245,245);opacity: 0.5">
-                                <span>manrt.43 · Threads </span>
+                            <div class="font-body text-center w-full lh-1  d-block fs-15 username-partner" style="color:rgb(245,245,245);opacity: 0.5">
+                                <span></span>
                             </div>
                             <a href="#" class="button_profile fs-15 " style="color:rgb(245,245,245);">Xem trang cá nhân</a>
                         </div>
@@ -365,3 +303,4 @@
         </div>
     </div>
 </div>
+<script src="~/js/mess/mess.js"></script>
