@@ -11,7 +11,7 @@ con.start().then().catch(function (arr) {
 class threadMain extends HTMLElement {
     constructor() {
         super();
-        this.id = this.dataset?.id
+        this.id = parseInt(this.dataset?.id)
         this.heart = this.querySelector(".heart");
         this.number = this.querySelector(".number")
         this.react = parseInt(this.dataset.react);
@@ -24,7 +24,7 @@ class threadMain extends HTMLElement {
         var _this = this
         this.heart.addEventListener("click", _this.likeSlideUp.bind(_this))
         con?.on("ReceiveMessage", function (currentReactAfter, threadID) {
-            if (this.id == threadID) {
+            if (_this.id == threadID) {
                 _this.realTimeHeart(currentReactAfter)
             }
 
@@ -82,9 +82,9 @@ class threadMain extends HTMLElement {
         var _this = this;
         let tym = _this.querySelector('.heart')
         tym.addEventListener('click', () => {
+        
             if (!tym.classList.contains('reacted')) {
                 tym.classList.add('reacted')
-
                 $.ajax({
                     headers: {
                         "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
@@ -94,9 +94,10 @@ class threadMain extends HTMLElement {
                     processData: false,
                     contentType: false,
                     success: async function (data) {
+
                         _this.setAttribute("data-react", data.currentReactAfter)
                         try {
-                            await con?.invoke("SendMessage", data.currentReactAfter);
+                            await con?.invoke("SendMessage", data.currentReactAfter, parseInt(_this.id));
                         } catch (err) {
                             console.error(err);
                         }
@@ -117,10 +118,10 @@ class threadMain extends HTMLElement {
                     processData: false,
                     contentType: false,
                     success: async function (data) {
-                        _this.setAttribute("data-react", data.currentReactAfter ,data.$id)
-
+                        _this.setAttribute("data-react", data.currentReactAfter)
+                  
                         try {
-                            await con?.invoke("SendMessage", data.currentReactAfter, data.$id);
+                            await con?.invoke("SendMessage", data.currentReactAfter, parseInt(_this.id));
                         } catch (err) {
                             console.error(err);
                         }

@@ -111,7 +111,7 @@ class threadDetail extends PopupBase {
         var _this = this;
         this.heartSvg.addEventListener("click", _this.likeSlideUp.bind(_this))
         con?.on("ReceiveMessage", function (currentReactAfter, threadID) {
-            if (this.id == threadID) {
+            if (_this.id == threadID) {
                 _this.realTimeHeart(currentReactAfter)
             }
           
@@ -139,9 +139,9 @@ class threadDetail extends PopupBase {
                     processData: false,
                     contentType: false,
                     success: async function (data) {
-                        _this.setAttribute("data-react", data.currentReactAfter, data.$id)
+                        _this.setAttribute("data-react", data.currentReactAfter)
                         try {
-                            await con?.invoke("SendMessage", data.currentReactAfter, data.$id);
+                            await con?.invoke("SendMessage", data.currentReactAfter, parseInt(_this.id));
                         } catch (err) {
                             console.error(err);
                         }
@@ -164,7 +164,7 @@ class threadDetail extends PopupBase {
                         _this.setAttribute("data-react", data.currentReactAfter)
 
                         try {
-                            await con?.invoke("SendMessage", data.currentReactAfter);
+                            await con?.invoke("SendMessage", data.currentReactAfter, parseInt(_this.id));
                         } catch (err) {
                             console.error(err);
                         }

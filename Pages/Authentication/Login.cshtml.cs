@@ -175,6 +175,7 @@ namespace PRN221_Assignment.Pages.Authentication
                 {
                 new Claim(ClaimTypes.Name, user.Info?.Name),
                 new Claim(ClaimTypes.Email, user?.Email),
+                new Claim(ClaimTypes.NameIdentifier,  user?.UserID+""),
                 new Claim(ClaimTypes.Sid, user?.UserID+"")
                 },
                 expires: DateTime.Now.AddSeconds(Convert.ToInt32(_config["JwtOptions:ExpirationSeconds"])),
