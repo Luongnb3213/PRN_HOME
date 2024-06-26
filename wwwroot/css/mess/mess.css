@@ -115,8 +115,14 @@ textarea[name="mess"] {
     cursor: pointer;
     padding: 4px;
     border-radius: 10px;
+    user-select: none;
 }
 
 .wrapper-avt-follower-up:hover {
     background-color: #262626;
+}
+
+.username-follower-up,
+.avt-follower-up {
+    user-select: none;
 }

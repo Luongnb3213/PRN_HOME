@@ -5,6 +5,7 @@ using PRN221_Assignment.Models;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using static PRN221_Assignment.Pages.mess.IndexModel;
 
 namespace PRN221_Assignment.Pages.mess
 {
@@ -51,6 +52,9 @@ namespace PRN221_Assignment.Pages.mess
                 peopleInChat.Add(Int32.Parse(userId));
                 ChatBox = (from a in context.Mess
                            join b in context.MessageReceive on a.messId equals b.messID
+                           join c in context.Accounts on a.AuthorId equals c.UserID
+                           join d in context.Accounts on b.UserId equals d.UserID
+                           join e in context.Info on a.AuthorId equals e.UserID
                            select new
                            {
                                a.messId,
@@ -63,7 +67,8 @@ namespace PRN221_Assignment.Pages.mess
                                ReceivePerson = b.UserId,
                                b.seen,
                                TypeMess = b.type,
-                               whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other")
+                               whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other"),
+                               avtAuthor = e.Image,
                            }).Where(x => peopleInChat.Contains(x.AuthorId) && peopleInChat.Contains(x.ReceivePerson)).Cast<dynamic>().ToList();
                 var options = new JsonSerializerOptions
                 {
@@ -72,6 +77,16 @@ namespace PRN221_Assignment.Pages.mess
                 return new JsonResult(new { data = ChatBox }, options);
             }
             return Page();
+        }
+
+        public IActionResult OnPost(int partnerId)
+        {
+            return new JsonResult(new { success = true });
+        }
+        public class MessageModel
+        {
+            public string MessContent { get; set; }
+            public int PartnerId { get; set; }
         }
     }
 }
