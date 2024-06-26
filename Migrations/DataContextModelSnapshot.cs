@@ -266,9 +266,6 @@ namespace PRN221_Assignment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageReceiveId"), 1L, 1);
 
-                    b.Property<int?>("AuthorUserID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("GroupID")
                         .IsRequired()
                         .HasColumnType("int");
@@ -287,9 +284,9 @@ namespace PRN221_Assignment.Migrations
 
                     b.HasKey("MessageReceiveId");
 
-                    b.HasIndex("AuthorUserID");
-
                     b.HasIndex("GroupID");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("messID")
                         .IsUnique();
@@ -491,13 +488,15 @@ namespace PRN221_Assignment.Migrations
 
             modelBuilder.Entity("PRN221_Assignment.Models.MessageReceive", b =>
                 {
-                    b.HasOne("PRN221_Assignment.Models.Account", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorUserID");
-
                     b.HasOne("PRN221_Assignment.Models.Group", "Group")
                         .WithMany("MessageReceive")
                         .HasForeignKey("GroupID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PRN221_Assignment.Models.Account", "Author")
+                        .WithMany("MessageReceives")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -579,6 +578,8 @@ namespace PRN221_Assignment.Migrations
                     b.Navigation("Info");
 
                     b.Navigation("Mess");
+
+                    b.Navigation("MessageReceives");
 
                     b.Navigation("Threads");
                 });

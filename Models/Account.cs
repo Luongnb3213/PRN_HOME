@@ -15,6 +15,7 @@ namespace PRN221_Assignment.Models
             GroupUser = new HashSet<GroupUser>();
             Mess = new HashSet<Mess>();
             Group =  new HashSet<Group>();
+            MessageReceives =  new HashSet<MessageReceive>();
         }
         [Key]
         public int UserID { get; set; }
@@ -40,6 +41,7 @@ namespace PRN221_Assignment.Models
         public virtual ICollection<GroupUser> GroupUser { get; set; }
         public virtual ICollection<Mess> Mess { get; set; }
         public virtual ICollection<Group> Group { get; set; }
+        public virtual ICollection<MessageReceive> MessageReceives { get; set; }
 
 
     }

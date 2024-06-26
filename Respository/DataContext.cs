@@ -122,6 +122,12 @@ namespace PRN221_Assignment.Respository
      .WithOne(e => e.Group)
      .HasForeignKey(e => e.GroupID)
      .IsRequired();
+
+            modelBuilder.Entity<Account>()
+          .HasMany(e => e.MessageReceives)
+          .WithOne(e => e.Author)
+          .HasForeignKey(e => e.UserId)
+          .IsRequired();
         }
     }
 }
