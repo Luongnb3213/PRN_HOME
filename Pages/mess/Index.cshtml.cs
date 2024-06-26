@@ -30,7 +30,7 @@ namespace PRN221_Assignment.Pages.mess
         [BindProperty(SupportsGet = true)]
         public bool selected { get; set; }
         public int currentUserId { get; set; }
-        public IActionResult OnGet()
+        public void OnGet()
         {
             var userId = string.Empty;
             if (User != null && User.Claims != null)
@@ -51,41 +51,43 @@ namespace PRN221_Assignment.Pages.mess
             {
                 dicFollower[account.UserID] = account;
             }
-
-            if (selected)
-            {
-                List<int> peopleInChat = new List<int>();
-                peopleInChat.Add(PartnerId);
-                peopleInChat.Add(Int32.Parse(userId));
-                ChatBox = (from a in context.Mess
-                           join b in context.MessageReceive on a.messId equals b.messID
-                           join c in context.Accounts on a.AuthorId equals c.UserID
-                           join d in context.Accounts on b.UserId equals d.UserID
-                           join e in context.Info on a.AuthorId equals e.UserID
-                           select new
-                           {
-                               a.messId,
-                               a.Content,
-                               a.AuthorId,
-                               a.createdBy,
-                               TypeNoti = a.type,
-                               b.MessageReceiveId,
-                               b.GroupID,
-                               ReceivePerson = b.UserId,
-                               b.seen,
-                               TypeMess = b.type,
-                               whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other"),
-                               avtAuthor = e.Image,
-                           }).Where(x => peopleInChat.Contains(x.AuthorId) && peopleInChat.Contains(x.ReceivePerson)).Cast<dynamic>().ToList();
-                var options = new JsonSerializerOptions
-                {
-                    ReferenceHandler = ReferenceHandler.Preserve
-                };
-                return new JsonResult(new { data = ChatBox }, options);
-            }
-            return Page();
         }
-
+        public IActionResult OnGetGetBoxChat()
+        {
+            var userId = string.Empty;
+            if (User != null && User.Claims != null)
+            {
+                userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+            }
+            List<int> peopleInChat = new List<int>();
+            peopleInChat.Add(PartnerId);
+            peopleInChat.Add(Int32.Parse(userId));
+            ChatBox = (from a in context.Mess
+                       join b in context.MessageReceive on a.messId equals b.messID
+                       join c in context.Accounts on a.AuthorId equals c.UserID
+                       join d in context.Accounts on b.UserId equals d.UserID
+                       join e in context.Info on a.AuthorId equals e.UserID
+                       select new
+                       {
+                           a.messId,
+                           a.Content,
+                           a.AuthorId,
+                           a.createdBy,
+                           TypeNoti = a.type,
+                           b.MessageReceiveId,
+                           b.GroupID,
+                           ReceivePerson = b.UserId,
+                           b.seen,
+                           TypeMess = b.type,
+                           whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other"),
+                           avtAuthor = e.Image,
+                       }).Where(x => peopleInChat.Contains(x.AuthorId) && peopleInChat.Contains(x.ReceivePerson)).Cast<dynamic>().ToList();
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+            return new JsonResult(new { data = ChatBox }, options);
+        }
         public async Task<IActionResult> OnPost([FromBody] MessageModel data)
         {
             var userId = string.Empty;
@@ -110,10 +112,7 @@ namespace PRN221_Assignment.Pages.mess
             context.MessageReceive.Add(newMessageReceive);
             context.SaveChanges();
 
-            List<int> peopleInChat = new List<int>();
-            peopleInChat.Add(data.partnerId);
-            peopleInChat.Add(Int32.Parse(userId));
-            ChatBox = (from a in context.Mess
+            var listMess = (from a in context.Mess
                        join b in context.MessageReceive on a.messId equals b.messID
                        join c in context.Accounts on a.AuthorId equals c.UserID
                        join d in context.Accounts on b.UserId equals d.UserID
@@ -132,16 +131,16 @@ namespace PRN221_Assignment.Pages.mess
                            TypeMess = b.type,
                            whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other"),
                            avtAuthor = e.Image,
-                       }).Where(x => peopleInChat.Contains(x.AuthorId) && peopleInChat.Contains(x.ReceivePerson)).Cast<dynamic>().ToList();
+                       }).Where(x => x.AuthorId == Int32.Parse(userId) && x.ReceivePerson == data.partnerId).ToList();
 
-    
+            var latestRecord = listMess.OrderByDescending(x => x.createdBy).FirstOrDefault();
 
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve
             };
 
-            return new JsonResult(new { data = ChatBox }, options);
+            return new JsonResult(new { data = latestRecord }, options);
         }
         public class MessageModel
         {
