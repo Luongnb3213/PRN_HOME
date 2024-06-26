@@ -53,9 +53,9 @@ function getBoxChat(followerId) {
 document.getElementById('myTextarea').addEventListener('keydown', function (event) {
     if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
-        let contentMessage = document.getElementById('myTextarea').value;
+        let messContent = document.getElementById('myTextarea').value;
         let dataSend = {
-            contentMessage,
+            messContent,
             partnerId
         }
         $.ajax({
@@ -63,15 +63,31 @@ document.getElementById('myTextarea').addEventListener('keydown', function (even
             
             url: '/mess',
             method: 'POST',
-            contentType: 'application/json',
+            contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             cache: false,
             data: JSON.stringify(dataSend),
             success: function (data) {
                 console.log(data)
             },
-            error: function (error) {
-                console.error("Error: " + error.msg); 
+            error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                console.log(msg)
             }
         })
         document.getElementById('myTextarea').value = '';

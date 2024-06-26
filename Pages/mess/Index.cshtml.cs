@@ -79,14 +79,14 @@ namespace PRN221_Assignment.Pages.mess
             return Page();
         }
 
-        public IActionResult OnPost(int partnerId)
+        public IActionResult OnPost([FromBody] MessageModel data)
         {
             return new JsonResult(new { success = true });
         }
         public class MessageModel
         {
-            public string MessContent { get; set; }
-            public int PartnerId { get; set; }
+            public string messContent { get; set; }
+            public int partnerId { get; set; }
         }
     }
 }
