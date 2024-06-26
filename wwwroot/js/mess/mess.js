@@ -49,7 +49,7 @@ function getBoxChat(followerId) {
         }
     })
 }
-
+//Code ajax
 document.getElementById('myTextarea').addEventListener('keydown', function (event) {
     if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
