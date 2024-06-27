@@ -21,8 +21,10 @@ namespace PRN221_Assignment.Pages.mess
             context = _context;
             hubContext = _hubContext;
             dicFollower = new Dictionary<int, Account>();
+            dicFollowerMesage = new Dictionary<int, string>();
         }
         public Dictionary<int, Account> dicFollower { get; set; }
+        public Dictionary<int, string> dicFollowerMesage { get; set; }
         public List<Account> listFollower { get; set; }
         public List<dynamic> ChatBox { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -30,6 +32,7 @@ namespace PRN221_Assignment.Pages.mess
         [BindProperty(SupportsGet = true)]
         public bool selected { get; set; }
         public int currentUserId { get; set; }
+        public List<Account> listFollowerDown { get; set; }
         public void OnGet()
         {
             var userId = string.Empty;
@@ -50,6 +53,36 @@ namespace PRN221_Assignment.Pages.mess
             foreach (var account in listFollower)
             {
                 dicFollower[account.UserID] = account;
+            }
+
+            var listMsgExistWithId = (from a in context.Mess
+                                join b in context.MessageReceive on a.messId equals b.messID
+                                select new
+                                {
+                                    a.AuthorId,
+                                    ReceiveId = b.UserId,
+                                }).Where(x => (x.AuthorId == Int32.Parse(userId) && listFollowerCorrect.Contains(x.ReceiveId)) || (x.ReceiveId == Int32.Parse(userId) && listFollowerCorrect.Contains(x.AuthorId))).ToList();
+
+            List<int> acceptableFollowerFull = new List<int>();
+
+            foreach(var id in listMsgExistWithId)
+            {
+                acceptableFollowerFull.Add(id.AuthorId);
+                acceptableFollowerFull.Add(id.ReceiveId);
+            }
+
+            var acceptableFollower = acceptableFollowerFull.Distinct();
+
+            listFollowerDown = context.Accounts
+                .Include(x => x.Mess)
+                .Include(x => x.Info)
+                .Where(x => acceptableFollower.Contains(x.UserID) && x.UserID != Int32.Parse(userId))
+                .ToList();
+            //sua lai
+            foreach(var acc in listFollowerDown)
+            {
+                var mess = acc.Mess.OrderByDescending(x => x.createdBy).Select(x => x.Content).FirstOrDefault();
+                dicFollowerMesage[acc.UserID] = mess;
             }
         }
         public IActionResult OnGetGetBoxChat()
