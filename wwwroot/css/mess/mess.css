@@ -126,3 +126,14 @@ textarea[name="mess"] {
 .avt-follower-up {
     user-select: none;
 }
+
+user-chat {
+    user-select: none;
+    cursor: pointer;
+    padding: 0 12px;
+}
+
+user-chat:hover {
+    background-color: #262626;
+    border-radius: 10px;
+}

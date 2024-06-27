@@ -21,10 +21,10 @@ namespace PRN221_Assignment.Pages.mess
             context = _context;
             hubContext = _hubContext;
             dicFollower = new Dictionary<int, Account>();
-            dicFollowerMesage = new Dictionary<int, string>();
+            dicFollowerMesage = new Dictionary<int, dynamic>();
         }
         public Dictionary<int, Account> dicFollower { get; set; }
-        public Dictionary<int, string> dicFollowerMesage { get; set; }
+        public Dictionary<int, dynamic> dicFollowerMesage { get; set; }
         public List<Account> listFollower { get; set; }
         public List<dynamic> ChatBox { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -56,16 +56,16 @@ namespace PRN221_Assignment.Pages.mess
             }
 
             var listMsgExistWithId = (from a in context.Mess
-                                join b in context.MessageReceive on a.messId equals b.messID
-                                select new
-                                {
-                                    a.AuthorId,
-                                    ReceiveId = b.UserId,
-                                }).Where(x => (x.AuthorId == Int32.Parse(userId) && listFollowerCorrect.Contains(x.ReceiveId)) || (x.ReceiveId == Int32.Parse(userId) && listFollowerCorrect.Contains(x.AuthorId))).ToList();
+                                      join b in context.MessageReceive on a.messId equals b.messID
+                                      select new
+                                      {
+                                          a.AuthorId,
+                                          ReceiveId = b.UserId,
+                                      }).Where(x => (x.AuthorId == Int32.Parse(userId) && listFollowerCorrect.Contains(x.ReceiveId)) || (x.ReceiveId == Int32.Parse(userId) && listFollowerCorrect.Contains(x.AuthorId))).ToList();
 
             List<int> acceptableFollowerFull = new List<int>();
 
-            foreach(var id in listMsgExistWithId)
+            foreach (var id in listMsgExistWithId)
             {
                 acceptableFollowerFull.Add(id.AuthorId);
                 acceptableFollowerFull.Add(id.ReceiveId);
@@ -77,11 +77,21 @@ namespace PRN221_Assignment.Pages.mess
                 .Include(x => x.Mess)
                 .Include(x => x.Info)
                 .Where(x => acceptableFollower.Contains(x.UserID) && x.UserID != Int32.Parse(userId))
+                //.OrderByDescending(x => (x.Mess.OrderByDescending(m => m.createdBy).FirstOrDefault()).createdBy)
                 .ToList();
-            //sua lai
-            foreach(var acc in listFollowerDown)
+
+            foreach (var acc in listFollowerDown)
             {
-                var mess = acc.Mess.OrderByDescending(x => x.createdBy).Select(x => x.Content).FirstOrDefault();
+                var mess = (from a in context.Mess
+                            join b in context.MessageReceive on a.messId equals b.messID
+                            select new
+                            {
+                                a.AuthorId,
+                                a.Content,
+                                ReceiveId = b.UserId,
+                                a.createdBy,
+                                whose = (a.AuthorId == Int32.Parse(userId) ? "You: " : "")
+                            }).Where(x => (x.AuthorId == Int32.Parse(userId) && x.ReceiveId == acc.UserID) || (x.ReceiveId == Int32.Parse(userId) && x.AuthorId == acc.UserID)).OrderByDescending(x => x.createdBy).First();
                 dicFollowerMesage[acc.UserID] = mess;
             }
         }
@@ -146,25 +156,29 @@ namespace PRN221_Assignment.Pages.mess
             context.SaveChanges();
 
             var listMess = (from a in context.Mess
-                       join b in context.MessageReceive on a.messId equals b.messID
-                       join c in context.Accounts on a.AuthorId equals c.UserID
-                       join d in context.Accounts on b.UserId equals d.UserID
-                       join e in context.Info on a.AuthorId equals e.UserID
-                       select new
-                       {
-                           a.messId,
-                           a.Content,
-                           a.AuthorId,
-                           a.createdBy,
-                           TypeNoti = a.type,
-                           b.MessageReceiveId,
-                           b.GroupID,
-                           ReceivePerson = b.UserId,
-                           b.seen,
-                           TypeMess = b.type,
-                           whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other"),
-                           avtAuthor = e.Image,
-                       }).Where(x => x.AuthorId == Int32.Parse(userId) && x.ReceivePerson == data.partnerId).ToList();
+                            join b in context.MessageReceive on a.messId equals b.messID
+                            join c in context.Accounts on a.AuthorId equals c.UserID
+                            join d in context.Accounts on b.UserId equals d.UserID
+                            join e in context.Info on a.AuthorId equals e.UserID
+                            join f in context.Info on b.UserId equals f.UserID
+                            select new
+                            {
+                                a.messId,
+                                a.Content,
+                                a.AuthorId,
+                                a.createdBy,
+                                AuthorUsername = c.Info.userName,
+                                TypeNoti = a.type,
+                                b.MessageReceiveId,
+                                b.GroupID,
+                                ReceivePerson = b.UserId,
+                                ReceiveName = d.Info.userName,
+                                b.seen,
+                                TypeMess = b.type,
+                                whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other"),
+                                avtAuthor = e.Image,
+                                avtPartner = f.Image
+                            }).Where(x => x.AuthorId == Int32.Parse(userId) && x.ReceivePerson == data.partnerId).ToList();
 
             var latestRecord = listMess.OrderByDescending(x => x.createdBy).FirstOrDefault();
 

@@ -21,7 +21,7 @@
                     <image-work class="flex gap-10 " style="overflow-x:auto">
                         @foreach (var follower in Model.listFollower)
                         {
-                            <div class="flex flex-column relative align-center wrapper-avt-follower-up" style="flex-shrink: 0" onclick="showBoxChatSingle(this)">
+                            <div class="flex flex-column relative align-center wrapper-avt-follower-up circle-@follower.UserID" style="flex-shrink: 0" onclick="showBoxChatSingle(this)">
                                 <div class="follower-id hidden" data-followerid="@follower.UserID"></div>
                                 <img src="@follower.Info.Image" width="65" height="65" class="rounded-50 mb-2 avt-follower-up" />
                                 <span class="username-follower-up body-weight fs-12" style="color: rgb(245,245,245)">@follower.Info.userName</span>
@@ -43,7 +43,7 @@
                         <inbox>
                             @foreach (var person in Model.listFollowerDown)
                             {
-                                <user-chat class="py-4 d-block">
+                                <user-chat class="py-4 d-block user-chat-@person.UserID" onclick="clickShow(@person.UserID)">
                                     <div class="user_chat_wrapper w-full flex gap-20 align-center">
                                         <div class="user_image relative" style="width: 56px;">
                                             <img src="@person.Info.Image" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
@@ -52,7 +52,7 @@
                                         <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
                                             <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">@person.Info.userName</span>
                                             <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
-                                                @Model.dicFollowerMesage[person.UserID]
+                                                @Model.dicFollowerMesage[person.UserID].whose@Model.dicFollowerMesage[person.UserID].Content
                                             </p>
                                         </div>
                                     </div>

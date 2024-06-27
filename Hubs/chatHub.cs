@@ -29,9 +29,9 @@ namespace PRN221_Assignment.Hubs
             }
             return base.OnDisconnectedAsync(exception);
         }
-        public async Task SendMessageOneUser(int partnerId, string messContent, string avtAuthor)
+        public async Task SendMessageOneUser(int partnerIdSignalR, string messContent, string avtAuthor, string ReceiveName)
         {
-            await Clients.User(partnerId + "").SendAsync("ReceiveMessageOneUser", partnerId, messContent, avtAuthor);
+            await Clients.User(partnerIdSignalR + "").SendAsync("ReceiveMessageOneUser", partnerIdSignalR, messContent, avtAuthor, ReceiveName);
         }
     }
 }
