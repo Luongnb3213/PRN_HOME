@@ -6,17 +6,19 @@
     border-radius: 50%;
     bottom: 27px;
     right: 0px;
-    border: 1px solid black; 
+    border: 1px solid black;
 }
 
 .user_image .online {
     bottom: 5px;
     right: 0px;
 }
-.header_left_body::-webkit-scrollbar{
+
+.header_left_body::-webkit-scrollbar {
     height: 400px;
     color: red;
 }
+
 .button_profile {
     padding-left: 16px;
     padding-right: 16px;
@@ -28,9 +30,11 @@
     padding-bottom: 5px;
     font-weight: 600;
 }
-.chat_body{
-     margin-bottom: 40px;
+
+.chat_body {
+    margin-bottom: 40px;
 }
+
 textarea[name="mess"] {
     --input-border-color: rgb(54,54,54);
     color: rgb(245,245,245);
@@ -40,17 +44,21 @@ textarea[name="mess"] {
     padding-right: 90px;
     --input-padding: 1rem 2rem;
 }
+
     textarea[name="mess"]:focus {
         --input-border-color: rgb(54,54,54);
     }
+
     textarea[name="mess"]::placeholder {
         color: rgb(245,245,245);
         opacity: 0.7;
     }
-.icon_chat{
-     top: 50%;
-     transform: translateY(-50%);
+
+.icon_chat {
+    top: 50%;
+    transform: translateY(-50%);
 }
+
 .write-comment-wrapper {
     width: calc( 100% - 33.33%);
     background-color: unset;
@@ -86,7 +94,6 @@ textarea[name="mess"] {
 }
 
 .wrapper-message.other {
-    
 }
 
 .wrapper-message.me {
@@ -118,9 +125,9 @@ textarea[name="mess"] {
     user-select: none;
 }
 
-.wrapper-avt-follower-up:hover {
-    background-color: #262626;
-}
+    .wrapper-avt-follower-up:hover {
+        background-color: #262626;
+    }
 
 .username-follower-up,
 .avt-follower-up {
@@ -133,7 +140,146 @@ user-chat {
     padding: 0 12px;
 }
 
-user-chat:hover {
-    background-color: #262626;
-    border-radius: 10px;
+    user-chat:hover {
+        background-color: #262626;
+        border-radius: 10px;
+    }
+
+.btn-group {
+    cursor: pointer;
 }
+
+popup-follower {
+    background-color: #101010;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    border-radius: 10px;
+    width: 400px;
+}
+
+.overlay-group {
+    position: absolute;
+    background-color: #040404;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.6;
+}
+
+.wrapper-select {
+    overflow: auto;
+    padding: 20px;
+    max-height: 300px;
+}
+
+.set-group-name,
+.body-popup-create-group,
+.header-popup-create-group {
+    width: 100%;
+}
+
+.header-popup-create-group {
+    text-align: center;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    padding: 12px;
+}
+
+.set-group-name {
+    color: var(--text-color);
+    padding: 4px 20px;
+    font-size: 1.4rem;
+}
+
+.group-name[type="text"] {
+    width: 70%;
+    background-color: #101010;
+    color: var(--text-color);
+    border: none;
+    outline: none;
+    padding: 0;
+}
+
+    .group-name[type="text"]::placeholder {
+        color: var(--text-color);
+        opacity: 0.5;
+    }
+
+.avt-follower-select {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.username-follower-select {
+    color: var(--text-color);
+    display: inline-block;
+    margin-left: 12px;
+}
+
+.follower-group {
+    padding: 8px 20px;
+}
+
+    .follower-group:hover {
+        background-color: var(--border-color);
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+.custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 1px solid #101010;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+    /* Tùy chỉnh checkmark */
+    .custom-checkbox:checked::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        background-color: #101010;
+        border-radius: 2px;
+    }
+
+    /* Tùy chỉnh checkmark khi hover */
+    .custom-checkbox:hover {
+        border-color: #101010;
+    }
+
+.btn-create-group {
+    background-color: var(--border-color);
+    width: 80px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 1.4rem;
+    color: #101010;
+    margin: 8px auto;
+    text-align: center;
+    border-radius: 10px;
+    color: var(--text-color);
+    cursor: pointer;
+    user-select: none;
+}
+
+    .btn-create-group:hover {
+        opacity: 0.8;
+    }

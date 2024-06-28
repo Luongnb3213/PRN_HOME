@@ -30,6 +30,8 @@ namespace PRN221_Assignment.Respository
         public DbSet<ThreadReact> ThreadReact { get; set; }
         public DbSet<Mess> Mess { get; set; }
         public DbSet<MessageReceive> MessageReceive { get; set; }
+        public DbSet<Group> Group { get; set; }
+        public DbSet<GroupUser> GroupUser { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

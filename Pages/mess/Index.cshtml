@@ -5,7 +5,35 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<div class="container-fluid">
+<div class="container-fluid relative">
+    <div class="overlay-group hidden"></div>
+    <popup-follower class="hidden">
+        <div class="header-popup-create-group">Creating group</div>
+        <form id="form-create-group" method="post" asp-page-handler="CreateGroup">
+            <div class="set-group-name">
+                Group name:
+                <input class="group-name" placeholder="Enter your group name..." asp-for="@Model.NameGroup" type="text" />
+            </div>
+            <div class="body-popup-create-group">
+                <div class="wrapper-select">
+                    @foreach (var acc in Model.listFollowerToGroup)
+                    {
+                        <div class="follower-group flex justify-content-between align-center" onclick="selectAccount(this)">
+                            <div class="left-select">
+                                <img src="@acc.Info.Image" class="avt-follower-select" />
+                                <span class="username-follower-select">@acc.Info.userName</span>
+                                <div class="follower-id hidden" data-followerid="@acc.UserID"></div>
+                            </div>
+                            <div class="right-select">
+                                <input class="custom-checkbox" type="checkbox" name="SelectedUsers" value="@acc.UserID" />
+                            </div>
+                        </div>
+                    }
+                    <div class="btn-create-group">Create</div>
+                </div>
+            </div>
+        </form>
+    </popup-follower>
     <div class="hidden currentuserid" data-currentuserid="@Model.currentUserId"></div>
     <div class="row">
         <div class="col-md-4">
@@ -43,14 +71,14 @@
                         <inbox>
                             @foreach (var person in Model.listFollowerDown)
                             {
-                                <user-chat class="py-4 d-block user-chat-@person.ReceiveId" onclick="clickShow(@person.ReceiveId)">
+                                <user-chat class="py-4 d-block user-chat-@person.IdToClick" onclick="clickShow(@person.IdToClick)">
                                     <div class="user_chat_wrapper w-full flex gap-20 align-center">
                                         <div class="user_image relative" style="width: 56px;">
-                                            <img src="@person.avtPartner" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                            <img src="@person.displayAvt" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
                                             <span class="absolute online"></span>
                                         </div>
                                         <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
-                                            <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">@person.PartnerUsername</span>
+                                            <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">@person.displayUsername</span>
                                             <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
                                                 @(person.whose == "other" ? "" : "You: ")@person.Content
                                             </p>

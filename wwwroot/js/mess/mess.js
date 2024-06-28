@@ -179,3 +179,27 @@ con.on("ReceiveMessageOneUser", function (partnerIdSignalR, messContent, avtAuth
     mainChat.scrollTop = mainChat.scrollHeight;
 
 });
+
+let btnGroup = document.querySelector('.btn-group');
+let overlay = document.querySelector('.overlay-group');
+let selectFollower = document.querySelector('popup-follower');
+btnGroup.addEventListener('click', function () {
+    overlay.classList.remove('hidden');
+    selectFollower.classList.remove('hidden');
+})
+
+overlay.addEventListener('click', function () {
+    overlay.classList.add('hidden');
+    selectFollower.classList.add('hidden');
+})
+
+function selectAccount(acc) {
+    let checkbox = acc.querySelector('.custom-checkbox');
+    checkbox.checked = !checkbox.checked;
+}
+
+let btnCreateGroup = document.querySelector('.btn-create-group');
+btnCreateGroup.addEventListener('click', function () {
+    let formCreateGroup = document.querySelector('#form-create-group');
+    formCreateGroup.submit();
+})
