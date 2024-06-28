@@ -43,16 +43,16 @@
                         <inbox>
                             @foreach (var person in Model.listFollowerDown)
                             {
-                                <user-chat class="py-4 d-block user-chat-@person.UserID" onclick="clickShow(@person.UserID)">
+                                <user-chat class="py-4 d-block user-chat-@person.ReceiveId" onclick="clickShow(@person.ReceiveId)">
                                     <div class="user_chat_wrapper w-full flex gap-20 align-center">
                                         <div class="user_image relative" style="width: 56px;">
-                                            <img src="@person.Info.Image" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                            <img src="@person.avtPartner" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
                                             <span class="absolute online"></span>
                                         </div>
                                         <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
-                                            <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">@person.Info.userName</span>
+                                            <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">@person.PartnerUsername</span>
                                             <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
-                                                @Model.dicFollowerMesage[person.UserID].whose@Model.dicFollowerMesage[person.UserID].Content
+                                                @(person.whose == "other" ? "" : "You: ")@person.Content
                                             </p>
                                         </div>
                                     </div>
