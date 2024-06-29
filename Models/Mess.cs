@@ -7,7 +7,10 @@ namespace PRN221_Assignment.Models
 {
     public class Mess
     {
-
+        public Mess()
+        {
+            MessageReceive = new HashSet<MessageReceive>();
+        }
 
         [Key]
         public int messId { get; set; }
@@ -20,7 +23,7 @@ namespace PRN221_Assignment.Models
         public bool type { get; set; }
 
         public virtual Account? Author { get; set; }
-        public virtual MessageReceive? MessageReceive { get; set; }
+        public virtual ICollection<MessageReceive> MessageReceive { get; set; }
 
     }
 }

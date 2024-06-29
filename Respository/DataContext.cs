@@ -112,12 +112,11 @@ namespace PRN221_Assignment.Respository
       .HasForeignKey(e => e.ThreadCommentId)
       .IsRequired();
 
-
             modelBuilder.Entity<Mess>()
-                .HasOne(e => e.MessageReceive)
-                .WithOne(e => e.Mess)
-                .HasForeignKey<MessageReceive>(e => e.messID)
-            .IsRequired();
+        .HasMany(e => e.MessageReceive)
+        .WithOne(e => e.Mess)
+        .HasForeignKey(e => e.messID)
+        .IsRequired();
 
             modelBuilder.Entity<Group>()
      .HasMany(e => e.MessageReceive)
