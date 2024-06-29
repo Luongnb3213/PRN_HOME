@@ -104,6 +104,8 @@ namespace PRN221_Assignment.Pages.mess
                            .OrderByDescending(x => x.createdBy)
                            .ToList();
 
+            var listMyGroup = context.GroupUser.Where(x => x.UserId == Int32.Parse(userId)).Select(x => x.GroupId).ToList();
+
             List<ChatHistory> allChatGroup = (from a in context.Mess
                                               join b in context.MessageReceive on a.messId equals b.messID
                                               join c in context.Accounts on a.AuthorId equals c.UserID
@@ -124,10 +126,11 @@ namespace PRN221_Assignment.Pages.mess
                                                   PartnerUsername = f.userName,
                                                   type = b.type,
                                                   GroupId = b.GroupID
-                                              }).Where(x => ((x.AuthorId == Int32.Parse(userId)) || (x.ReceiveId == Int32.Parse(userId))) && x.type == true)
+                                              }).Where(x => listMyGroup.Contains(x.GroupId) && x.type == true)
                            .OrderByDescending(x => x.createdBy)
                            .ToList();
             //false la single, true la group
+            
             var listDup = new List<ChatHistory>();
             foreach (ChatHistory a in allChat)
             {
@@ -339,7 +342,7 @@ namespace PRN221_Assignment.Pages.mess
             public string displayUsername { get; set; }
             public int IdToClick { get; set; }
             public bool type { get; set; }
-            public int? GroupId { get; set; }
+            public int GroupId { get; set; }
         }
     }
 }

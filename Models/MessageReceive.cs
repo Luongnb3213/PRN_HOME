@@ -7,7 +7,7 @@ namespace PRN221_Assignment.Models
         [Key]
         public int MessageReceiveId { get; set; }
         public int messID { get; set; }
-        public int? GroupID { get; set; }
+        public int GroupID { get; set; }
         public int UserId { get; set; }
         public bool seen { get; set; }
         public bool type { get; set; }
