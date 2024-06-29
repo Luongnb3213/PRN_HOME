@@ -20,6 +20,18 @@ namespace PRN221_Assignment.Hubs
         {
             userConnections[userId] = connectionId;
         }
+        // Method to join a group
+        public async Task JoinGroup(string groupName)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+        }
+
+        // Method to leave a group
+        public async Task LeaveGroup(string groupName)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+        }
+
         public override Task OnDisconnectedAsync(Exception exception)
         {
             var userId = userConnections.FirstOrDefault(x => x.Value == Context.ConnectionId).Key;
@@ -32,6 +44,10 @@ namespace PRN221_Assignment.Hubs
         public async Task SendMessageOneUser(int partnerIdSignalR, string messContent, string avtAuthor, string ReceiveName)
         {
             await Clients.User(partnerIdSignalR + "").SendAsync("ReceiveMessageOneUser", partnerIdSignalR, messContent, avtAuthor, ReceiveName);
+        }
+        public async Task SendMessageToGroup(string groupName, int AuthorId, string content, string avt, string userName, string groupImg)
+        {
+            await Clients.OthersInGroup(groupName).SendAsync("ReceiveGroupMessage", AuthorId, content, avt, userName, groupImg, groupName);
         }
     }
 }

@@ -71,20 +71,41 @@
                         <inbox>
                             @foreach (var person in Model.listFollowerDown)
                             {
-                                <user-chat class="py-4 d-block user-chat-@person.IdToClick" onclick="clickShow(@person.IdToClick)">
-                                    <div class="user_chat_wrapper w-full flex gap-20 align-center">
-                                        <div class="user_image relative" style="width: 56px;">
-                                            <img src="@person.displayAvt" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
-                                            <span class="absolute online"></span>
+                                @if (person.type == false)
+                                {
+                                    <user-chat class="py-4 d-block user-chat-@person.IdToClick" onclick="clickShow(@person.IdToClick)">
+                                        <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                            <div class="user_image relative" style="width: 56px;">
+                                                <img src="@person.displayAvt" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                                <span class="absolute online"></span>
+                                            </div>
+                                            <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
+                                                <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">@person.displayUsername</span>
+                                                <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                                    @(person.whose == "other" ? "" : "You: ")@person.Content
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
-                                            <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">@person.displayUsername</span>
-                                            <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
-                                                @(person.whose == "other" ? "" : "You: ")@person.Content
-                                            </p>
+                                    </user-chat>
+                                } else
+                                {
+                                    <user-chat class="py-4 d-block user-chat-@person.IdToClick-group" onclick="showBoxChatGroup(this)">
+                                        <div class="group-id" data-groupid="@person.IdToClick"></div>
+                                        <div class="user_chat_wrapper w-full flex gap-20 align-center">
+                                            <div class="user_image relative" style="width: 56px;">
+                                                <img src="@person.displayAvt" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
+                                                <span class="absolute online"></span>
+                                            </div>
+                                            <div class="flex-1 user_mess flex gap-3 flex-column group-name" style="max-width: calc(100% - 56px - 20px)">
+                                                <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">@person.displayUsername</span>
+                                                <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
+                                                    @(person.whose == "other" ? "" : "You: ")@person.Content
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </user-chat>
+                                    </user-chat>
+                                }
+
                             }
                         </inbox>
                     </div>
@@ -122,13 +143,13 @@
 
                     <div class="main-chat" style="overflow-y: auto;height: 65vh ; max-height: 65vh">
                         <div class="chat_body flex flex-column gap-10 align-center">
-                            <div class="user_image relative avt-partner" style="width:96px;">
+                            <div class="user_image relative avt-partner user-image-big" style="width:96px;">
                                 <img src="" class="rounded-50 w-full" style="object-fit: cover; height: 96px;" />
                                 <span class="absolute online"></span>
                             </div>
                             <div class="font-body text-center w-full lh-1  d-block fs-15 fullname-partner" style="color:rgb(245,245,245);">
                             </div>
-                            <div class="font-body text-center w-full lh-1  d-block fs-15 username-partner" style="color:rgb(245,245,245);opacity: 0.5">
+                            <div class="font-body text-center w-full lh-1  d-block fs-15 username-partner group-chat" style="color:rgb(245,245,245);opacity: 0.5">
                                 <span></span>
                             </div>
                             <a href="#" class="button_profile fs-15 " style="color:rgb(245,245,245);">Xem trang cá nhân</a>
