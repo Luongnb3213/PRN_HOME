@@ -45,9 +45,9 @@ namespace PRN221_Assignment.Hubs
         {
             await Clients.User(partnerIdSignalR + "").SendAsync("ReceiveMessageOneUser", partnerIdSignalR, messContent, avtAuthor, ReceiveName);
         }
-        public async Task SendMessageToGroup(string groupName, int AuthorId, string content, string avt, string userName, string groupImg)
+        public async Task SendMessageToGroup(string groupName, int AuthorId, string content, string avt, string userName, string groupImg, string groupId)
         {
-            await Clients.OthersInGroup(groupName).SendAsync("ReceiveGroupMessage", AuthorId, content, avt, userName, groupImg, groupName);
+            await Clients.OthersInGroup(groupName).SendAsync("ReceiveGroupMessage", AuthorId, content, avt, userName, groupImg, groupName, groupId);
         }
     }
 }

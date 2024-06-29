@@ -77,7 +77,7 @@ textarea[name="mess"] {
 .message-box {
     max-width: 350px;
     min-height: 12px;
-    padding: 0 10px 0 14px;
+    padding: 12px 10px 12px 14px;
     display: flex;
     align-items: center;
     border-radius: 10px;

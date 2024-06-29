@@ -153,6 +153,7 @@ namespace PRN221_Assignment.Pages.mess
                                               }).Where(x => listMyGroup.Contains(x.GroupId) && x.type == true)
                            .OrderByDescending(x => x.createdBy)
                            .ToList();
+
             //false la single, true la group
 
             var chatGroupOfGroup = allChatGroup.GroupBy(x => new { x.GroupId }).Select(g =>
@@ -228,6 +229,28 @@ namespace PRN221_Assignment.Pages.mess
                 foreach (var chat in chatGroupOfGroup)
                 {
                     listFollowerDown.Add(chat);
+                }
+            }
+
+
+            var listAvailableGroup = context.Group.Select(x => x.GroupId).ToList();
+            var newGroup = context.Group.Where(g => !context.MessageReceive.Any(mr => mr.GroupID == g.GroupId)).Select(g => g.GroupId).ToList();
+            var listNewGroup = context.Group.Where(g => newGroup.Contains(g.GroupId)).OrderByDescending(x => x.createdBy).ToList();
+
+            if (listNewGroup.Count != 0)
+            {
+                int index = 0;
+                foreach (var gr in listNewGroup)
+                {
+                    ChatHistory newChatHistory = new ChatHistory();
+                    newChatHistory.IdToClick = gr.GroupId;
+                    newChatHistory.displayAvt = gr.Image;
+                    newChatHistory.displayUsername = gr.Name;
+                    newChatHistory.type = true;
+                    newChatHistory.whose = "other";
+                    newChatHistory.Content = "You have just been added to this group";
+                    newChatHistory.createdBy = gr.createdBy;
+                    listFollowerDown.Add(newChatHistory);
                 }
             }
 
@@ -489,129 +512,6 @@ namespace PRN221_Assignment.Pages.mess
         }
         public IActionResult OnGetGetFlexibleChatBar()
         {
-            //var userId = string.Empty;
-            //if (User != null && User.Claims != null)
-            //{
-            //    userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
-            //}
-            //currentUserId = Int32.Parse(userId);
-            ////my follower
-            //var listFollowerId = context.Follow
-            //    .Include(x => x.Account)
-            //    .Include(x => x.Account.Info)
-            //    .Where(x => x.UserID == Int32.Parse(userId)).Select(x => x.UserFollowErId).ToList();
-            //var listFollowerCorrect = context.Follow
-            //    .Include(x => x.Account)
-            //    .Include(x => x.Account.Info)
-            //    .Where(x => listFollowerId.Contains(x.UserID) && x.UserFollowErId == Int32.Parse(userId)).Select(x => x.UserID).ToList();
-            //var listMyGroup = context.GroupUser.Where(x => x.UserId == Int32.Parse(userId)).Select(x => x.GroupId).ToList();
-
-            //List<ChatHistory> allChat = (from a in context.Mess
-            //                             join b in context.MessageReceive on a.messId equals b.messID
-            //                             join c in context.Accounts on a.AuthorId equals c.UserID
-            //                             join d in context.Accounts on b.UserId equals d.UserID
-            //                             join e in context.Info on a.AuthorId equals e.UserID
-            //                             join f in context.Info on b.UserId equals f.UserID
-            //                             select new ChatHistory()
-            //                             {
-            //                                 AuthorId = a.AuthorId,
-            //                                 Content = a.Content,
-            //                                 createdBy = a.createdBy,
-            //                                 ReceiveId = b.UserId,
-            //                                 whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other"),
-            //                                 avtAuthor = e.Image,
-            //                                 avtPartner = f.Image,
-            //                                 AuthorUsername = e.userName,
-            //                                 PartnerUsername = f.userName,
-            //                                 type = b.type
-            //                             }).Where(x => ((x.AuthorId == Int32.Parse(userId) && listFollowerCorrect.Contains(x.ReceiveId)) || (x.ReceiveId == Int32.Parse(userId) && listFollowerCorrect.Contains(x.AuthorId))) && x.type == false)
-            //               .OrderByDescending(x => x.createdBy)
-            //               .ToList();
-            //List<ChatHistory> allChatGroup = (from a in context.Mess
-            //                                  join b in context.MessageReceive on a.messId equals b.messID
-            //                                  join c in context.Accounts on a.AuthorId equals c.UserID
-            //                                  join d in context.Accounts on b.UserId equals d.UserID
-            //                                  join e in context.Info on a.AuthorId equals e.UserID
-            //                                  join f in context.Info on b.UserId equals f.UserID
-            //                                  join p in context.Group on b.GroupID equals p.GroupId
-            //                                  select new ChatHistory()
-            //                                  {
-            //                                      AuthorId = a.AuthorId,
-            //                                      Content = a.Content,
-            //                                      createdBy = a.createdBy,
-            //                                      ReceiveId = b.UserId,
-            //                                      whose = (a.AuthorId == Int32.Parse(userId) ? "me" : "other"),
-            //                                      avtAuthor = e.Image,
-            //                                      avtPartner = p.Image,
-            //                                      AuthorUsername = e.userName,
-            //                                      PartnerUsername = p.Name,
-            //                                      type = b.type,
-            //                                      GroupId = b.GroupID
-            //                                  }).Where(x => listMyGroup.Contains(x.GroupId) && x.type == true)
-            //   .OrderByDescending(x => x.createdBy)
-            //   .ToList();
-            //var chatGroupOfGroup = allChatGroup.GroupBy(x => new { x.GroupId }).Select(g =>
-            //{
-            //    var maxByCreated = g.MaxBy(x => x.createdBy);
-            //    return new ChatHistory()
-            //    {
-            //        AuthorId = maxByCreated.AuthorId,
-            //        Content = maxByCreated.Content,
-            //        createdBy = maxByCreated.createdBy,
-            //        ReceiveId = maxByCreated.ReceiveId,
-            //        whose = maxByCreated.whose,
-            //        avtAuthor = maxByCreated.avtAuthor,
-            //        avtPartner = maxByCreated.avtPartner,
-            //        AuthorUsername = maxByCreated.AuthorUsername,
-            //        PartnerUsername = maxByCreated.PartnerUsername,
-            //        displayAvt = maxByCreated.avtPartner,
-            //        displayUsername = maxByCreated.PartnerUsername,
-            //        IdToClick = maxByCreated.GroupId,
-            //        GroupId = maxByCreated.GroupId,
-            //        type = maxByCreated.type
-            //    };
-            //}).ToList();
-
-            //var chatGroupMin = allChat.GroupBy(x => new { x.ReceiveId, x.AuthorId }).Select(g =>
-            //{
-            //    var maxByCreated = g.MaxBy(x => x.createdBy);
-            //    return new ChatHistory()
-            //    {
-            //        AuthorId = g.Key.AuthorId,
-            //        Content = maxByCreated.Content,
-            //        createdBy = maxByCreated.createdBy,
-            //        ReceiveId = maxByCreated.ReceiveId,
-            //        whose = maxByCreated.whose,
-            //        avtAuthor = maxByCreated.avtAuthor,
-            //        avtPartner = maxByCreated.avtPartner,
-            //        AuthorUsername = maxByCreated.AuthorUsername,
-            //        PartnerUsername = maxByCreated.PartnerUsername,
-            //        displayAvt = maxByCreated.whose.Equals("other") ? maxByCreated.avtAuthor : maxByCreated.avtPartner,
-            //        displayUsername = maxByCreated.whose.Equals("other") ? maxByCreated.AuthorUsername : maxByCreated.PartnerUsername,
-            //        IdToClick = maxByCreated.whose.Equals("other") ? maxByCreated.AuthorId : maxByCreated.ReceiveId,
-            //        type = maxByCreated.type
-            //    };
-            //}).ToList();
-            //if (chatGroupMin.Count != 0)
-            //{
-            //    foreach (var chat in chatGroupMin)
-            //    {
-            //        if ((chat.whose.Equals("me") && chat.AuthorId == Int32.Parse(userId)) || (chat.whose.Equals("other") && chat.ReceiveId == Int32.Parse(userId)))
-            //        {
-            //            listFollowerDown.Add(chat);
-            //        }
-            //    }
-            //}
-
-            //if (chatGroupOfGroup.Count != 0)
-            //{
-            //    foreach (var chat in chatGroupOfGroup)
-            //    {
-            //        listFollowerDown.Add(chat);
-            //    }
-            //}
-
-            //listFollowerDown = listFollowerDown.OrderByDescending(x => x.createdBy).ToList();
             var userId = string.Empty;
             if (User != null && User.Claims != null)
             {
@@ -720,6 +620,7 @@ namespace PRN221_Assignment.Pages.mess
                                               }).Where(x => listMyGroup.Contains(x.GroupId) && x.type == true)
                            .OrderByDescending(x => x.createdBy)
                            .ToList();
+
             //false la single, true la group
 
             var chatGroupOfGroup = allChatGroup.GroupBy(x => new { x.GroupId }).Select(g =>
@@ -798,7 +699,30 @@ namespace PRN221_Assignment.Pages.mess
                 }
             }
 
+
+            var listAvailableGroup = context.Group.Select(x => x.GroupId).ToList();
+            var newGroup = context.Group.Where(g => !context.MessageReceive.Any(mr => mr.GroupID == g.GroupId)).Select(g => g.GroupId).ToList();
+            var listNewGroup = context.Group.Where(g => newGroup.Contains(g.GroupId)).OrderByDescending(x => x.createdBy).ToList();
+
+            if (listNewGroup.Count != 0)
+            {
+                int index = 0;
+                foreach (var gr in listNewGroup)
+                {
+                    ChatHistory newChatHistory = new ChatHistory();
+                    newChatHistory.IdToClick = gr.GroupId;
+                    newChatHistory.displayAvt = gr.Image;
+                    newChatHistory.displayUsername = gr.Name;
+                    newChatHistory.type = true;
+                    newChatHistory.whose = "other";
+                    newChatHistory.Content = "You have just been added to this group";
+                    newChatHistory.createdBy = gr.createdBy;
+                    listFollowerDown.Add(newChatHistory);
+                }
+            }
+
             listFollowerDown = listFollowerDown.OrderByDescending(x => x.createdBy).ToList();
+
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.Preserve

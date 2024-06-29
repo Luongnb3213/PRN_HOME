@@ -19,15 +19,12 @@ function showBoxChatSingle(e) {
         el.innerHTML = followerFullName
     })
     partnerId = e.querySelector('.follower-id').dataset.followerid;
-    console.log(partnerId)
-    //con.invoke("RegisterConnection", partnerId, con.connection.connectionId);
     getBoxChat(e.querySelector('.follower-id').dataset.followerid);
 }
 function showBoxChatGroup(e) {
     typeChat = 'group';
     groupId = e.querySelector('.group-id').dataset.groupid;
-    console.log(groupId)
-
+    console.log(groupId);
     $.ajax({
         headers:
         {
@@ -39,7 +36,6 @@ function showBoxChatGroup(e) {
         contentType: false,
         success: function (data) {
             con.invoke("JoinGroup", data.nameGroup).catch(err => console.error(err.toString()));
-            console.log(data)
             document.querySelector('.right-panel').classList.remove('hidden');
 
             document.querySelectorAll('.avt-partner').forEach((el) => {
@@ -56,6 +52,7 @@ function showBoxChatGroup(e) {
             })
 
             let mainMess = document.querySelector('.main_mess');
+            mainMess.dataset.type = `groupChat-${groupId}`;
             let mainChat = document.querySelector('.main-chat');
             let arrayMess = data.data.$values
             mainMess.innerHTML = '';
@@ -88,6 +85,7 @@ function getBoxChat(followerId) {
         contentType: false,
         success: function (data) {
             let mainMess = document.querySelector('.main_mess');
+            mainMess.dataset.type = `singleChat-${partnerId}`;
             let mainChat = document.querySelector('.main-chat');
             let arrayMess = data.data.$values
             mainMess.innerHTML = '';
@@ -198,27 +196,6 @@ document.getElementById('myTextarea').addEventListener('keydown', function (even
                         mainChat.scrollTop = mainChat.scrollHeight;
 
                         getFlexibleChatBar();
-                        //    let oldUserchat = document.querySelector(`.user-chat-${partnerId}`);
-                        //    oldUserchat.remove();
-                        //    let newUserchat = `
-                        //            <user-chat class="py-4 d-block user-chat-${partnerId}" onclick="clickShow(${partnerId})">
-                        //                <div class="user_chat_wrapper w-full flex gap-20 align-center">
-                        //                    <div class="user_image relative" style="width: 56px;">
-                        //                        <img src="${currentMess.avtPartner}" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
-                        //                        <span class="absolute online"></span>
-                        //                    </div>
-                        //                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
-                        //                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">${currentMess.ReceiveName}</span>
-                        //                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
-                        //                            ${currentMess.whose === 'me' ? 'You: ' : ''}${currentMess.Content}
-                        //                        </p>
-                        //                    </div>
-                        //                </div>
-                        //            </user-chat>
-                        //`
-                        //    let inbox = document.querySelector('inbox')
-                        //    inbox.insertAdjacentHTML('beforebegin', newUserchat)
-                        //    mainChat.scrollTop = mainChat.scrollHeight;
 
                     },
                     error: function (jqXHR, exception) {
@@ -257,7 +234,7 @@ document.getElementById('myTextarea').addEventListener('keydown', function (even
                         let currentMess = data.data;
                         let mainMess = document.querySelector('.main_mess');
                         let mainChat = document.querySelector('.main-chat');
-                        con.invoke("SendMessageToGroup", currentMess.groupName, currentMess.AuthorId, messContent, currentMess.avtAuthor, currentMess.AuthorUsername, currentMess.groupImg);
+                        con.invoke("SendMessageToGroup", currentMess.groupName, currentMess.AuthorId, messContent, currentMess.avtAuthor, currentMess.AuthorUsername, currentMess.groupImg, groupId);
 
                         let messageBox = `
                             <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${currentMess.whose}">
@@ -269,30 +246,6 @@ document.getElementById('myTextarea').addEventListener('keydown', function (even
                         mainMess.insertAdjacentHTML('beforeend', messageBox);
                         mainChat.scrollTop = mainChat.scrollHeight;
                         getFlexibleChatBar();
-
-                        //    let oldUserchat = document.querySelector(`.user-chat-${groupId}-group`);
-                        //    oldUserchat.remove();
-                        //    let newUserchat = `
-                        //            <user-chat class="py-4 d-block user-chat-${groupId}-group" onclick="showBoxChatGroup(this)">
-                        //                <div class="group-id" data-groupid="${groupId}"></div>
-                        //                <div class="user_chat_wrapper w-full flex gap-20 align-center">
-                        //                    <div class="user_image relative" style="width: 56px;">
-                        //                        <img src="${currentMess.avtGroup}" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
-                        //                        <span class="absolute online"></span>
-                        //                    </div>
-                        //                    <div class="flex-1 user_mess flex gap-3 flex-column group-name" style="max-width: calc(100% - 56px - 20px)">
-                        //                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">${currentMess.groupName}</span>
-                        //                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
-                        //                            ${currentMess.whose === 'me' ? 'You: ' : ''}${currentMess.Content}
-                        //                        </p>
-                        //                    </div>
-                        //                </div>
-                        //            </user-chat>
-
-                        //`
-                        //    let inbox = document.querySelector('inbox')
-                        //    inbox.insertAdjacentHTML('beforebegin', newUserchat)
-                        //    mainChat.scrollTop = mainChat.scrollHeight;
 
                     },
                     error: function (jqXHR, exception) {
@@ -320,91 +273,53 @@ document.getElementById('myTextarea').addEventListener('keydown', function (even
         }
     }
 });
-con.on("ReceiveGroupMessage", function (AuthorId, messContent, avtAuthor, AuthorUsername, groupImg, groupName) {
+con.on("ReceiveGroupMessage", function (AuthorId, messContent, avtAuthor, AuthorUsername, groupImg, groupName, groupId) {
     let currentuserid = document.querySelector('.currentuserid').dataset.currentuserid;
     let mainMess = document.querySelector('.main_mess');
-    let mainChat = document.querySelector('.main-chat');
-    let whose = '';
-    if (parseInt(AuthorId) === parseInt(currentuserid)) {
-        whose = 'me'
-    } else {
-        whose = 'other'
-    }
+    if (mainMess.dataset.type === `groupChat-${groupId}`) {
+        let mainChat = document.querySelector('.main-chat');
+        let whose = '';
+        if (parseInt(AuthorId) === parseInt(currentuserid)) {
+            whose = 'me'
+        } else {
+            whose = 'other'
+        }
 
-    let messageBox = `
+        let messageBox = `
                 <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${whose}">
                     <img src="${avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                     <div class="message-box">
                         <span class="message-box--content">${messContent}</span>
                     </div>
                 </div>`;
-    mainMess.insertAdjacentHTML('beforeend', messageBox);
-    mainChat.scrollTop = mainChat.scrollHeight;
+        mainMess.insertAdjacentHTML('beforeend', messageBox);
+        mainChat.scrollTop = mainChat.scrollHeight;
+    }
     getFlexibleChatBar()
-    //let oldUserchat = document.querySelector(`.user-chat-${groupId}-group`);
-    //oldUserchat.remove();
 
-    //let newUserchat = `
-    //                            <user-chat class="py-4 d-block user-chat-${groupId}-group" onclick="showBoxChatGroup(this)">
-    //                                <div class="group-id" data-groupid="${groupId}"></div>
-    //                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
-    //                                    <div class="user_image relative" style="width: 56px;">
-    //                                        <img src="${groupImg}" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
-    //                                        <span class="absolute online"></span>
-    //                                    </div>
-    //                                    <div class="flex-1 user_mess flex gap-3 flex-column group-name" style="max-width: calc(100% - 56px - 20px)">
-    //                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">${groupName}</span>
-    //                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
-    //                                            ${whose === 'me' ? 'You: ' : ''}${messContent}
-    //                                        </p>
-    //                                    </div>
-    //                                </div>
-    //                            </user-chat>
-    //                `
-    //let inbox = document.querySelector('inbox')
-    //inbox.insertAdjacentHTML('beforebegin', newUserchat)
 })
 con.on("ReceiveMessageOneUser", function (partnerIdSignalR, messContent, avtAuthor, AuthorUsername) {
     let currentuserid = document.querySelector('.currentuserid').dataset.currentuserid;
     let mainMess = document.querySelector('.main_mess');
-    let mainChat = document.querySelector('.main-chat');
-    let whose = "";
-    if (parseInt(currentuserid) !== parseInt(partnerIdSignalR)) {
-        whose = "me"
-    } else {
-        whose = "other"
-    }
-    let messageBox = `
+    if (mainMess.dataset.type === `singleChat-${partnerIdSignalR}`) {
+        let mainChat = document.querySelector('.main-chat');
+        let whose = "";
+        if (parseInt(currentuserid) !== parseInt(partnerIdSignalR)) {
+            whose = "me"
+        } else {
+            whose = "other"
+        }
+        let messageBox = `
                 <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${whose}">
                     <img src="${avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                     <div class="message-box">
                         <span class="message-box--content">${messContent}</span>
                     </div>
                 </div>`;
-    mainMess.insertAdjacentHTML('beforeend', messageBox);
-    mainChat.scrollTop = mainChat.scrollHeight;
+        mainMess.insertAdjacentHTML('beforeend', messageBox);
+        mainChat.scrollTop = mainChat.scrollHeight;
+    }
     getFlexibleChatBar()
-    //let oldUserchat = document.querySelector(`.user-chat-${partnerId}`);
-    //oldUserchat.remove();
-    //let newUserchat = `
-    //                            <user-chat class="py-4 d-block user-chat-${partnerId}" onclick="clickShow(${partnerId})">
-    //                                <div class="user_chat_wrapper w-full flex gap-20 align-center">
-    //                                    <div class="user_image relative" style="width: 56px;">
-    //                                        <img src="${avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 56px;" />
-    //                                        <span class="absolute online"></span>
-    //                                    </div>
-    //                                    <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
-    //                                        <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">${AuthorUsername}</span>
-    //                                        <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
-    //                                            ${whose === 'me' ? 'You: ' : ''}${messContent}
-    //                                        </p>
-    //                                    </div>
-    //                                </div>
-    //                            </user-chat>
-    //                `
-    //let inbox = document.querySelector('inbox')
-    //inbox.insertAdjacentHTML('beforebegin', newUserchat)
-    //console.log(partnerId)
 
 });
 
