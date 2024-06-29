@@ -24,7 +24,6 @@ function showBoxChatSingle(e) {
 function showBoxChatGroup(e) {
     typeChat = 'group';
     groupId = e.querySelector('.group-id').dataset.groupid;
-    console.log(groupId);
     $.ajax({
         headers:
         {
@@ -182,9 +181,13 @@ document.getElementById('myTextarea').addEventListener('keydown', function (even
                     data: JSON.stringify(dataSend),
                     success: function (data) {
                         let currentMess = data.data;
+                        console.log(currentMess.AuthorId)
                         let mainMess = document.querySelector('.main_mess');
                         let mainChat = document.querySelector('.main-chat');
-                        con.invoke("SendMessageOneUser", parseInt(partnerId), messContent, currentMess.avtAuthor, currentMess.AuthorUsername);
+                        con.invoke("SendMessageOneUser", parseInt(partnerId), messContent, currentMess.avtAuthor, currentMess.AuthorUsername, currentMess.AuthorId)
+                            .catch(err => {
+                                console.log(err)
+                            })                            ;
                         let messageBox = `
                 <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${currentMess.whose}">
                     <img src="${currentMess.avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
@@ -298,10 +301,10 @@ con.on("ReceiveGroupMessage", function (AuthorId, messContent, avtAuthor, Author
     getFlexibleChatBar()
 
 })
-con.on("ReceiveMessageOneUser", function (partnerIdSignalR, messContent, avtAuthor, AuthorUsername) {
+con.on("ReceiveMessageOneUser", function (partnerIdSignalR, messContent, avtAuthor, AuthorUsername, authorId) {
     let currentuserid = document.querySelector('.currentuserid').dataset.currentuserid;
     let mainMess = document.querySelector('.main_mess');
-    if (mainMess.dataset.type === `singleChat-${partnerIdSignalR}`) {
+    if (mainMess.dataset.type === `singleChat-${authorId}`) {
         let mainChat = document.querySelector('.main-chat');
         let whose = "";
         if (parseInt(currentuserid) !== parseInt(partnerIdSignalR)) {
