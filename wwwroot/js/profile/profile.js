@@ -124,11 +124,14 @@ class avatar extends PopupBase {
 
     init() {
         var _this = this;
-        _this.addEventListener('click', function () {
-            _this.initPopup(`<div class="option-box">
+        let checkElement = document.querySelector('.checkValid').dataset.checkvalid
+        if (checkElement === 'True') {
+            _this.addEventListener('click', function () {
+                _this.initPopup(`<div class="option-box">
                         ${_this.querySelector('.option-box').innerHTML}
                     </div>`)
-        })
+            })
+        }
     }
 }
 customElements.define("avatar-user", avatar);
@@ -193,3 +196,29 @@ document.addEventListener('DOMContentLoaded', function () {
 //        consosle.log(window.history)
 //    }
 //});
+
+function doFollow(userId) {
+    let type = "follow";
+    doRelation(userId, type)
+}
+
+function doUnFollow(userId) {
+    let type = "unfollow";
+    doRelation(userId, type)
+}
+
+function doRelation(userId, type) {
+    $.ajax({
+        headers:
+        {
+            "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        url: `/profile?handler=DoRelation&partnerId=${userId}&type=${type}`,
+        method: 'POST',
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            location.reload();
+        }
+    })
+}

@@ -8,48 +8,33 @@
         {
             <follower>
                 <div class="follower-wrapper">
-                    <a href="" class="a-link-follower">
+                    <a href="/profile?userId=@fl.UserID" class="a-link-follower">
                         <div class="follower-wrapper-person">
                             <div class="follower-avt-wrapper">
-                                <img src="@fl.Account.Info.Image" class="follower-avt" />
+                                <img src="@fl.Info.Image" class="follower-avt" />
                             </div>
                             <div class="follower-info-wrapper">
                                 <div class="follower-info">
-                                    <div class="follower-username">@fl.Account.Info.userName</div>
-                                    <div class="follower-fullname">@fl.Account.Info.Name</div>
+                                    <div class="follower-username">@fl.Info.userName</div>
+                                    <div class="follower-fullname">@fl.Info.Name</div>
                                 </div>
                             </div>
                         </div>
                     </a>
                     <div class="follower-btn-wrapper">
-                        <div class="follower-btn-follow hidden">Follow</div>
-                        <div class="follower-btn-unfollow">Unfollow</div>
+                        @if (Model.myFollowerCorrect[fl.UserID] == true && fl.UserID != Model.myCurrentId)
+                        {
+                            <div class="follower-btn-unfollow" onclick="doUnFollow(@fl.UserID)">Unfollow</div>
+                        }
+                        @if (Model.myFollowerCorrect[fl.UserID] == false && fl.UserID != Model.myCurrentId)
+                        {
+                            <div class="follower-btn-follow" onclick="doFollow(@fl.UserID)">Follow</div>
+                        }
                     </div>
                 </div>
                 <div class="line"></div>
             </follower>
         }
-        <follower>
-            <div class="follower-wrapper">
-                <a href="" class="a-link-follower">
-                    <div class="follower-wrapper-person">
-                        <div class="follower-avt-wrapper">
-                            <img src="./pics/profile/meower.jpg" class="follower-avt" />
-                        </div>
-                        <div class="follower-info-wrapper">
-                            <div class="follower-info">
-                                <div class="follower-username">_____meower</div>
-                                <div class="follower-fullname">Mòe</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <div class="follower-btn-wrapper">
-                    <div class="follower-btn-follow ">Follow</div>
-                    <div class="follower-btn-unfollow hidden">Unfollow</div>
-                </div>
-            </div>
-            <div class="line"></div>
-        </follower>
     </div>
+    <form method="post" enctype="multipart/form-data"></form>
 </div>

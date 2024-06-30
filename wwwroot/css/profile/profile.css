@@ -289,7 +289,7 @@ html {
     width: 100%;
     height: 1px;
     background-color: var(--border-color);
-    margin: 0 0 16px 0;
+    margin: 20px 0 16px 0;
 }
 
 .row-private {
@@ -1100,4 +1100,29 @@ custom-media img {
     text-align: center;
     padding: 20px;
     margin-top: 20px;
+}
+
+.relation-btn {
+    display: block;
+    width: 200px;
+    font-size: 1.4rem;
+    margin-left: auto;
+    text-align: center;
+    border-radius: 10px;
+    line-height: 32px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.relation-btn.follow-btn {
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    background-color: #FFFFFF;
+}
+
+.relation-btn.unfollow-btn {
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
 }

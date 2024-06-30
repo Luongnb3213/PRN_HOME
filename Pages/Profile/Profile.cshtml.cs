@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PRN221_Assignment.Models;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using System.Threading;
 
 namespace PRN221_Assignment.Pages.Profile
@@ -27,8 +29,19 @@ namespace PRN221_Assignment.Pages.Profile
         public Info info { get; set; }
         public Dictionary<string, bool> dicReact { get; set; }
         public int numFollower { get; set; }
+        public int myCurrentId { get; set; }
+        public bool isFollow { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int partnerId { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string type { get; set; }
         public void OnGet()
         {
+            if (User != null && User.Claims != null)
+            {
+                myCurrentId = Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
+            }
+
             selectedAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == userId);
 
             myThreads = context.Thread
@@ -62,8 +75,45 @@ namespace PRN221_Assignment.Pages.Profile
 
             List<Follow> myFollower = context.Follow.Include(x => x.Account).Include(x => x.Account.Info).Where(x => x.UserID == userId).ToList();
             numFollower = myFollower.Count();
-        }
 
+            var meAndThey = context.Follow.Where(x => x.UserID == userId && x.UserFollowErId == myCurrentId).FirstOrDefault();
+            if (meAndThey != null)
+            {
+                isFollow = true;
+            } else
+            {
+                isFollow = false;
+            }
+
+        }
+        public IActionResult OnPostDoRelation()
+        {
+            var userIdMe = string.Empty;
+            if (User != null && User.Claims != null)
+            {
+                userIdMe = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value;
+            }
+
+            if (type.Equals("follow"))
+            {
+                Follow newFollow = new Follow();
+                newFollow.UserID = partnerId;
+                newFollow.UserFollowErId = Int32.Parse(userIdMe);
+                context.Follow.Add(newFollow);
+                context.SaveChanges();
+            } else if (type.Equals("unfollow"))
+            {
+                Follow deleteFollow = context.Follow.Where(x => x.UserID == partnerId && x.UserFollowErId == Int32.Parse(userIdMe)).FirstOrDefault();
+                context.Follow.Remove(deleteFollow);
+                context.SaveChanges();
+            }
+
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+            return new JsonResult(new { data = userIdMe }, options);
+        }
         public IActionResult OnPost()
         {
             selectedAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == userId);

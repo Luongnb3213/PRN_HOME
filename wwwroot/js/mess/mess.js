@@ -18,7 +18,11 @@ function showBoxChatSingle(e) {
     document.querySelectorAll('.fullname-partner').forEach((el) => {
         el.innerHTML = followerFullName
     })
+
     partnerId = e.querySelector('.follower-id').dataset.followerid;
+    document.querySelector('.button_profile').setAttribute('href', `/profile?userId=${partnerId}`);
+
+
     getBoxChat(e.querySelector('.follower-id').dataset.followerid);
 }
 function showBoxChatGroup(e) {
@@ -274,12 +278,15 @@ function sendForm() {
 }
 
 //Code ajax
-document.getElementById('myTextarea').addEventListener('keydown', function (event) {
-    if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        sendForm();
-    }
-});
+if (document.getElementById('myTextarea') != null) {
+    document.getElementById('myTextarea').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            sendForm();
+        }
+    });
+}
+
 con.on("ReceiveGroupMessage", function (AuthorId, messContent, avtAuthor, AuthorUsername, groupImg, groupName, groupId) {
     let currentuserid = document.querySelector('.currentuserid').dataset.currentuserid;
     let mainMess = document.querySelector('.main_mess');
@@ -333,15 +340,18 @@ con.on("ReceiveMessageOneUser", function (partnerIdSignalR, messContent, avtAuth
 let btnGroup = document.querySelector('.btn-group');
 let overlay = document.querySelector('.overlay-group');
 let selectFollower = document.querySelector('popup-follower');
-btnGroup.addEventListener('click', function () {
-    overlay.classList.remove('hidden');
-    selectFollower.classList.remove('hidden');
-})
-
-overlay.addEventListener('click', function () {
-    overlay.classList.add('hidden');
-    selectFollower.classList.add('hidden');
-})
+if (btnGroup != null) {
+    btnGroup.addEventListener('click', function () {
+        overlay.classList.remove('hidden');
+        selectFollower.classList.remove('hidden');
+    })
+}
+if (overlay != null) {
+    overlay.addEventListener('click', function () {
+        overlay.classList.add('hidden');
+        selectFollower.classList.add('hidden');
+    })
+}
 
 function selectAccount(acc) {
     let checkbox = acc.querySelector('.custom-checkbox');
@@ -349,15 +359,19 @@ function selectAccount(acc) {
 }
 
 let btnCreateGroup = document.querySelector('.btn-create-group');
-btnCreateGroup.addEventListener('click', function () {
-    let groupName = document.querySelector('.input-create-group-name');
-    if (groupName.value != '') {
-        let formCreateGroup = document.querySelector('#form-create-group');
-        formCreateGroup.submit();
-    }
-})
+if (btnCreateGroup != null) {
+    btnCreateGroup.addEventListener('click', function () {
+        let groupName = document.querySelector('.input-create-group-name');
+        if (groupName.value != '') {
+            let formCreateGroup = document.querySelector('#form-create-group');
+            formCreateGroup.submit();
+        }
+    })
+}
 
 let btnWrite = document.querySelector('.write-comment-btn-submit');
-btnWrite.addEventListener('click', function (event) {
-    sendForm();
-})
+if (btnWrite != null) {
+    btnWrite.addEventListener('click', function (event) {
+        sendForm();
+    })
+}
