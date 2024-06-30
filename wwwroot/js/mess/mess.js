@@ -161,119 +161,123 @@ function getFlexibleChatBar() {
     })
 }
 
-//Code ajax
-document.getElementById('myTextarea').addEventListener('keydown', function (event) {
-    if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        let messContent = document.getElementById('myTextarea').value;
-        if (messContent !== '') {
-            if (typeChat === 'single') {
-                let dataSend = {
-                    messContent,
-                    partnerId
-                }
-                $.ajax({
-                    headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
-                    url: '/mess',
-                    method: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    data: JSON.stringify(dataSend),
-                    success: function (data) {
-                        let currentMess = data.data;
-                        console.log(currentMess.AuthorId)
-                        let mainMess = document.querySelector('.main_mess');
-                        let mainChat = document.querySelector('.main-chat');
-                        con.invoke("SendMessageOneUser", parseInt(partnerId), messContent, currentMess.avtAuthor, currentMess.AuthorUsername, currentMess.AuthorId)
-                            .catch(err => {
-                                console.log(err)
-                            })                            ;
-                        let messageBox = `
+function sendForm() {
+    let messContent = document.getElementById('myTextarea').value;
+    if (messContent !== '') {
+        if (typeChat === 'single') {
+            let dataSend = {
+                messContent,
+                partnerId
+            }
+            $.ajax({
+                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                url: '/mess',
+                method: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(dataSend),
+                success: function (data) {
+                    let currentMess = data.data;
+                    console.log(currentMess.AuthorId)
+                    let mainMess = document.querySelector('.main_mess');
+                    let mainChat = document.querySelector('.main-chat');
+                    con.invoke("SendMessageOneUser", parseInt(partnerId), messContent, currentMess.avtAuthor, currentMess.AuthorUsername, currentMess.AuthorId)
+                        .catch(err => {
+                            console.log(err)
+                        });
+                    let messageBox = `
                 <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${currentMess.whose}">
                     <img src="${currentMess.avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                     <div class="message-box">
                         <span class="message-box--content">${currentMess.Content}</span>
                     </div>
                 </div>`;
-                        mainMess.insertAdjacentHTML('beforeend', messageBox);
-                        mainChat.scrollTop = mainChat.scrollHeight;
+                    mainMess.insertAdjacentHTML('beforeend', messageBox);
+                    mainChat.scrollTop = mainChat.scrollHeight;
 
-                        getFlexibleChatBar();
+                    getFlexibleChatBar();
 
-                    },
-                    error: function (jqXHR, exception) {
-                        var msg = '';
-                        if (jqXHR.status === 0) {
-                            msg = 'Not connect.\n Verify Network.';
-                        } else if (jqXHR.status == 404) {
-                            msg = 'Requested page not found. [404]';
-                        } else if (jqXHR.status == 500) {
-                            msg = 'Internal Server Error [500].';
-                        } else if (exception === 'parsererror') {
-                            msg = 'Requested JSON parse failed.';
-                        } else if (exception === 'timeout') {
-                            msg = 'Time out error.';
-                        } else if (exception === 'abort') {
-                            msg = 'Ajax request aborted.';
-                        } else {
-                            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                        }
-                        console.log(msg)
+                },
+                error: function (jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
                     }
-                })
-            } else {
-                let dataSendGroup = {
-                    messContent,
-                    groupId
+                    console.log(msg)
                 }
-                $.ajax({
-                    headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
-                    url: '/mess?handler=Group',
-                    method: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    data: JSON.stringify(dataSendGroup),
-                    success: function (data) {
-                        let currentMess = data.data;
-                        let mainMess = document.querySelector('.main_mess');
-                        let mainChat = document.querySelector('.main-chat');
-                        con.invoke("SendMessageToGroup", currentMess.groupName, currentMess.AuthorId, messContent, currentMess.avtAuthor, currentMess.AuthorUsername, currentMess.groupImg, groupId);
+            })
+        } else {
+            let dataSendGroup = {
+                messContent,
+                groupId
+            }
+            $.ajax({
+                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                url: '/mess?handler=Group',
+                method: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(dataSendGroup),
+                success: function (data) {
+                    let currentMess = data.data;
+                    let mainMess = document.querySelector('.main_mess');
+                    let mainChat = document.querySelector('.main-chat');
+                    con.invoke("SendMessageToGroup", currentMess.groupName, currentMess.AuthorId, messContent, currentMess.avtAuthor, currentMess.AuthorUsername, currentMess.groupImg, groupId);
 
-                        let messageBox = `
+                    let messageBox = `
                             <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${currentMess.whose}">
                                 <img src="${currentMess.avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                                 <div class="message-box">
                                     <span class="message-box--content">${currentMess.Content}</span>
                                 </div>
                             </div>`;
-                        mainMess.insertAdjacentHTML('beforeend', messageBox);
-                        mainChat.scrollTop = mainChat.scrollHeight;
-                        getFlexibleChatBar();
+                    mainMess.insertAdjacentHTML('beforeend', messageBox);
+                    mainChat.scrollTop = mainChat.scrollHeight;
+                    getFlexibleChatBar();
 
-                    },
-                    error: function (jqXHR, exception) {
-                        var msg = '';
-                        if (jqXHR.status === 0) {
-                            msg = 'Not connect.\n Verify Network.';
-                        } else if (jqXHR.status == 404) {
-                            msg = 'Requested page not found. [404]';
-                        } else if (jqXHR.status == 500) {
-                            msg = 'Internal Server Error [500].';
-                        } else if (exception === 'parsererror') {
-                            msg = 'Requested JSON parse failed.';
-                        } else if (exception === 'timeout') {
-                            msg = 'Time out error.';
-                        } else if (exception === 'abort') {
-                            msg = 'Ajax request aborted.';
-                        } else {
-                            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                        }
-                        console.log(msg)
+                },
+                error: function (jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
                     }
-                })
-            }
-            document.getElementById('myTextarea').value = '';
+                    console.log(msg)
+                }
+            })
         }
+        document.getElementById('myTextarea').value = '';
+    }
+}
+
+//Code ajax
+document.getElementById('myTextarea').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendForm();
     }
 });
 con.on("ReceiveGroupMessage", function (AuthorId, messContent, avtAuthor, AuthorUsername, groupImg, groupName, groupId) {
@@ -346,6 +350,14 @@ function selectAccount(acc) {
 
 let btnCreateGroup = document.querySelector('.btn-create-group');
 btnCreateGroup.addEventListener('click', function () {
-    let formCreateGroup = document.querySelector('#form-create-group');
-    formCreateGroup.submit();
+    let groupName = document.querySelector('.input-create-group-name');
+    if (groupName.value != '') {
+        let formCreateGroup = document.querySelector('#form-create-group');
+        formCreateGroup.submit();
+    }
+})
+
+let btnWrite = document.querySelector('.write-comment-btn-submit');
+btnWrite.addEventListener('click', function (event) {
+    sendForm();
 })
