@@ -10,7 +10,7 @@
                 <div class="fullname">@Model.selectedAccount.Info.Name</div>
                 <div class="username">@Model.selectedAccount.Info.userName</div>
                 <div class="story">@Model.selectedAccount.Info.Story</div>
-                <a href="/followers" class="followers">50 followers</a>
+                <a href="/followers?userId=@Model.userId" class="followers">@Model.numFollower followers</a>
             </div>
             <div class="right">
                 <avatar-user data-custom-class="custom-option-box" class="avatar" style="background-image: url('@Model.selectedAccount.Info.Image')">

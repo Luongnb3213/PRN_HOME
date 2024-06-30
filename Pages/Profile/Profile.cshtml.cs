@@ -26,7 +26,7 @@ namespace PRN221_Assignment.Pages.Profile
         [BindProperty]
         public Info info { get; set; }
         public Dictionary<string, bool> dicReact { get; set; }
-
+        public int numFollower { get; set; }
         public void OnGet()
         {
             selectedAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == userId);
@@ -60,6 +60,8 @@ namespace PRN221_Assignment.Pages.Profile
                 }
             }
 
+            List<Follow> myFollower = context.Follow.Include(x => x.Account).Include(x => x.Account.Info).Where(x => x.UserID == userId).ToList();
+            numFollower = myFollower.Count();
         }
 
         public IActionResult OnPost()
