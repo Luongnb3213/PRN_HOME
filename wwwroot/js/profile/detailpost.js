@@ -1,5 +1,7 @@
 ﻿var linkPrevious = document.querySelector('.a-back-page');
-linkPrevious.setAttribute('href', sessionStorage.getItem('previous'));
+if (sessionStorage.getItem('previous') != null) {
+    linkPrevious.setAttribute('href', sessionStorage.getItem('previous'));
+}
 
 //Comment-detail-like
 class commentAuthor extends PopupBase {
@@ -114,7 +116,7 @@ class threadDetail extends PopupBase {
             if (_this.id == threadID) {
                 _this.realTimeHeart(currentReactAfter)
             }
-          
+
         })
         var numLike = _this.querySelector('.num-like.detail-like.detail');
         numLike.addEventListener('click', function (event) {
@@ -513,7 +515,7 @@ function clickReplyBtn(current) {
             let currentCount = element.querySelector('.num-comment.detail-comment').innerHTML
             element.querySelector('.num-comment.detail-comment').innerHTML = currentCount * 1 + 1;
             document.querySelector('.num-comment.detail-comment').innerHTML = document.querySelector('.num-comment.detail-comment').innerHTML * 1 + 1;
-            
+
         }
     });
 }
