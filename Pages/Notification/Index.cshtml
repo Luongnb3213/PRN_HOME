@@ -1,0 +1,140 @@
+﻿@page
+@model PRN221_Assignment.Pages.Notification.IndexModel
+@{
+}
+<div class="page">
+    <div class="type-noti">
+        <ul class="list-type">
+            <li class="option-noti selected">
+                <a href="/notification">
+                    Notifications
+                </a>
+            </li>
+            <li class="option-noti">
+                <a href="/request">
+                    Requests
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="main">
+
+        @if (Model.NoficationShows.Count > 0 && Model.NoficationShows != null)
+        {
+            @foreach (var item in Model.NoficationShows)
+            {
+                @if(item?.Nofication.typeID == 1)
+                {
+                    <noti>
+                        <div  class="a-link-noti">
+                            <div class="noti-wrapper">
+                                <div class="noti-avt-wrapper">
+                                    <img src="@item.account.accountt.Info.Image" width="36" height="36" class="noti-avt" />
+                                </div>
+                                <div class="noti-content-wrapper">
+                                    <div class="noti-content-header">
+                                        <a class="show-specific-profile" href="/profile?userId=@item.account.accountt?.UserID">@item.account.accountt?.Info?.userName</a>
+
+                                        <div class="noti-time">13 hour</div>
+                                    </div>
+                                    <a href="/detailpost?threadId=@item.thread?.ThreadId" class="noti-content-body">
+                                        <div class="noti-content-message">Liked a post</div>
+                                        <div class="post_content">
+                                            @item.thread?.Content
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line"></div>
+                    </noti>
+                }
+                else if (item?.Nofication.typeID == 2)
+                {
+                    <nofi>
+                        <div class="flex flex-column py-15">
+                            <div class="flex flex-cols gap-10  flex-wrap">
+                                <div class="thread_info col-w-custom" style="width: 48px">
+                                    <div class="flex h-full flex-column">
+                                        <img src="@item.account.accountt?.Info?.Image" width=" 36" height="36" class="noti-avt" />
+                                        <div class="line_main mx-auto flex-1 hidden">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="thread_main col-w-custom" style="--col-width: calc(100% - 48px - 30px);">
+                                    <div class="flex mb-2 align-center justify-between">
+                                        <div class="flex flex-column">
+                                            <h3 class="author flex align-center fs-15">
+                                                <a class="show-specific-profile" href="/profile?userId=@item.account.accountt?.UserID">@item.account.accountt?.Info?.userName</a>
+                                                <span class="time-elapsed"></span>
+                                            </h3>
+                                            <h4 class="author_nickname">@item.account.accountt.Info.Name</h4>
+                                        </div>
+                                        <button-follow data-followdid="@item.account.accountt?.UserID" style="margin-left: auto;background-color: rgb(24, 24, 24); color: white" class="button_create px-15  py-2">
+                                            @(@item.account.follow ? "Đang theo dõi" : "Theo dõi")
+                                        </button-follow>
+                                    </div>
+                                    <span class="follow_text">
+
+                                        @if (@item.account.totalFollower != null && @item.account.totalFollower >= 1)
+                                        {
+                                            <span>@item.account.totalFollower người theo dõi</span>
+                                        }
+                                        0 người theo dõi
+                                    </span>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="line"></div>
+                    </nofi>
+                }
+                else
+                {
+                    <noti>
+                        <div  class="a-link-noti">
+                            <div class="noti-wrapper">
+                                <div class="noti-avt-wrapper">
+                                    <img src="@item.account.accountt.Info.Image" width="36" height="36" class="noti-avt" />
+                                </div>
+                                <div class="noti-content-wrapper">
+                                    <div class="noti-content-header">
+                                        <a class="show-specific-profile" href="/profile?userId=@item.account.accountt?.UserID">@item.account.accountt?.Info?.userName</a>
+
+                                        <div class="noti-time">13 hour</div>
+                                    </div>
+                                    <a href="/detailpost?threadId=@item.thread?.ThreadId" class="noti-content-body">
+                                        <div class="noti-content-message">Created a post</div>
+                                        <div class="post_content">
+                                            @item.thread?.Content
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line"></div>
+                    </noti>
+                  
+                }
+            }
+        }
+        else
+        {
+            <div>
+                No nofications
+            </div>
+
+        }
+      
+     
+       
+      
+       
+
+    </div>
+</div>

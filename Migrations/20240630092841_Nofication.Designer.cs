@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PRN221_Assignment.Respository;
 
@@ -11,9 +12,10 @@ using PRN221_Assignment.Respository;
 namespace PRN221_Assignment.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240630092841_Nofication")]
+    partial class Nofication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -266,7 +268,8 @@ namespace PRN221_Assignment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageReceiveId"), 1L, 1);
 
-                    b.Property<int>("GroupID")
+                    b.Property<int?>("GroupID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -431,29 +434,6 @@ namespace PRN221_Assignment.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("typeNofication");
-                });
-
-            modelBuilder.Entity("PRN221_Assignment.Models.UserNofication", b =>
-                {
-                    b.Property<int>("UserNoficationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserNoficationId"), 1L, 1);
-
-                    b.Property<int>("NoficationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserNoficationId");
-
-                    b.HasIndex("NoficationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserNofication");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Block", b =>
@@ -650,25 +630,6 @@ namespace PRN221_Assignment.Migrations
                     b.Navigation("Thread");
                 });
 
-            modelBuilder.Entity("PRN221_Assignment.Models.UserNofication", b =>
-                {
-                    b.HasOne("PRN221_Assignment.Models.Nofication", "Nofication")
-                        .WithMany("UserNofications")
-                        .HasForeignKey("NoficationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PRN221_Assignment.Models.Account", "User")
-                        .WithMany("UserNofications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Nofication");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("PRN221_Assignment.Models.Account", b =>
                 {
                     b.Navigation("BLocks");
@@ -688,8 +649,6 @@ namespace PRN221_Assignment.Migrations
                     b.Navigation("Nofications");
 
                     b.Navigation("Threads");
-
-                    b.Navigation("UserNofications");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Comment", b =>
@@ -709,11 +668,6 @@ namespace PRN221_Assignment.Migrations
             modelBuilder.Entity("PRN221_Assignment.Models.Mess", b =>
                 {
                     b.Navigation("MessageReceive");
-                });
-
-            modelBuilder.Entity("PRN221_Assignment.Models.Nofication", b =>
-                {
-                    b.Navigation("UserNofications");
                 });
 
             modelBuilder.Entity("PRN221_Assignment.Models.Thread", b =>

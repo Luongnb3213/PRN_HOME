@@ -16,6 +16,9 @@ namespace PRN221_Assignment.Models
             Mess = new HashSet<Mess>();
             Group =  new HashSet<Group>();
             MessageReceives =  new HashSet<MessageReceive>();
+            Nofications = new HashSet<Nofication>();
+            UserNofications = new HashSet<UserNofication>();
+            NoficationsOfUser = new HashSet<Nofication>();
         }
         [Key]
         public int UserID { get; set; }
@@ -42,7 +45,10 @@ namespace PRN221_Assignment.Models
         public virtual ICollection<Mess> Mess { get; set; }
         public virtual ICollection<Group> Group { get; set; }
         public virtual ICollection<MessageReceive> MessageReceives { get; set; }
+        public virtual ICollection<Nofication> Nofications { get; set; }
 
+        public virtual ICollection<UserNofication> UserNofications { get; set; }
+        public virtual ICollection<Nofication> NoficationsOfUser { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@ function Debounce(value) {
     return new Promise((resolve, reject) => {
         time = setTimeout(() => {
             resolve(value)
-        }, 1500)
+        }, 10000)
     })
 }
 
@@ -17,10 +17,19 @@ var BlsSearch = (function () {
     return {
         init: function () {
             var text = document.querySelector("input[name='text']");
+            var loader_search = document.querySelector("input[name='text'] ~ .loader_search")
+           
             if (text) {
                 text.addEventListener('input', (e) => {
+                    loader_search.classList.remove("hidden")
+                    if (e.target.value.trim() === '') {
+                        
+                        loader_search.classList.add("hidden")
+                        clearTimeout(time)
+                        return;
+                    }
                     var value = Debounce(e.target.value).then((text_value) => {
-                        console.log(JSON.stringify(text_value))
+                        
                         $.ajax({
                             headers:
                             {
@@ -33,6 +42,7 @@ var BlsSearch = (function () {
                             dataType: 'json',
                             data: JSON.stringify(text_value),
                             success: function (data) {
+                                loader_search.classList.add("hidden")
                                 console.log(data)
                             }
                         })

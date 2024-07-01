@@ -30,19 +30,22 @@
 }
 
 .noti-content-wrapper {
-    margin-left: 12px;
+    margin-left: 10px;
     flex: 11;
 }
 
 .noti-content-body {
     color: var(--text-color);
     font-size: 1.4rem;
+    text-decoration: none;
 }
-
-.noti-content-header {
-    display: flex;
-    align-content: center;
-}
+    .noti-content-body:hover {
+         color: white;
+    }
+    .noti-content-header {
+        display: flex;
+        align-content: center;
+    }
 
 .noti-person-name {
     color: var(--text-color);
@@ -86,4 +89,10 @@
 
 .option-noti.selected a {
     color: var(--text-color) !important;
+}
+.noti-content-message{
+    color:#777777;
+}
+.button_create.disabled{
+     pointer-events: none;
 }

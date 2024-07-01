@@ -339,3 +339,18 @@ class commentReply extends HTMLElement {
     }
 }
 customElements.define("comment-reply", commentReply)
+
+
+
+class buttonFollow extends HTMLElement {
+    constructor() {
+        super()
+        this.id = this.dataset.followdid
+
+        this.init()
+    }
+    init() {
+     
+    }
+}
+customElements.define("button-follow", buttonFollow)

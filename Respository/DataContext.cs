@@ -32,6 +32,10 @@ namespace PRN221_Assignment.Respository
         public DbSet<MessageReceive> MessageReceive { get; set; }
         public DbSet<Group> Group { get; set; }
         public DbSet<GroupUser> GroupUser { get; set; }
+        public DbSet<typeNofication> typeNofication { get; set; }
+        public DbSet<Nofication> Nofication { get; set; }
+        public DbSet<UserNofication> UserNofication { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,6 +51,13 @@ namespace PRN221_Assignment.Respository
           .WithOne(e => e.Account)
           .HasForeignKey(e => e.UserID)
           .IsRequired();
+
+            modelBuilder.Entity<Account>()
+       .HasMany(e => e.Nofications)
+       .WithOne(e => e.Account)
+       .HasForeignKey(e => e.authorId)
+       .IsRequired();
+
 
             modelBuilder.Entity<Account>()
           .HasMany(e => e.Mess)
@@ -105,6 +116,11 @@ namespace PRN221_Assignment.Respository
              .WithMany(e => e.Accounts)
              .UsingEntity<GroupUser>();
 
+            modelBuilder.Entity<Account>()
+            .HasMany(e => e.NoficationsOfUser)
+            .WithMany(e => e.AccountsNofication)
+            .UsingEntity<UserNofication>();
+
 
             modelBuilder.Entity<ThreadComment>()
       .HasMany(e => e.Conversations)
@@ -129,6 +145,15 @@ namespace PRN221_Assignment.Respository
           .WithOne(e => e.Author)
           .HasForeignKey(e => e.UserId)
           .IsRequired();
+
+
+
+            modelBuilder.Entity<typeNofication>()
+       .HasMany(e => e.Nofications)
+       .WithOne(e => e.typeNofication)
+       .HasForeignKey(e => e.typeID)
+       .IsRequired();
+
         }
     }
 }
