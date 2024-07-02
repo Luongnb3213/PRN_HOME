@@ -389,6 +389,27 @@ class timeConvert extends HTMLElement {
 customElements.define("time-convert", timeConvert)
 
 
+class iconSetting extends HTMLElement {
+    constructor() {
+        super()
+        this.icon = this.querySelector("icon")
+        this.init()
+    }
+    init() {
+        var _this = this
+        this.icon.addEventListener("click", (e) => {
+            _this.classList.add("active")
+        })
+        document.body.addEventListener("click", (e) => {
+            if (!e.target.closest(".header_last")) {
+                this.classList.remove("active")
+            }
+
+        })
+    }
+}
+
+customElements.define("icon-setting", iconSetting)
 
 con.on("receiveNofication", function (userId,nofi, account, newThread, count, threadId) {
     var html = ''
@@ -489,3 +510,6 @@ con.on("receiveNofication", function (userId,nofi, account, newThread, count, th
     }
    
 })
+
+
+                                         

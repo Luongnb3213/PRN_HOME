@@ -58,9 +58,9 @@ thread-main {
 .more_options {
      transition: all 0.2s linear;
 }
-.more_options:hover{
-    background-color: red;
-}
+    .more_options:hover {
+        background-color: rgb(77,77,77);
+    }
 .create_thread {
     border-radius: 10px;
     border-style: solid;
