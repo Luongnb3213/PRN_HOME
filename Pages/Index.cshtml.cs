@@ -13,6 +13,7 @@ using System.Threading;
 using Thread = PRN221_Assignment.Models.Thread;
 using PRN221_Assignment.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using System.Linq;
 
 namespace PRN221_Assignment.Pages
 {
@@ -80,6 +81,41 @@ namespace PRN221_Assignment.Pages
                 context.SaveChanges();
             }
             TempData["msg"] = "CreatedThread";
+
+            try
+            {
+                Nofication nofi = new Nofication();
+                nofi.createdBy = DateTime.Now;
+                nofi.authorId = Int32.Parse(userId);
+                nofi.typeID = 3;
+                nofi.dataId = newThread.ThreadId;
+                context.Nofication.Add(nofi);
+                context.SaveChanges();
+                var follower = context.Follow.Where( x => x.UserFollowErId == Int32.Parse(userId)).ToList();
+                List<UserNofication> listNew = new List<UserNofication>();
+                var accountInfo = context.Info.Where(x => x.UserID == Int32.Parse(userId)).FirstOrDefault();
+                List<string> listUser = context.Follow.Where(x => x.UserFollowErId == Int32.Parse(userId)).Select(x => x.UserID.ToString()).ToList();
+                foreach (var item in follower)
+                {
+                   UserNofication userNofication = new UserNofication();
+                    userNofication.NoficationId = nofi.Id;
+                    userNofication.UserId = item.UserID;
+                    listNew.Add(userNofication);
+                    
+                }
+                await hubContext.Clients.Users(listUser).SendAsync("receiveNofication", userId, nofi.typeID, accountInfo.Image,accountInfo.userName, newThread.Content, newThread.ThreadId);
+
+                if (listNew.Count > 0)
+                {
+                    context.UserNofication.AddRange(listNew);
+                    context.SaveChanges();
+                }
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
             return RedirectToPage("", new { msg = TempData["msg"] });
 
         }
@@ -92,17 +128,42 @@ namespace PRN221_Assignment.Pages
             }
             if (typeReact.Equals("up"))
             {
-                int currentReact = context.Thread.Where(x => x.ThreadId == threadId).Select(x => x.React).FirstOrDefault();
-                Thread reactedThread = context.Thread.FirstOrDefault(x => x.ThreadId == threadId);
-                reactedThread.React = ++currentReact;
-                context.SaveChanges();
+               
+                    int currentReact = context.Thread.Where(x => x.ThreadId == threadId).Select(x => x.React).FirstOrDefault();
+                    Thread reactedThread = context.Thread.FirstOrDefault(x => x.ThreadId == threadId);
+                    reactedThread.React = ++currentReact;
+                    context.SaveChanges();
 
-                ThreadReact newThreadReact = new ThreadReact();
-                newThreadReact.UserID = Int32.Parse(userId);
-                newThreadReact.threadId = threadId;
-                context.ThreadReact.Add(newThreadReact);
-                context.SaveChanges();
+                    ThreadReact newThreadReact = new ThreadReact();
+                    newThreadReact.UserID = Int32.Parse(userId);
+                    newThreadReact.threadId = threadId;
+                    context.ThreadReact.Add(newThreadReact);
+                    context.SaveChanges();
 
+                    if(reactedThread.AuthorId != Int32.Parse(userId))
+                    {
+                        Nofication nofi = new Nofication();
+                        nofi.createdBy = DateTime.Now;
+                        nofi.authorId = Int32.Parse(userId);
+                        nofi.typeID = 1;
+                        nofi.dataId = reactedThread.ThreadId;
+                        context.Nofication.Add(nofi);
+                        context.SaveChanges();
+
+                        UserNofication userNofication = new UserNofication();
+                        userNofication.NoficationId = nofi.Id;
+                        userNofication.UserId = reactedThread.AuthorId;
+                        context.UserNofication.Add(userNofication);
+                        context.SaveChanges();
+
+                        var account = context.Info.Where(x => x.UserID == Int32.Parse(userId)).FirstOrDefault();
+
+                     await hubContext.Clients.User(reactedThread.AuthorId + "").SendAsync("receiveNofication", userId, nofi.typeID, account, reactedThread.Content, reactedThread.ThreadId);
+                    }
+               
+                
+               
+              
             } else
             {
                 int currentReact = context.Thread.Where(x => x.ThreadId == threadId).Select(x => x.React).FirstOrDefault();

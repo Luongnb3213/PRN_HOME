@@ -65,7 +65,7 @@ class threadMain extends HTMLElement {
             _this.number.classList.remove("active");
         } else {
             _this.number.classList.add("active");
-
+            // call ajax
             _this.number.querySelectorAll(".main_number").forEach((item) => {
                 item.classList.add("translate-y--50")
             })
@@ -354,3 +354,138 @@ class buttonFollow extends HTMLElement {
     }
 }
 customElements.define("button-follow", buttonFollow)
+
+function timeSince(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - new Date(date)) / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
+
+    if (years >= 1) return years + (years > 1 ? " years" : " year");
+    if (months >= 1) return months + (months > 1 ? " months" : " month");
+    if (days >= 1) return days + (days > 1 ? " days" : " day");
+    if (hours >= 1) return hours + (hours > 1 ? " hours" : " hour");
+    if (minutes >= 1) return minutes + (minutes > 1 ? " minutes" : " minute");
+    return seconds + (seconds > 1 ? " seconds" : " second");
+}
+
+class timeConvert extends HTMLElement {
+    constructor() {
+        super()
+        this.time = this.dataset?.time
+
+        this.init()
+    }
+    init() {
+        if (this.time) {
+            this.innerHTML = timeSince(this.time)
+
+        }
+    }
+}
+customElements.define("time-convert", timeConvert)
+
+
+
+con.on("receiveNofication", function (userId,nofi, account, newThread, count, threadId) {
+    var html = ''
+
+    if (nofi == 1) {
+        html = ` <noti>
+                        <div  class="a-link-noti">
+                            <div class="noti-wrapper">
+                                <div class="noti-avt-wrapper">
+                                    <img src="${account.image}" width="36" height="36" class="noti-avt" />
+                                </div>
+                                <div class="noti-content-wrapper">
+                                    <div class="noti-content-header">
+                                        <a class="show-specific-profile" href="/profile?userId=${userId}"> ${account.userName} </a>
+
+                                        <time-convert class="noti-time">now</time-convert>
+                                    </div>
+                                    <a href="/detailpost?threadId=${count}" class="noti-content-body">
+                                        <div class="noti-content-message">Liked a post</div>
+                                        <div class="post_content">
+                                           ${newThread}
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line"></div>
+                    </noti>`
+    } else if (nofi == 2) {
+        html =`  <nofi>
+                        <div class="flex flex-column py-15">
+                            <div class="flex flex-cols gap-10  flex-wrap">
+                                <div class="thread_info col-w-custom" style="width: 48px">
+                                    <div class="flex h-full flex-column">
+                                        <img src="${account.image}" width=" 36" height="36" class="noti-avt" />
+                                        <div class="line_main mx-auto flex-1 hidden">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="thread_main col-w-custom" style="--col-width: calc(100% - 48px - 30px);">
+                                    <div class="flex mb-2 align-center justify-between">
+                                        <div class="flex flex-column">
+                                            <h3 class="author flex align-center fs-15">
+                                                <a class="show-specific-profile" href="/profile?userId=${userId}">${account.userName}</a>
+                                                <time-convert class="time-elapsed">now</time-convert>
+                                            </h3>
+                                            <h4 class="author_nickname">${account.Name}</h4>
+                                        </div>
+                                        <button-follow data-followdid="${userId}" style="margin-left: auto;background-color: rgb(24, 24, 24); color: white" class="button_create px-15  py-2">
+                                           ${newThread ? 'Đang theo dõi' : "Theo dõi "}
+                                        </button-follow>
+                                    </div>
+                                    <span class="follow_text">
+                                        
+                                        ${count} người theo dõi 
+                                    </span>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="line"></div>
+                    </nofi>`
+    } else {
+        html = ` <noti>
+                        <div  class="a-link-noti">
+                            <div class="noti-wrapper">
+                                <div class="noti-avt-wrapper">
+                                    <img src=" ${account}" width="36" height="36" class="noti-avt" />
+                                </div>
+                                <div class="noti-content-wrapper">
+                                    <div class="noti-content-header">
+                                        <a class="show-specific-profile" href="/profile?userId=${userId}"> ${newThread}</a>
+
+                                        <time-convert class="noti-time">now</time-convert>
+                                    </div>
+                                    <a href="/detailpost?threadId=${threadId}" class="noti-content-body">
+                                        <div class="noti-content-message">Created a post</div>
+                                        <div class="post_content">
+                                           ${count}
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line"></div>
+                    </noti>`
+    }
+    var fisrtNofi = document.querySelectorAll("noti")[0]
+    if (fisrtNofi) {
+        $(html).insertBefore(fisrtNofi);
+    } else {
+        $(".main_noti").append(html)
+    }
+   
+})

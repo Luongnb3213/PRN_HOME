@@ -32,14 +32,14 @@ namespace PRN221_Assignment.Pages.Notification
                 {
                     NoficationShow item = new NoficationShow();
                     item.Nofication = Nofication.Nofication;
-                    item.account.accountt = context.Accounts.Include(x => x.Info).Where(x => x.UserID == Nofication.UserId).FirstOrDefault();
+                    item.account.accountt = context.Accounts.Include(x => x.Info).Where(x => x.UserID == Nofication.Nofication.authorId).FirstOrDefault();
                     if(Nofication.Nofication.typeID == 1 || Nofication.Nofication.typeID == 3)
                     {
                         item.thread = context.Thread.Where(x => x.ThreadId == Nofication.Nofication.dataId).FirstOrDefault();
                     }
                     NoficationShows.Add(item);
 
-                   var follower = context.Follow.Where(x => x.UserID ==  userId && x.FollowerId == item.account.accountt.UserID).FirstOrDefault();
+                   var follower = context.Follow.Where(x => x.UserID == item.account.accountt.UserID && x.FollowerId == userId ).FirstOrDefault();
                     if(follower != null)
                     {
                         item.account.follow = true;

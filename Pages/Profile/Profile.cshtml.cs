@@ -7,15 +7,19 @@ using System.Security.Claims;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading;
+using Microsoft.AspNetCore.SignalR;
+using PRN221_Assignment.Hubs;
 
 namespace PRN221_Assignment.Pages.Profile
 {
     public class ProfileModel : PageModel
     {
         private readonly PRN221_Assignment.Respository.DataContext context;
-        public ProfileModel(PRN221_Assignment.Respository.DataContext _context)
+        private readonly IHubContext<chatHub> hubContext;
+        public ProfileModel(PRN221_Assignment.Respository.DataContext _context, IHubContext<chatHub> _hubContext)
         {
             context = _context;
+            hubContext = _hubContext;
             dicThreadComment = new Dictionary<string, int>();
             dicReact = new Dictionary<string, bool>();
         }
@@ -86,7 +90,13 @@ namespace PRN221_Assignment.Pages.Profile
             }
 
         }
-        public IActionResult OnPostDoRelation()
+        public class newAccount
+        {
+            public Info? accountInfo;
+            public bool follow;
+            public int totalFollower;
+        }
+        public async Task<IActionResult> OnPostDoRelation()
         {
             var userIdMe = string.Empty;
             if (User != null && User.Claims != null)
@@ -96,11 +106,41 @@ namespace PRN221_Assignment.Pages.Profile
 
             if (type.Equals("follow"))
             {
-                Follow newFollow = new Follow();
-                newFollow.UserID = partnerId;
-                newFollow.UserFollowErId = Int32.Parse(userIdMe);
-                context.Follow.Add(newFollow);
-                context.SaveChanges();
+                try
+                {
+                    Follow newFollow = new Follow();
+                    newFollow.UserID = partnerId;
+                    newFollow.UserFollowErId = Int32.Parse(userIdMe);
+                    context.Follow.Add(newFollow);
+                    context.SaveChanges();
+
+
+                    Nofication nofi = new Nofication();
+                    nofi.createdBy = DateTime.Now;
+                    nofi.authorId = Int32.Parse(userIdMe);
+                    nofi.typeID = 2;
+                    nofi.dataId = Int32.Parse(userIdMe);
+                    context.Nofication.Add(nofi);
+                    context.SaveChanges();
+
+                    UserNofication userNofication = new UserNofication();
+                    userNofication.NoficationId = nofi.Id;
+                    userNofication.UserId = partnerId;
+                    context.UserNofication.Add(userNofication);
+                    context.SaveChanges();
+                    var account = context.Info.Where(x => x.UserID == Int32.Parse(userIdMe)).FirstOrDefault();
+                    var isFollow = context.Follow.Where(x => x.UserFollowErId == partnerId && x.UserID == Int32.Parse(userIdMe)).FirstOrDefault();
+                    bool isFollower = false;
+                    if (isFollow != null)
+                    {
+                        isFollower = true;
+                    }
+                    await hubContext.Clients.User(partnerId + "").SendAsync("receiveNofication", userIdMe, nofi.typeID, account, isFollower, context.Follow.Where(x => x.FollowerId == Int32.Parse(userIdMe)).ToList().Count);
+
+                }
+                catch(Exception e) {
+                }
+               
             } else if (type.Equals("unfollow"))
             {
                 Follow deleteFollow = context.Follow.Where(x => x.UserID == partnerId && x.UserFollowErId == Int32.Parse(userIdMe)).FirstOrDefault();
@@ -112,6 +152,7 @@ namespace PRN221_Assignment.Pages.Profile
             {
                 ReferenceHandler = ReferenceHandler.Preserve
             };
+
             return new JsonResult(new { data = userIdMe }, options);
         }
         public IActionResult OnPost()

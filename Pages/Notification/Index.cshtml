@@ -10,14 +10,9 @@
                     Notifications
                 </a>
             </li>
-            <li class="option-noti">
-                <a href="/request">
-                    Requests
-                </a>
-            </li>
         </ul>
     </div>
-    <div class="main">
+    <div class="main main_noti">
 
         @if (Model.NoficationShows.Count > 0 && Model.NoficationShows != null)
         {
@@ -35,7 +30,7 @@
                                     <div class="noti-content-header">
                                         <a class="show-specific-profile" href="/profile?userId=@item.account.accountt?.UserID">@item.account.accountt?.Info?.userName</a>
 
-                                        <div class="noti-time">13 hour</div>
+                                        <time-convert class="noti-time" data-time="@item?.Nofication.createdBy"></time-convert>
                                     </div>
                                     <a href="/detailpost?threadId=@item.thread?.ThreadId" class="noti-content-body">
                                         <div class="noti-content-message">Liked a post</div>
@@ -68,7 +63,7 @@
                                         <div class="flex flex-column">
                                             <h3 class="author flex align-center fs-15">
                                                 <a class="show-specific-profile" href="/profile?userId=@item.account.accountt?.UserID">@item.account.accountt?.Info?.userName</a>
-                                                <span class="time-elapsed"></span>
+                                                <time-convert class="time-elapsed" data-time="@item?.Nofication.createdBy"></time-convert>
                                             </h3>
                                             <h4 class="author_nickname">@item.account.accountt.Info.Name</h4>
                                         </div>
@@ -81,8 +76,10 @@
                                         @if (@item.account.totalFollower != null && @item.account.totalFollower >= 1)
                                         {
                                             <span>@item.account.totalFollower người theo dõi</span>
+                                        }else{
+                                            <span>0 người theo dõi</span>
                                         }
-                                        0 người theo dõi
+                                        
                                     </span>
 
                                 </div>
@@ -106,7 +103,7 @@
                                     <div class="noti-content-header">
                                         <a class="show-specific-profile" href="/profile?userId=@item.account.accountt?.UserID">@item.account.accountt?.Info?.userName</a>
 
-                                        <div class="noti-time">13 hour</div>
+                                        <time-convert class="noti-time" data-time="@item?.Nofication.createdBy"></time-convert>
                                     </div>
                                     <a href="/detailpost?threadId=@item.thread?.ThreadId" class="noti-content-body">
                                         <div class="noti-content-message">Created a post</div>
