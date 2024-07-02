@@ -434,10 +434,10 @@ con.on("receiveNofication", function (userId,nofi, account, newThread, count, th
                                     <div class="flex mb-2 align-center justify-between">
                                         <div class="flex flex-column">
                                             <h3 class="author flex align-center fs-15">
-                                                <a class="show-specific-profile" href="/profile?userId=${userId}">${account.userName}</a>
-                                                <time-convert class="time-elapsed">now</time-convert>
+                                                <a class="show-specific-profile"  href="/profile?userId=${userId}">${account.userName}</a>
+                                                <time-convert class="noti-time">now</time-convert>
                                             </h3>
-                                            <h4 class="author_nickname">${account.Name}</h4>
+                                            <h4 class="author_nickname">${account.name}</h4>
                                         </div>
                                         <button-follow data-followdid="${userId}" style="margin-left: auto;background-color: rgb(24, 24, 24); color: white" class="button_create px-15  py-2">
                                            ${newThread ? 'Đang theo dõi' : "Theo dõi "}

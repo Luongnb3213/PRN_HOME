@@ -135,7 +135,7 @@ namespace PRN221_Assignment.Pages.Profile
                     {
                         isFollower = true;
                     }
-                    await hubContext.Clients.User(partnerId + "").SendAsync("receiveNofication", userIdMe, nofi.typeID, account, isFollower, context.Follow.Where(x => x.FollowerId == Int32.Parse(userIdMe)).ToList().Count);
+                    await hubContext.Clients.User(partnerId + "").SendAsync("receiveNofication", userIdMe, nofi.typeID, account, isFollower, context.Follow.Where(x => x.UserFollowErId == Int32.Parse(userIdMe)).ToList().Count);
 
                 }
                 catch(Exception e) {

@@ -50,6 +50,7 @@ namespace PRN221_Assignment.Pages.Notification
                     }
                     item.account.totalFollower = context.Follow.Where(x => x.UserID == item.account.accountt.UserID).ToList().Count;
                 }
+                NoficationShows = NoficationShows.OrderByDescending(x => x.Nofication.createdBy).ToList();
             }
            
 
