@@ -27,6 +27,9 @@ namespace PRN221_Assignment.Pages.Profile
         public List<ThreadReact> listDetailReact { get; set; }
         public bool reactedYet { get; set; }
         public List<Account> listPersonReact { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int deleteCommentId { get; set; }
+        public int currentUserId { get; set; }
         public async Task OnGet()
         {
             SelectedThread = context.Thread
@@ -116,6 +119,7 @@ namespace PRN221_Assignment.Pages.Profile
                 currentAccount = context.Accounts.Include(x => x.Info).FirstOrDefault(x => x.UserID == Int32.Parse(userId));
                 ViewData["UserId"] = userId;
             }
+            currentUserId = Int32.Parse(userId);
             listDetailReact = context.ThreadReact
                 .Include(x => x.Thread)
                 .Include(x => x.Thread.Account)
@@ -207,6 +211,57 @@ namespace PRN221_Assignment.Pages.Profile
                     .FirstOrDefault(x => x.CommentId == currentReply.CommentId);
                 return new JsonResult(new { data = newReplyComment }, options);
             }
+        }
+
+        public IActionResult OnPostDeleteComment()
+        {
+            int tcId = 0;
+            ThreadComment deletedThreadComment = context.ThreadComment.Where(x => x.CommentId == deleteCommentId).FirstOrDefault();
+            if (deletedThreadComment != null)
+            {
+                tcId = deletedThreadComment.ThreadCommentId;
+                List<Conversation> deletedConversation = context.Conversation.Where(x => x.ThreadCommentId == tcId).ToList();
+
+                if (deletedConversation != null)
+                {
+                    context.Conversation.RemoveRange(deletedConversation);
+                    //context.SaveChanges();
+
+                    foreach (var conversation in deletedConversation)
+                    {
+                        Comment deletedCommentReply = context.Comment.Where(x => x.CommentId == conversation.CommentId).FirstOrDefault();
+                        if (deletedCommentReply.CommentImages.Count != 0)
+                        {
+                            CommentImages deletedCommentImageReply = context.CommentImages.Where(x => x.CommentId == conversation.CommentId).FirstOrDefault();
+                            context.CommentImages.Remove(deletedCommentImageReply);
+                            context.SaveChanges();
+                        }
+                        context.Comment.Remove(deletedCommentReply);
+                        context.SaveChanges();
+                    }
+
+                }
+                context.ThreadComment.Remove(deletedThreadComment);
+                context.SaveChanges();
+            }
+
+
+            Comment deletedComment = context.Comment.Where(x => x.CommentId == deleteCommentId).FirstOrDefault();
+            if (deletedComment.CommentImages.Count != 0)
+            {
+                CommentImages deletedCommentImage = context.CommentImages.Where(x => x.CommentId == deleteCommentId).FirstOrDefault();
+                context.CommentImages.Remove(deletedCommentImage);
+                context.SaveChanges();
+            }
+            context.Comment.Remove(deletedComment);
+            context.SaveChanges();
+
+
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+            return new JsonResult(new { data = string.Empty }, options);
         }
         public class MyComment()
         {

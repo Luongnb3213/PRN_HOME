@@ -240,7 +240,6 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
             let commentBox = document.querySelector('.comment-box');
             //let noComment = document.querySelector('.no-comment-wrapper');
             //noComment.classList.add('hidden');
-            console.log(data)
             let commentImageHTML = '';
             if (data.data.Comment.CommentImages.$values.length !== 0) {
                 commentImageHTML = `<img src="${data.data.Comment.CommentImages.$values[0].Media}" class="comment-picture">`;
@@ -326,16 +325,22 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
         </div>
         <div class="comment-right-wrapper">
             <div class="option-icon">
-                <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
-                    <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
-                         class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
-                         style="fill: #777777; --height: 20px; --width: 20px;">
-                        <title>Xem thêm</title>
-                        <circle cx="12" cy="12" r="1.5"></circle>
-                        <circle cx="6" cy="12" r="1.5"></circle>
-                        <circle cx="18" cy="12" r="1.5"></circle>
-                    </svg>
-                </icon>
+                <icon-setting class="relative header_last ">
+                                                            <icon class="pointer more_options flex align-center justify-content-center rounded-50">
+                                                                <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24" class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn" style="fill: #777777; --height: 20px; --width: 20px;"><title>Xem thêm</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+                                                            </icon>
+                                                            <div class="absolute rounded-style rounded-10 thread_settings rounded-10 top-30 right-0" style="border-radius: 10px;">
+                                                                <ul class="list-unstyled rounded-10">
+                                                                    <li class="fs-16   rounded-10 header_last_text p-15">
+                                                                        <div class="text-decoration-none text-light delete-btn" onclick="doDeleteComment(this)">
+                                                                            <div class="commentId hidden" data-commentid="${data.data.Comment.CommentId}"></div>
+                                                                            Delete
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </div>
+                                                        </icon-setting>
             </div>
         </div>
     </comment-author>
@@ -378,8 +383,10 @@ document.querySelector('.write-comment-btn-submit').addEventListener('click', fu
             document.querySelector('.write-comment-box-content').value = '';
             document.querySelector('#commentForm').reset();
             document.querySelector('.num-comment.detail-comment').innerHTML = document.querySelector('.num-comment.detail-comment').innerHTML * 1 + 1;
-            if (!document.querySelector('.no-comment-wrapper').classList.contains('hidden')) {
-                document.querySelector('.no-comment-wrapper').classList.add('hidden');
+            if (document.querySelector('.no-comment-wrapper') != null) {
+                if (!document.querySelector('.no-comment-wrapper').classList.contains('hidden')) {
+                    document.querySelector('.no-comment-wrapper').classList.add('hidden');
+                }
             }
         }
     });
@@ -418,7 +425,6 @@ function clickReplyBtn(current) {
         contentType: false,
         data: formData,
         success: function (data) {
-            console.log(data);
             let commentImageHTML = '';
             if (data.data.CommentImages.$values.length !== 0) {
                 commentImageHTML = `<img src="${data.data.CommentImages.$values[0].Media}" class="comment-picture">`;
@@ -494,16 +500,22 @@ function clickReplyBtn(current) {
                             </div>
                             <div class="comment-right-wrapper">
                                 <div class="option-icon">
-                                    <icon class="option-icon pointer more_options flex align-center justify-content-center rounded-50">
-                                        <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24"
-                                             class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn"
-                                             style="fill: #777777; --height: 20px; --width: 20px;">
-                                            <title>Xem thêm</title>
-                                            <circle cx="12" cy="12" r="1.5"></circle>
-                                            <circle cx="6" cy="12" r="1.5"></circle>
-                                            <circle cx="18" cy="12" r="1.5"></circle>
-                                        </svg>
-                                    </icon>
+                                    <icon-setting class="relative header_last ">
+                                                            <icon class="pointer more_options flex align-center justify-content-center rounded-50">
+                                                                <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24" class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn" style="fill: #777777; --height: 20px; --width: 20px;"><title>Xem thêm</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+                                                            </icon>
+                                                            <div class="absolute rounded-style rounded-10 thread_settings rounded-10 top-30 right-0" style="border-radius: 10px;">
+                                                                <ul class="list-unstyled rounded-10">
+                                                                    <li class="fs-16   rounded-10 header_last_text p-15">
+                                                                        <div class="text-decoration-none text-light delete-btn" onclick="doDeleteComment(this)">
+                                                                            <div class="commentId hidden" data-commentid="${data.data.CommentId}"></div>
+                                                                            Delete
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </div>
+                                                        </icon-setting>
                                 </div>
                             </div>
                         </comment-author>
@@ -563,4 +575,20 @@ function hideReply(element) {
     let fatherWrapper = element.closest('.comment-wrapper');
     let replyArea = fatherWrapper.querySelector('.reply-area');
     replyArea.classList.add('hidden');
+}
+
+function doDeleteComment(el) {
+    console.log(el.querySelector('.commentId').dataset.commentid)
+    $.ajax({
+        headers: {
+            "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+        },
+        url: `/detailpost?handler=DeleteComment&deleteCommentId=${el.querySelector('.commentId').dataset.commentid}`,
+        method: 'POST',
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            location.reload();
+        }
+    })
 }
