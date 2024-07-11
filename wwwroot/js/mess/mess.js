@@ -1,6 +1,8 @@
 ﻿var partnerId = 0;
 var groupId = 0;
 var typeChat = '';
+emojione.ascii = true;
+emojione.emojiSize = 32;
 function showBoxChatSingle(e) {
     typeChat = 'single';
     document.querySelector('.right-panel').classList.remove('hidden');
@@ -64,7 +66,7 @@ function showBoxChatGroup(e) {
                 <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${el.whose}">
                     <img src="${el.avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                     <div class="message-box">
-                        <span class="message-box--content">${el.Content}</span>
+                        <span class="message-box--content">${emojione.toImage(el.Content)}</span>
                     </div>
                 </div>`;
                 mainMess.insertAdjacentHTML('beforeend', messageBox);
@@ -97,7 +99,7 @@ function getBoxChat(followerId) {
                 <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${el.whose}">
                     <img src="${el.avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                     <div class="message-box">
-                        <span class="message-box--content">${el.Content}</span>
+                        <span class="message-box--content">${emojione.toImage(el.Content)}</span>
                     </div>
                 </div>`;
                 mainMess.insertAdjacentHTML('beforeend', messageBox);
@@ -137,7 +139,7 @@ function getFlexibleChatBar() {
                             <div class="flex-1 user_mess flex gap-3 flex-column" style="max-width: calc(100% - 56px - 20px)">
                                 <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">${el.displayUsername}</span>
                                 <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
-                                    ${el.whose == "other" ? "" : "You: "}${el.Content}
+                                    ${el.whose == "other" ? "" : "You: "}${emojione.toImage(el.Content)}
                                 </p>
                             </div>
                         </div>
@@ -153,7 +155,7 @@ function getFlexibleChatBar() {
                             <div class="flex-1 user_mess flex gap-3 flex-column group-name" style="max-width: calc(100% - 56px - 20px)">
                                 <span class="font-body w-full lh-1 d-block fs-18" style="color:rgb(245,245,245)">${el.displayUsername}</span>
                                 <p class="font-body w-full d-block ellipsis lh-1  fs-15" style="color:rgb(245,245,245); opacity: 0.8; margin:0">
-                                    ${el.whose == "other" ? "" : "You: "}${el.Content}
+                                    ${el.whose == "other" ? "" : "You: "}${emojione.toImage(el.Content)}
                                 </p>
                             </div>
                         </div>
@@ -166,7 +168,7 @@ function getFlexibleChatBar() {
 }
 
 function sendForm() {
-    let messContent = document.getElementById('myTextarea').value;
+    let messContent = emojione.toShort(document.getElementById('myTextarea').value);
     if (messContent !== '') {
         if (typeChat === 'single') {
             let dataSend = {
@@ -193,7 +195,7 @@ function sendForm() {
                 <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${currentMess.whose}">
                     <img src="${currentMess.avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                     <div class="message-box">
-                        <span class="message-box--content">${currentMess.Content}</span>
+                        <span class="message-box--content">${emojione.toImage(currentMess.Content)}</span>
                     </div>
                 </div>`;
                     mainMess.insertAdjacentHTML('beforeend', messageBox);
@@ -244,7 +246,7 @@ function sendForm() {
                             <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${currentMess.whose}">
                                 <img src="${currentMess.avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                                 <div class="message-box">
-                                    <span class="message-box--content">${currentMess.Content}</span>
+                                    <span class="message-box--content">${emojione.toImage(currentMess.Content)}</span>
                                 </div>
                             </div>`;
                     mainMess.insertAdjacentHTML('beforeend', messageBox);
@@ -303,7 +305,7 @@ con.on("ReceiveGroupMessage", function (AuthorId, messContent, avtAuthor, Author
                 <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${whose}">
                     <img src="${avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                     <div class="message-box">
-                        <span class="message-box--content">${messContent}</span>
+                        <span class="message-box--content">${emojione.toImage(messContent)}</span >
                     </div>
                 </div>`;
         mainMess.insertAdjacentHTML('beforeend', messageBox);
@@ -327,7 +329,7 @@ con.on("ReceiveMessageOneUser", function (partnerIdSignalR, messContent, avtAuth
                 <div class="image py-3 flex flex-wrap gap-10 wrapper-message ${whose}">
                     <img src="${avtAuthor}" class="rounded-50 w-full" style="object-fit: cover; height: 48px; width:48px" />
                     <div class="message-box">
-                        <span class="message-box--content">${messContent}</span>
+                        <span class="message-box--content">${emojione.toImage(messContent)}</span >
                     </div>
                 </div>`;
         mainMess.insertAdjacentHTML('beforeend', messageBox);
@@ -375,3 +377,9 @@ if (btnWrite != null) {
         sendForm();
     })
 }
+
+var user_mess = document.querySelectorAll(".user_mess")
+user_mess.forEach((i) => {
+    let text = i.querySelector("p")
+    text.innerHTML = emojione.toImage(text.textContent)
+})

@@ -250,7 +250,10 @@ namespace PRN221_Assignment.Pages.mess
                     newChatHistory.whose = "other";
                     newChatHistory.Content = "You have just been added to this group";
                     newChatHistory.createdBy = gr.createdBy;
-                    listFollowerDown.Add(newChatHistory);
+                    if (newChatHistory.IdToClick != 1)
+                    {
+                        listFollowerDown.Add(newChatHistory);
+                    }
                 }
             }
 

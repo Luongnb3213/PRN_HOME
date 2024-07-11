@@ -37,3 +37,31 @@ class commetContent extends HTMLElement{
     }
 }
 customElements.define("commet-content", commetContent)
+
+
+class emojiChat extends HTMLElement {
+    constructor() {
+        super();
+        this.picker = null
+        this.init()
+    }
+    init() {
+        emojione.emojiSize = 32;
+        emojione.ascii = true;
+        const button = this.querySelector('.emoji-button');
+        const emojiContainer = this.closest(".write-comment-box-wrapper")?.querySelector("#myTextarea");
+        const picker = new EmojiButton();
+        picker.on('emoji', emoji => {
+            if (emojiContainer) {
+                emojiContainer.value += emoji.emoji
+            }
+        });
+        if (button) {
+            button.addEventListener('click', () => {
+                picker.togglePicker(button);
+            });
+        }
+
+    }
+}
+customElements.define("emoji-chat", emojiChat)
