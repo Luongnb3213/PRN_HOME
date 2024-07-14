@@ -71,40 +71,47 @@
 
 
                         <div class="option-icon">
-                            <icon-setting class="relative header_last ">
+                            <popup-create class="create_post  flex-1">
                                 <icon class="pointer more_options flex align-center justify-content-center rounded-50">
                                     <svg width="20" height="20" aria-label="Xem thêm" role="img" viewBox="0 0 24 24" class="x1lliihq xffa9am x1jwls1v x1n2onr6 x17fnjtu x1gaogpn" style="fill: #777777; --height: 20px; --width: 20px;"><title>Xem thêm</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
                                 </icon>
-                                <div class="absolute rounded-style rounded-10 thread_settings rounded-10 top-30 right-0" style="border-radius: 10px;">
-                                    <ul class="list-unstyled rounded-10">
-                                        <li class="fs-16 rounded-10 header_last_text p-15">
-                                            <a href="#" class="text-decoration-none">
-                                                Lưu
-                                            </a>
 
-                                        </li>
-                                        <li class="fs-16 rounded-10 header_last_text p-15">
-                                            <a href="#" class="text-decoration-none">
-                                                Không quan tâm
-                                            </a>
+                                <div class="content_popup">
+                                    <div class="create_thread hidden">
+                                        <form method="post" asp-page-handler="Thread" enctype="multipart/form-data">
+                                            <div class="msg-status" hidden data-msg="@ViewBag.msg"></div>
+                                            <div class=" py-15 px-25">
+                                                <div class="flex flex-cols gap-20 flex-wrap" style="--bs-gutter-x: 3rem">
+                                                    <div class="thread_info col-w-custom" style="width: 48px">
+                                                        <div class="flex h-full flex-column">
+                                                            <img width="48" height="48" class="avt-me" src="@Model.SelectedThread.Account.Info.Image" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="thread_main col-w-custom" style="--col-width: calc(100% - 48px - 30px)">
+                                                        <div class="flex align-center justify-between">
+                                                            <h3 class="author flex align-center fs-16"></h3>
+                                                        </div>
 
-                                        </li>
-                                        <li class="fs-16 rounded-10 header_last_text p-15">
-                                            <a href="#" class="text-decoration-none">
-                                                Tắt thông báo
-                                            </a>
-
-                                        <li>
-                                        <li class="fs-16   rounded-10 header_last_text p-15">
-                                            <a href="#" class="text-decoration-none">
-                                                Bỏ theo dõi
-                                            </a>
-
-                                        </li>
-                                    </ul>
-
+                                                        <div class="content">
+                                                            <textarea is="custom-text" asp-for="@Model.content" name="content_new" id="my-textarea" rows="2" placeholder="Edit content........" type="text"></textarea>
+                                                        </div>
+                                                        <input type="hidden" value="@Model.SelectedThread.ThreadId" name="threadid" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex align-center mt-3 pb-20">
+                                                    <button style="margin-left: auto;background-color: #0a0a0a;" class="button_create px-15 py-2">
+                                                        Update
+                                                    </button>
+                                                </div>
+           
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </icon-setting>
+
+                            </popup-create>
+                               
+                           
                         </div>
                     </div>
                     <div class="detail-caption">

@@ -213,3 +213,11 @@ custom-media:active img {
         transform: rotate(1turn)
     }
 }
+
+.thread_body_search_loader.hidden ~ .thread_body_search_content{
+    display: block;
+
+}
+.thread_body_search_loader ~ .thread_body_search_content {
+    display: none;
+}

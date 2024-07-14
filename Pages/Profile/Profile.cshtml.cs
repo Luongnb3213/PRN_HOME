@@ -9,9 +9,12 @@ using System.Text.Json;
 using System.Threading;
 using Microsoft.AspNetCore.SignalR;
 using PRN221_Assignment.Hubs;
+using PRN221_Assignment.Authorization;
 
 namespace PRN221_Assignment.Pages.Profile
 {
+    [customAuthorize]
+
     public class ProfileModel : PageModel
     {
         private readonly PRN221_Assignment.Respository.DataContext context;

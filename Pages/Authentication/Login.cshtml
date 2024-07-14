@@ -43,11 +43,27 @@
                     </svg>
                 </div>
                 <div class="big-box">
+                   
                     <form method="post" class="flex align-center flex-column">
+                       
                         <input type="email" class="input email" asp-for="Input.Email" placeholder="Username">
-                        <input type="password" class="input password" asp-for="Input.Password" placeholder="Password">
+                        <input type="password" required class="input password" asp-for="Input.Password" placeholder="Password">
+                        @if (!ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach (var key in ModelState.Keys)
+                                    {
+                                        foreach (var error in ModelState[key].Errors)
+                                        {
+                                            <li>@error.ErrorMessage</li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        }
                         <button type="submit"  class="btn btn-login">Login</button>
-                        <div class="error hide">*Invalid username or password</div>
+                       
                     </form>
                     <div class="divider">
                         <span>OR</span>
@@ -60,7 +76,7 @@
                     <div class="forgot-password">
                         <a href="/authentication/forgotpassword">Forgot password?</a>
                     </div>
-                    <a asp-page-handler="Index">Index</a>
+                
                 </div>
                 <div class="small-box">
                     <a href="/authentication/signup">Create new account</a>
@@ -68,6 +84,7 @@
             </div>
         </div>
     </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </body>
 
 </html>

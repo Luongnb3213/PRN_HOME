@@ -5,9 +5,11 @@ using PRN221_Assignment.Models;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Security.Claims;
+using PRN221_Assignment.Authorization;
 
 namespace PRN221_Assignment.Pages.Profile
 {
+    [customAuthorize]
     public class DetailPostModel : PageModel
     {
         public readonly PRN221_Assignment.Respository.DataContext context;
@@ -17,8 +19,8 @@ namespace PRN221_Assignment.Pages.Profile
         }
         [BindProperty(SupportsGet = true)]
         public int ThreadId { get; set; }
-        //[BindProperty]
-        //public string Comment { get; set; }
+        [BindProperty]
+        public string content { get; set; }
         public Models.Thread SelectedThread { get; set; }
         public int numOfComment { get; set; }
         public List<ThreadComment> listOriginalComment { get; set; }
@@ -262,6 +264,18 @@ namespace PRN221_Assignment.Pages.Profile
                 ReferenceHandler = ReferenceHandler.Preserve
             };
             return new JsonResult(new { data = string.Empty }, options);
+        }
+
+        public IActionResult OnPostThread(int threadid, string content_new)
+        {
+            
+            Models.Thread thread  = context.Thread.Where(x => x.ThreadId ==  threadid).FirstOrDefault();
+            if(thread != null)
+            {
+                thread.Content = content_new;
+                context.SaveChanges();
+            }
+            return Redirect("/detailpost?threadId=" + threadid);
         }
         public class MyComment()
         {

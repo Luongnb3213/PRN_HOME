@@ -42,30 +42,46 @@
             <div class="title">Explore the world!</div>
             <form method="post">
 
-
+                @if (!ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach (var key in ModelState.Keys)
+                            {
+                                if (string.IsNullOrEmpty(key))
+                                {
+                                    foreach (var error in ModelState[key].Errors)
+                                    {
+                                        <li>@error.ErrorMessage</li>
+                                    }
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
                 <div class="row">
-                    <input class="input-field fullname" asp-for="Account.Info.Name" value="@Model.Account?.Info?.Name" placeholder="Full Name" />
-                    <div class="error">*Something's wrong</div>
+                    <input class="input-field fullname" asp-for="Account.Info.Name" required value="@Model.Account?.Info?.Name" placeholder="Full Name" />
+                    <span asp-validation-for="Account.Info.Name" class="text-danger"></span>
                 </div>
                 <div class="row">
-                    <input class="input-field email" type="email" value="@Model.Account?.Email" placeholder="Email" asp-for="Account.Email" />
-                    <div class="error">*Something's wrong</div>
+                    <input class="input-field email" required type="email" value="@Model.Account?.Email" placeholder="Email" asp-for="Account.Email" />
+                    <span asp-validation-for="Account.Email" class="text-danger"></span>
                 </div>
                 <div class="row">
-                    <input class="input-field username" placeholder="User Name" asp-for="Account.Info.userName" value="@Model.Account?.Info?.userName" />
-                    <div class="error">*Something's wrong</div>
+                    <input class="input-field username" required placeholder="User Name" asp-for="Account.Info.userName" value="@Model.Account?.Info?.userName" />
+                    <span asp-validation-for="Account.Info.userName" class="text-danger"></span>
                 </div>
                 <div class="row">
-                    <input class="input-field dob" type="date" placeholder="Birth Date" asp-for="Account.Info.Dob" value="@Model.Account?.Info.Dob" />
-                    <div class="error hide">*Something's wrong</div>
+                    <input class="input-field dob" required type="date" placeholder="Birth Date" asp-for="Account.Info.Dob" value="@Model.Account?.Info.Dob" />
+                    <span asp-validation-for="Account.Info.Dob" class="text-danger"></span>
                 </div>
                 <div class="row">
-                    <input class="input-field password" type="password" placeholder="Password" asp-for="Account.Password" />
-                    <div class="error">*Something's wrong</div>
+                    <input class="input-field password" required type="password" placeholder="Password" asp-for="Account.Password" />
+                    <span asp-validation-for="Account.Password" class="text-danger"></span>
                 </div>
                 <div class="row">
                     <input class="input-field password" type="password" name="confirmPassword" placeholder="Confirm Password" />
-                    <div class="error">*Something's wrong</div>
+                    
                 </div>
 
 

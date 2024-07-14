@@ -61,7 +61,7 @@ html {
     border: solid 1px grey;
     line-height: 40px;
     font-size: 1.6rem;
-    margin: 8px auto;
+    margin: 15px auto;
     padding: 0 12px;
 }
 
@@ -90,6 +90,7 @@ html {
 .btn-create {
     background-color: var(--primary-color);
     color: white;
+    display:block;
 }
 
 /* Small box */
@@ -113,3 +114,19 @@ html {
     .back:hover {
         opacity: 0.8;
     }
+
+
+
+.alert ul {
+    width: 75%;
+    margin: 0px auto;
+}
+
+    .alert ul li {
+        color: red;
+        font-size: 15px;
+    }
+.text-danger {
+    color: red;
+    font-size: 15px;
+}

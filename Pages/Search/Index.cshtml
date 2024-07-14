@@ -21,39 +21,42 @@
 
         </div>
 
-        <div class="thread_body_search ">
+        <div class="thread_body_search flex flex-col flex-column justify-content-center">
+            <div class="loader thread_body_search_loader hidden mx-auto" style="width: 60px">
+            </div>
 
-
-            <div  class="flex flex-column py-15 px-25">
-                <div class="flex flex-cols gap-20 flex-wrap">
-                    <div class="thread_info col-w-custom" style="width: 48px">
-                        <div class="flex h-full flex-column">
-                            <img width="48" height="48" class="avt-author" src="" />
-                            <div class="line_main mx-auto flex-1 hidden">
+            <div class="flex flex-column gap-20 py-15 px-25 thread_body_search_content">
+                @foreach(var item in Model.Accounts)
+                {
+                    <div class="flex flex-cols gap-20 flex-wrap">
+                        <div class="thread_info col-w-custom" style="width: 48px">
+                            <div class="flex h-full flex-column">
+                                <img width="48" height="48" class="avt-author" src="@item.account.Info.Image" />
+                                <div class="line_main mx-auto flex-1 hidden">
+                                </div>
                             </div>
+
+
                         </div>
+                        <div class="thread_main pb-3 col-w-custom" style="--col-width: calc(100% - 48px - 30px);border-bottom: 1px solid rgba(243, 245, 247, 0.15);">
+                            <div class="flex mb-2 align-center justify-between">
+                                <div class="flex flex-column">
+                                    <h3 class="author flex align-center fs-16">
+                                        <a class="show-specific-profile" href="/profile?userId=@item.account.UserID">@item.account.Info.Name</a>
+                                        <span class="time-elapsed"></span>
+                                    </h3>
+                                    <h4 class="author_nickname">@item.account.Info.userName</h4>
+                                </div>
 
-
-                    </div>
-                    <div class="thread_main pb-3 col-w-custom" style="--col-width: calc(100% - 48px - 30px);border-bottom: 1px solid rgba(243, 245, 247, 0.15);">
-                        <div class="flex mb-2 align-center justify-between">
-                            <div class="flex flex-column">
-                                <h3 class="author flex align-center fs-16">
-                                    <a class="show-specific-profile" href="/profile?userId=">minhtu.ngguyen__</a>
-                                    <span class="time-elapsed"></span>
-                                </h3>
-                                <h4 class="author_nickname">Minh Tú Nguyễn </h4>
                             </div>
-                            <button style="margin-left: auto;background-color: rgb(24, 24, 24); color: white" class="button_create px-15 py-2">
-                              Theo dõi
-                            </button>
+                            <span class="follow_text">
+                                @item.countUser nguoi theo doi
+                            </span>
+
                         </div>
-                        <span class="follow_text">
-                            100 người theo dõi
-                        </span>
-          
                     </div>
-                </div>
+                }
+                
 
 
 

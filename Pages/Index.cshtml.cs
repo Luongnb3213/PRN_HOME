@@ -17,7 +17,7 @@ using System.Linq;
 
 namespace PRN221_Assignment.Pages
 {
-
+    [customAuthorize]
     public class IndexModel : PageModel
     {
         private readonly PRN221_Assignment.Respository.DataContext context;

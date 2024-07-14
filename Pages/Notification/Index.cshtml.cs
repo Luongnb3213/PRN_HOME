@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.SignalR;
 using PRN221_Assignment.Models;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using PRN221_Assignment.Authorization;
 namespace PRN221_Assignment.Pages.Notification
 {
+    [customAuthorize]
+
     public class IndexModel : PageModel
     {
         public readonly PRN221_Assignment.Respository.DataContext context;
@@ -39,7 +42,7 @@ namespace PRN221_Assignment.Pages.Notification
                     }
                     NoficationShows.Add(item);
 
-                   var follower = context.Follow.Where(x => x.UserID == item.account.accountt.UserID && x.FollowerId == userId ).FirstOrDefault();
+                   var follower = context.Follow.Where(x => x.UserID == item.account.accountt.UserID && x.UserFollowErId == userId ).FirstOrDefault();
                     if(follower != null)
                     {
                         item.account.follow = true;

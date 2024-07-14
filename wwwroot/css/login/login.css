@@ -201,3 +201,14 @@ html {
         color: black;
         font-weight: bold;
     }
+
+
+.alert ul {
+    list-style-type: none;
+    width: 75%;
+    margin: 0px auto;
+}
+.alert ul li {
+     color: red;
+     font-size: 15px;
+}

@@ -29,7 +29,8 @@ namespace PRN221_Assignment.Models
 
 
         [Required]
-        public string? Password { get; set; }
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[\W_])(?=.*[0-9]).{8,}$", ErrorMessage = "Password must be at least 8 characters long and contain an uppercase letter, a special character, and a number.")]
+        public string Password { get; set; }
 
         public bool? Status { get; set; }
        

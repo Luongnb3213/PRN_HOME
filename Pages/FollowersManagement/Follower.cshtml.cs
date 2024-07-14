@@ -2,12 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using PRN221_Assignment.Authorization;
 using PRN221_Assignment.Hubs;
 using PRN221_Assignment.Models;
 using System.Security.Claims;
 
 namespace PRN221_Assignment.Pages.FollowersManagement
 {
+    [customAuthorize]
+
     public class IndexModel : PageModel
     {
         public readonly PRN221_Assignment.Respository.DataContext context;

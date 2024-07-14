@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRN221_Assignment", "PRN221
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment", "..\..\PRN211\WinFormsAppChiLp\Assignment\Assignment.csproj", "{B9B69B60-F766-409B-877A-FD60D7AC90D4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPagesMovie", "..\..\PRN211\RazorPagesMovie\RazorPagesMovie\RazorPagesMovie.csproj", "{8E6372DD-6804-4CAC-9D48-37621EA79E0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B9B69B60-F766-409B-877A-FD60D7AC90D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9B69B60-F766-409B-877A-FD60D7AC90D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9B69B60-F766-409B-877A-FD60D7AC90D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E6372DD-6804-4CAC-9D48-37621EA79E0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E6372DD-6804-4CAC-9D48-37621EA79E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E6372DD-6804-4CAC-9D48-37621EA79E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E6372DD-6804-4CAC-9D48-37621EA79E0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

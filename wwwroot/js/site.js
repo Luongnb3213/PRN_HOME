@@ -346,11 +346,28 @@ class buttonFollow extends HTMLElement {
     constructor() {
         super()
         this.id = this.dataset.followdid
-
-        this.init()
+        this.type = this.dataset.type
+        this.init();
     }
     init() {
-     
+        this.addEventListener("click", (e) => { 
+            
+                $.ajax({
+                    headers:
+                    {
+                        "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    url: `/profile?handler=DoRelation&partnerId=${this.id}&type=${this.type}`,
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        location.reload();
+                    }
+                })
+            
+
+        })
     }
 }
 customElements.define("button-follow", buttonFollow)
@@ -460,7 +477,7 @@ con.on("receiveNofication", function (userId,nofi, account, newThread, count, th
                                             </h3>
                                             <h4 class="author_nickname">${account.name}</h4>
                                         </div>
-                                        <button-follow data-followdid="${userId}" style="margin-left: auto;background-color: rgb(24, 24, 24); color: white" class="button_create px-15  py-2">
+                                        <button-follow data-followdid="${userId}" style="margin-left: auto;background-color: rgb(24, 24, 24); color: white;cursor:pointer" class="button_create px-15  py-2">
                                            ${newThread ? 'Đang theo dõi' : "Theo dõi "}
                                         </button-follow>
                                     </div>
@@ -502,6 +519,8 @@ con.on("receiveNofication", function (userId,nofi, account, newThread, count, th
                         <div class="line"></div>
                     </noti>`
     }
+    var nofi_icon = document.querySelector(".icon-header.noti");
+    nofi_icon.classList.add("new-noti");
     var fisrtNofi = document.querySelectorAll("noti")[0]
     if (fisrtNofi) {
         $(html).insertBefore(fisrtNofi);
@@ -512,4 +531,4 @@ con.on("receiveNofication", function (userId,nofi, account, newThread, count, th
 })
 
 
-                                         
+                      

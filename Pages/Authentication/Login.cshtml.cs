@@ -121,16 +121,16 @@ namespace PRN221_Assignment.Pages.Authentication
 
             if (!_context.Accounts.Any(a => a.Email.Equals(Input.Email)))
             {
-                ModelState.AddModelError("Email", "This account doesn't exist in system ");
-                return RedirectToPage("/Authentication/Login");
+                ModelState.AddModelError(string.Empty, "This account doesn't exist in system ");
+                return Page();
 
             }
             var user = Authenticate(Input);
 
             if (user == null)
             {
-                ModelState.AddModelError("Password", "Password was wrong");
-                return RedirectToPage("/Authentication/Login");
+                ModelState.AddModelError(string.Empty, "Password was wrong");
+                return Page();
             }
 
             if (user != null)

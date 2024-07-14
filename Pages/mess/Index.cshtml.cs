@@ -9,9 +9,12 @@ using static PRN221_Assignment.Pages.mess.IndexModel;
 using Microsoft.AspNetCore.SignalR;
 using PRN221_Assignment.Hubs;
 using System.Text.RegularExpressions;
+using PRN221_Assignment.Authorization;
 
 namespace PRN221_Assignment.Pages.mess
 {
+    [customAuthorize]
+
     public class IndexModel : PageModel
     {
         public readonly PRN221_Assignment.Respository.DataContext context;

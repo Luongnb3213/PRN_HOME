@@ -56,12 +56,12 @@ namespace PRN221_Assignment.Pages.Authentication
             {
                 if (accInfo.Email == account.Email)
                 {
-                    ModelState.AddModelError("Email", "This email already exists in the system.");
+                    ModelState.AddModelError("", "This email already exists in the system.");
                     return Page();
                 }
                 if (accInfo.UserName == account.Info?.userName)
                 {
-                    ModelState.AddModelError("userName", "This userName already exists in the system.");
+                    ModelState.AddModelError("", "This userName already exists in the system.");
                     return Page();
                 }
 
